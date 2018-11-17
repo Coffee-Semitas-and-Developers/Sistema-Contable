@@ -1,6 +1,8 @@
+SET SEARCH_PATH TO "Planilla";
+
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     10/11/2018 5:13:58 p. m.                     */
+/* Created on:     10/11/2018 6:40:53 p. m.                     */
 /*==============================================================*/
 
 
@@ -33,9 +35,6 @@ drop table PLANILLA;
 /*==============================================================*/
 create table EMPLEADO (
    DUI                  VARCHAR(10)          not null,
-   NOMBRE               VARCHAR(50)          not null,
-   APELLIDO             VARCHAR(50)          not null,
-   TEL                  VARCHAR(9)           not null,
    CARGO                VARCHAR(50)          not null,
    SALARIO              DECIMAL(10,2)        not null,
    DEPARTAMENTO         VARCHAR(50)          not null,
@@ -58,12 +57,12 @@ DUI
 create table EXTRA (
    DUI                  VARCHAR(10)          not null,
    FECHAPAGO            DATE                 not null,
-   SALARIOREAL          DECIMAL(10,2)        null,
+   OCASION              VARCHAR(25)          not null,
    TIPO                 BOOL                 not null,
    DESCRIP              VARCHAR(100)         not null,
-   PORCENTAJE           DECIMAL(1,2)         not null,
-   MONTO                DECIMAL(10,2)        not null,
-   constraint PK_EXTRA primary key (DUI, FECHAPAGO)
+   PORCENTAJE           DECIMAL(2,2)         null,
+   MONTO                DECIMAL(10,2)        null,
+   constraint PK_EXTRA primary key (DUI, FECHAPAGO, TIPO, OCASION, DESCRIP)
 );
 
 /*==============================================================*/
@@ -71,7 +70,10 @@ create table EXTRA (
 /*==============================================================*/
 create unique index EXTRA_PK on EXTRA (
 DUI,
-FECHAPAGO
+FECHAPAGO,
+TIPO,
+OCASION,
+DESCRIP
 );
 
 /*==============================================================*/
@@ -80,8 +82,10 @@ FECHAPAGO
 create table LINEAPLANILLA (
    DUI                  VARCHAR(10)          not null,
    FECHAPAGO            DATE                 not null,
+   TIPO                 BOOL                 not null,
+   OCASION              VARCHAR(25)          not null,
    SALARIOREAL          DECIMAL(10,2)        not null,
-   constraint PK_LINEAPLANILLA primary key (DUI, FECHAPAGO)
+   constraint PK_LINEAPLANILLA primary key (DUI, FECHAPAGO, TIPO, OCASION)
 );
 
 /*==============================================================*/
@@ -89,7 +93,9 @@ create table LINEAPLANILLA (
 /*==============================================================*/
 create unique index EN_LISTADO_EN_PK on LINEAPLANILLA (
 DUI,
-FECHAPAGO
+FECHAPAGO,
+TIPO,
+OCASION
 );
 
 /*==============================================================*/
@@ -103,7 +109,9 @@ DUI
 /* Index: EN_LISTADO_EN_FK                                      */
 /*==============================================================*/
 create  index EN_LISTADO_EN_FK on LINEAPLANILLA (
-FECHAPAGO
+FECHAPAGO,
+TIPO,
+OCASION
 );
 
 /*==============================================================*/
@@ -131,14 +139,16 @@ create table PLANILLA (
    FECHAPAGO            DATE                 not null,
    TIPO                 BOOL                 not null,
    OCASION              VARCHAR(25)          not null,
-   constraint PK_PLANILLA primary key (FECHAPAGO)
+   constraint PK_PLANILLA primary key (FECHAPAGO, TIPO, OCASION)
 );
 
 /*==============================================================*/
 /* Index: PLANILLA_PK                                           */
 /*==============================================================*/
 create unique index PLANILLA_PK on PLANILLA (
-FECHAPAGO
+FECHAPAGO,
+TIPO,
+OCASION
 );
 
 alter table EMPLEADO
@@ -147,13 +157,13 @@ alter table EMPLEADO
       on delete restrict on update restrict;
 
 alter table EXTRA
-   add constraint FK_EXTRA_SE_CONVIE_LINEAPLA foreign key (DUI, FECHAPAGO)
-      references LINEAPLANILLA (DUI, FECHAPAGO)
+   add constraint FK_EXTRA_AGREGA_A_LINEAPLA foreign key (DUI, FECHAPAGO, TIPO, OCASION)
+      references LINEAPLANILLA (DUI, FECHAPAGO, TIPO, OCASION)
       on delete restrict on update restrict;
 
 alter table LINEAPLANILLA
-   add constraint FK_LINEAPLA_EN_LISTAD_PLANILLA foreign key (FECHAPAGO)
-      references PLANILLA (FECHAPAGO)
+   add constraint FK_LINEAPLA_EN_LISTAD_PLANILLA foreign key (FECHAPAGO, TIPO, OCASION)
+      references PLANILLA (FECHAPAGO, TIPO, OCASION)
       on delete restrict on update restrict;
 
 alter table LINEAPLANILLA
