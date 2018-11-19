@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package planillas;
+
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -12,34 +12,25 @@ import java.util.Date;
  *
  * @author jorge
  */
-public class Empleado extends Persona{
-    private String cargo,departamento;
-    private Date fechaContrato,fechaDespido;
-    private boolean estado;
-    private double salario;
-    public Empleado(){
-        
-    }
-    
-    public Empleado(String cargo, String departamento, Date fechaContrato, Date fechaDespido, boolean estado, double salario,  String dui, String nombres, String apellidos, String tel, int edad) {
-        super(dui, nombres, apellidos, tel, edad);
+public class Empleado {
+
+    private String dui, nombres, apellidos, cargo, tel, nit, nup, numIss;
+    private Date fechaContrato, fechaDespido;
+
+    public Empleado(String dui, String nombres, String apellidos, String cargo, String nit, String nup, String numIss, Date fechaContrato) {
+        this.dui = dui;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
         this.cargo = cargo;
-        this.departamento = departamento;
+        this.nit = nit;
+        this.nup = nup;
+        this.numIss = numIss;
         this.fechaContrato = fechaContrato;
-        this.fechaDespido = fechaDespido;
-        this.estado = estado;
-        this.salario = salario;
-    }
-  
-    
-    public double getSalario() {
-        return salario;
     }
 
-    public void setSalario(double salario) {
-        this.salario = salario;
-    }  
-    
+    public Empleado() {
+
+    }
 
     public String getCargo() {
         return cargo;
@@ -47,14 +38,6 @@ public class Empleado extends Persona{
 
     public void setCargo(String cargo) {
         this.cargo = cargo;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
     }
 
     public Date getFechaContrato() {
@@ -73,14 +56,60 @@ public class Empleado extends Persona{
         this.fechaDespido = fechaDespido;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public String getDui() {
+        return dui;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setDui(String dui) {
+        this.dui = dui;
     }
-    
-    
-    
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getNit() {
+        return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
+    public String getNup() {
+        return nup;
+    }
+
+    public void setNup(String nup) {
+        this.nup = nup;
+    }
+
+    public String getNumIss() {
+        return numIss;
+    }
+
+    public void setNumIss(String numIss) {
+        this.numIss = numIss;
+    }
+
 }
