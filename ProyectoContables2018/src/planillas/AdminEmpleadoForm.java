@@ -77,20 +77,14 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addComponent(jButton2)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1133, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(31, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(69, 69, 69))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,10 +94,10 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -117,11 +111,11 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
 
     private void inicializarColumnas() {
     TableColumnModel tColumnModel = new DefaultTableColumnModel();
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
     TableColumn col = new TableColumn(i);
     switch (i) {
         case 0:
-        col.setHeaderValue("Dui");
+        col.setHeaderValue("DUI");
         break;
         case 1:
         col.setHeaderValue("Nombres");
@@ -133,10 +127,16 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         col.setHeaderValue("Cargo");
         break;
         case 4:
-        col.setHeaderValue("Salario");
+        col.setHeaderValue("NIT");
         break;
         case 5:
-        col.setHeaderValue("Departamento");
+        col.setHeaderValue("NUP");
+        break;
+        case 6:
+        col.setHeaderValue("Numero ISSS");
+        break;
+        case 7:
+        col.setHeaderValue("fecha Contrato");
         break;
     }
     tColumnModel.addColumn(col);
@@ -156,7 +156,7 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
     
      private void consultaInicial() {
     try {
-    String sentenciaSql = "SELECT * FROM Empleado inner join Persona on Empleado.dui=Persona.dui";
+    String sentenciaSql = "SELECT * FROM Empleado ";
     Statement statement = this.conexion.createStatement();
     ResultSet resultado = statement.executeQuery(sentenciaSql);
     while (resultado.next()) {
@@ -165,8 +165,9 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
     e.setNombres(resultado.getString("nombre"));
     e.setApellidos(resultado.getString("apellido"));
     e.setCargo(resultado.getString("cargo"));
-    e.setSalario(resultado.getDouble("salario"));
-    e.setDepartamento(resultado.getString("departamento"));
+    e.setNit(resultado.getString("nit"));
+    e.setNup(resultado.getString("nup"));
+    e.setNumIss(resultado.getString("numIsss"));
 
     this.empleadoTM.empleados.add(e);
     }
