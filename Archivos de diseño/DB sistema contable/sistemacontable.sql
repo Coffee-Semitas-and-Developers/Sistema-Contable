@@ -86,8 +86,6 @@ drop index PRODUCTO_PK;
 
 drop table PRODUCTO;
 
-drop index PRESENTA_FK;
-
 drop index PERTENECE_FK;
 
 drop index UTILIZAMANODEOBRA_FK;
@@ -496,7 +494,6 @@ create table TARJETADETIEMPO (
    FECHATARJETA         DATE                 not null,
    IDORDEN              INT4                 not null,
    DUI                  VARCHAR(10)          not null,
-   IDLINEA              INT4                 not null,
    TOTALHORASTRABAJADAS INT4                 null,
    TOTALHORASEXTRAS     INT4                 null,
    constraint PK_TARJETADETIEMPO primary key (IDTARJETA, FECHATARJETA)
@@ -522,13 +519,6 @@ IDORDEN
 /*==============================================================*/
 create  index PERTENECE_FK on TARJETADETIEMPO (
 DUI
-);
-
-/*==============================================================*/
-/* Index: PRESENTA_FK                                           */
-/*==============================================================*/
-create  index PRESENTA_FK on TARJETADETIEMPO (
-IDLINEA
 );
 
 /*==============================================================*/
