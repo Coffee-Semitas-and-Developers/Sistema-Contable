@@ -24,7 +24,7 @@ public class EmpleadoTableModel extends AbstractTableModel{
  }
  @Override
  public int getColumnCount() {
- return 6;
+ return 7;
  }
  @Override
  public Object getValueAt(int rowIndex, int columnIndex) {
@@ -41,9 +41,11 @@ public class EmpleadoTableModel extends AbstractTableModel{
             break;
             case 3: valor = empleado.getCargo();
             break;
-            case 4: valor = empleado.getSalario();
+            case 4: valor = empleado.getNit();
             break;
-            case 5: valor = empleado.getDepartamento();
+            case 5: valor = empleado.getNup();
+            break;
+             case 6: valor = empleado.getNumIss();
             break;
         }
     return valor;

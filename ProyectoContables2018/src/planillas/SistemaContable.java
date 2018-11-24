@@ -9,7 +9,7 @@ package planillas;
  *
  * @author jorge
  */
-public class PLANILLAS {
+public class SistemaContable {
 
     /**
      * @param args the command line arguments
