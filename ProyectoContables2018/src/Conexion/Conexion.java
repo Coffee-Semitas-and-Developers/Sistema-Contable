@@ -10,12 +10,11 @@ import java.util.logging.Logger;
  *
  * @author Dalton
  */
-
 public class Conexion {
 
     private static Connection con;
 
-    private static void conectar() {        
+    private static void conectar() {
         try {
             Class.forName("org.postgresql.Driver").newInstance();
             con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sic",
@@ -32,5 +31,14 @@ public class Conexion {
             conectar();
         }
         return con;
+    }
+
+    public static void close() {
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
