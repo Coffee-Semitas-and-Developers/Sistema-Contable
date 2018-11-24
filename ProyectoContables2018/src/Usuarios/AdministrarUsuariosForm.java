@@ -5,9 +5,18 @@
  */
 package Usuarios;
 
-import java.util.ArrayList;
-import java.util.List;
+
+
 import javax.swing.DefaultComboBoxModel;
+import Conexion.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,10 +27,39 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
     /**
      * Creates new form AdministrarUsuariosForm
      */
+    Connection con = Conexion.getConexion();
+    
     public AdministrarUsuariosForm() {
         initComponents();
+        try{
+            llenarTabla();
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(this,"Ocurrio un Error al conectar a la base de usuarios");
+        }
+        
+        
     }
+    
+    private void llenarTabla() throws SQLException{
+        DefaultTableModel model = new DefaultTableModel(){
+             public boolean isCellEditable(int row, int column)
+                {
+                    return false;//This causes all cells to be not editable
+                }
+        };
+        tablaUsuarios.setModel(model);
+        model.addColumn("Id");
+        model.addColumn("Usuario");
+        model.addColumn("Contraseña");
+        model.addColumn("Permisos");
 
+        PreparedStatement pstm = con.prepareStatement("SELECT * FROM usuario");
+        ResultSet Rs = pstm.executeQuery();
+        while(Rs.next()){
+                    model.addRow(new Object[]{Rs.getInt(1), Rs.getString(2),Rs.getString(3),Rs.getString(4)});
+            }
+        pstm.close();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,10 +101,25 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tablaUsuarios);
+        if (tablaUsuarios.getColumnModel().getColumnCount() > 0) {
+            tablaUsuarios.getColumnModel().getColumn(0).setHeaderValue("Usuario");
+            tablaUsuarios.getColumnModel().getColumn(1).setHeaderValue("Contraseña");
+            tablaUsuarios.getColumnModel().getColumn(2).setHeaderValue("Permisos");
+        }
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnNuevo.setText("Nuevo Usuario");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -92,6 +145,11 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
 
         btnGuardar.setText("Guardar");
         btnGuardar.setEnabled(false);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
@@ -220,6 +278,8 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         btnCancelar.setEnabled(true);
         comboBoxPermisos.setEnabled(true);
         comboBoxPermisos.setModel(new DefaultComboBoxModel<>(new String[]{"Usuario","Administrador"} ));
+        btnEditar.setEnabled(false);
+        btnEliminar.setEnabled(false);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -231,7 +291,83 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         comboBoxPermisos.setEnabled(false);
         txtContraseña.setText("");
         txtUsuario.setText("");
+        btnEditar.setEnabled(true);
+        btnEliminar.setEnabled(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        String usuario,contra,rol;
+        usuario = txtUsuario.getText();
+        contra = txtContraseña.getText();
+        rol = (String)comboBoxPermisos.getSelectedItem();
+        try{
+            
+            String query = "INSERT INTO usuario ("+ "nombreusuario,"+"contrasena,"+"rol) VALUES (?, ?, ?)";
+            PreparedStatement pstm = con.prepareStatement(query);
+            pstm.setString(1, usuario);
+            pstm.setString(2, contra);
+            pstm.setString(3, rol);
+            
+           pstm.executeUpdate();
+           pstm.close();
+           JOptionPane.showMessageDialog(this,"Usuario Agregado Correctamente");
+        }catch(SQLException ex){
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try{
+            llenarTabla();
+        }catch(SQLException ex){
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        btnNuevo.setEnabled(true);
+        txtContraseña.setEnabled(false);
+        txtUsuario.setEnabled(false);
+        btnGuardar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        comboBoxPermisos.setEnabled(false);
+        txtContraseña.setText("");
+        txtUsuario.setText("");
+        btnEditar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int row = tablaUsuarios.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)tablaUsuarios.getModel();
+        String seleccion = model.getValueAt(row,0).toString();
+        if(row>=0){
+            try{
+                String query = "DELETE FROM usuario WHERE idusuario="+seleccion;
+                PreparedStatement pstm = con.prepareStatement(query);
+                pstm.executeUpdate();
+                pstm.close();
+                llenarTabla();
+                JOptionPane.showMessageDialog(this,"Usuario Eliminado Correctamente");
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(this,"Ocurrio un Error al conectar a la base de usuarios");
+            }
+        }
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int row = tablaUsuarios.getSelectedRow();
+        btnNuevo.setEnabled(false);
+        txtContraseña.setEnabled(true);
+        txtUsuario.setEnabled(true);
+        btnGuardar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        comboBoxPermisos.setEnabled(true);
+        comboBoxPermisos.setModel(new DefaultComboBoxModel<>(new String[]{"Usuario","Administrador"} ));
+        btnEditar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        DefaultTableModel model = (DefaultTableModel)tablaUsuarios.getModel();
+        txtUsuario.setText(model.getValueAt(row,1).toString());
+        txtContraseña.setText(model.getValueAt(row,2).toString());
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
