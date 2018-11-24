@@ -5,6 +5,9 @@
  */
 package interfaz;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+
 /**
  *
  * @author Gonzalo
@@ -16,7 +19,16 @@ public class EstadoDecosto extends javax.swing.JFrame {
      */
     public EstadoDecosto() {
         initComponents();
+        getIconImage();
+        setLocationRelativeTo(null);
+        this.setResizable(false);
+        
     }
+     public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO 2.jpg"));
+        return retValue;
+    }
+    /**
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,6 +42,7 @@ public class EstadoDecosto extends javax.swing.JFrame {
         regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
 
         regresar.setText("Regresar");
         regresar.addActionListener(new java.awt.event.ActionListener() {

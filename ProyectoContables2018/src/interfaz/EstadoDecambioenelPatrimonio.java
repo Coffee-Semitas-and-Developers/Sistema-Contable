@@ -5,6 +5,9 @@
  */
 package interfaz;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+
 /**
  *
  * @author Gonzalo
@@ -19,6 +22,11 @@ public class EstadoDecambioenelPatrimonio extends javax.swing.JFrame {
          setLocationRelativeTo(null);
         this.setResizable(false);
         setTitle("Estado de Cambio en el patrimonio");
+    }
+    
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO 2.jpg"));
+        return retValue;
     }
 
     /**
@@ -35,6 +43,7 @@ public class EstadoDecambioenelPatrimonio extends javax.swing.JFrame {
         Regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

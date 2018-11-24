@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author Gonzalo
  */
 public class Conexion {
-     private static Connection con;
+    private static Connection con;
 
     private static void conectar() {        
         try {
@@ -36,5 +36,4 @@ public class Conexion {
         }
         return con;
     }
-    
 }
