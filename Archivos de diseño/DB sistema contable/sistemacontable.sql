@@ -143,6 +143,7 @@ create table CUENTA (
    SALDODEUDOR          DECIMAL(10,2)        null,
    SALDOACREEDOR        DECIMAL(10,2)        null,
    SALDOFINAL           DECIMAL(10,2)        null,
+   ESTADOFINANCIERO     VARCHAR(1)           null,
    constraint PK_CUENTA primary key (IDCUENTA)
 );
 
