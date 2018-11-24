@@ -14,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Dalton
  */
 public class CuentaTableModel extends AbstractTableModel  {
-    List<Cuenta> cuentas = new ArrayList();
+    public List<Cuenta> cuentas = new ArrayList();
     
     @Override
     public int getRowCount() {
@@ -37,12 +37,11 @@ public class CuentaTableModel extends AbstractTableModel  {
                 break;
             case 1: valor=cuenta.getNombreCuenta();
                 break;
-            case 2: valor=cuenta.getCuentaPadre();
+            case 2: valor=cuenta.getGrupoCuenta();
                 break;
             case 3: valor=cuenta.getSaldoFinal();
                 break;
         }
-        
         return valor;
     } 
 }

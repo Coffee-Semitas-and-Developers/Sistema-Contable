@@ -21,10 +21,12 @@ public class Cuenta {
     private double saldoFinal;
     private Cuenta cuentaPadre;
 
-    public Cuenta(String nombreCuenta, String descripcion, Cuenta cuentaPadre,char estadoFinanciero, String grupoCuenta) {
+    public Cuenta() {
+    }
+
+    public Cuenta(String nombreCuenta, String descripcion, char estadoFinanciero, String grupoCuenta) {
         this.nombreCuenta = nombreCuenta;
         this.descripcion = descripcion;
-        this.cuentaPadre = cuentaPadre;
         this.estadoFinanciero = estadoFinanciero;
         this.grupoCuenta = grupoCuenta;
     }
@@ -101,9 +103,9 @@ public class Cuenta {
         this.cuentaPadre = cuentaPadre;
     }
     
-     @Override
+    @Override
     public String toString() {
-        return "Cuenta: " + "Código: " + codigo + ", Cuenta: " + nombreCuenta + ", Descripcion: " + descripcion + ", Cuenta Mayor: " + cuentaPadre.nombreCuenta + ", Estado Financiero Perteneciente: " + estadoFinanciero + ", Grupo de la Cuenta: " + grupoCuenta + '}';
+        return "Cuenta: " + "Código: " + codigo + ", Cuenta: " + nombreCuenta + ", Descripcion: " + descripcion + ", Estado Financiero Perteneciente: " + estadoFinanciero + ", Grupo de la Cuenta: " + grupoCuenta + '}';
     }
     
 }
