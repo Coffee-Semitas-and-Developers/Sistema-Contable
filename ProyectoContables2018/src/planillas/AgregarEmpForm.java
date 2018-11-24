@@ -80,6 +80,11 @@ public class AgregarEmpForm extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("fecha:");
 
@@ -134,7 +139,7 @@ public class AgregarEmpForm extends javax.swing.JFrame {
         });
         txtNit.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtApelKeyTyped(evt);
+                txtNitKeyTyped(evt);
             }
         });
 
@@ -146,9 +151,20 @@ public class AgregarEmpForm extends javax.swing.JFrame {
             }
         });
 
+        txtNup.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNupKeyTyped(evt);
+            }
+        });
+
         txtIs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIsActionPerformed(evt);
+            }
+        });
+        txtIs.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIsKeyTyped(evt);
             }
         });
 
@@ -292,9 +308,7 @@ public class AgregarEmpForm extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAgregar)
-                        .addGap(24, 24, 24))
+                    .addComponent(btnAgregar)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnVolver)))
@@ -312,7 +326,7 @@ public class AgregarEmpForm extends javax.swing.JFrame {
         //hora, minuto y segundo del sistema
         //usando el método get y el parámetro correspondiente
         int año = fecha.get(Calendar.YEAR);
-        int mes = fecha.get(Calendar.MONTH);
+        int mes = fecha.get(Calendar.MONTH)+1;
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
         dat= (""+dia+"/"+mes+"/"+año+"").toString(); 
         try{   
@@ -327,8 +341,8 @@ public class AgregarEmpForm extends javax.swing.JFrame {
     
     private void conectar() {
  try {
-    conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Planilla", "postgres",
-   "administrador");
+    conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sic", "semitas",
+   "semita");
 
     } catch (SQLException ex) {
     Logger.getLogger(AdminEmpleadoForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -344,6 +358,7 @@ public class AgregarEmpForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         AdminEmpleadoForm a= new AdminEmpleadoForm();
         a.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnVolverActionPerformed
 
     
@@ -435,6 +450,35 @@ public class AgregarEmpForm extends javax.swing.JFrame {
     private void txtIsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIsActionPerformed
+
+    private void txtNupKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNupKeyTyped
+ if(txtNup.getText().length()>12){
+            getToolkit().beep();    
+            evt.consume();
+            }  
+     }//GEN-LAST:event_txtNupKeyTyped
+
+    private void txtIsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIsKeyTyped
+if(txtIs.getText().length()>9){
+            getToolkit().beep();    
+            evt.consume();
+            }      }//GEN-LAST:event_txtIsKeyTyped
+
+    private void txtNitKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNitKeyTyped
+if(txtIs.getText().length()>17){
+            getToolkit().beep();    
+            evt.consume();
+            }     }//GEN-LAST:event_txtNitKeyTyped
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        try {
+            conexion.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al cerrar la conexión a la base de datos");
+        }
+        JOptionPane.showMessageDialog(this, "La conexión a la base de datos ha sido cerrada");
+    }//GEN-LAST:event_formWindowClosing
 
     
     

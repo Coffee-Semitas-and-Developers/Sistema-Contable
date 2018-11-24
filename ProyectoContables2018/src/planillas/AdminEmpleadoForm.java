@@ -24,11 +24,9 @@ import javax.swing.JOptionPane;
  */
 public class AdminEmpleadoForm extends javax.swing.JFrame {
 
-    public EmpleadoTableModel empleadoTM = new EmpleadoTableModel(); 
-     private Connection conexion;
+    public EmpleadoTableModel empleadoTM = new EmpleadoTableModel();
+    private Connection conexion;
 
-    
-    
     /**
      * Creates new form AdminEmpleadoForm
      */
@@ -55,6 +53,11 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Administración de empleados");
@@ -71,6 +74,11 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         });
 
         jButton2.setText("Volver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,78 +113,90 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        AgregarEmpForm a= new AgregarEmpForm();      
+        AgregarEmpForm a = new AgregarEmpForm();
         a.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        try {
+            conexion.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al cerrar la conexión a la base de datos");
+        }
+        JOptionPane.showMessageDialog(this, "La conexión a la base de datos ha sido cerrada");
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void inicializarColumnas() {
-    TableColumnModel tColumnModel = new DefaultTableColumnModel();
-    for (int i = 0; i < 7; i++) {
-    TableColumn col = new TableColumn(i);
-    switch (i) {
-        case 0:
-        col.setHeaderValue("DUI");
-        break;
-        case 1:
-        col.setHeaderValue("Nombres");
-        break;
-        case 2:
-        col.setHeaderValue("Apellidos");
-        break;
-        case 3:
-        col.setHeaderValue("Cargo");
-        break;
-        case 4:
-        col.setHeaderValue("NIT");
-        break;
-        case 5:
-        col.setHeaderValue("NUP");
-        break;
-        case 6:
-        col.setHeaderValue("Numero ISSS");
-        break;
-        case 7:
-        col.setHeaderValue("fecha Contrato");
-        break;
+        TableColumnModel tColumnModel = new DefaultTableColumnModel();
+        for (int i = 0; i < 6; i++) {
+            TableColumn col = new TableColumn(i);
+            switch (i) {
+                case 0:
+                    col.setHeaderValue("DUI");
+                    break;
+                case 1:
+                    col.setHeaderValue("Nombres");
+                    break;
+                case 2:
+                    col.setHeaderValue("Apellidos");
+                    break;
+                case 3:
+                    col.setHeaderValue("Cargo");
+                    break;
+                case 4:
+                    col.setHeaderValue("NIT");
+                    break;
+                case 5:
+                    col.setHeaderValue("NUP");
+                    break;
+                case 6:
+                    col.setHeaderValue("Numero ISSS");
+                    break;
+            }
+            tColumnModel.addColumn(col);
+        }
+        tablaEmpleados.setColumnModel(tColumnModel);
     }
-    tColumnModel.addColumn(col);
-    }
-    tablaEmpleados.setColumnModel(tColumnModel);
- }
-    
+
     private void conectar() {
- try {
- conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Planilla", "postgres",
-"administrador");
+        try {
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sic", "semitas",
+                    "semita");
 
- } catch (SQLException ex) {
- Logger.getLogger(AdminEmpleadoForm.class.getName()).log(Level.SEVERE, null, ex);
- }
- }
-    
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminEmpleadoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
      private void consultaInicial() {
-    try {
-    String sentenciaSql = "SELECT * FROM Empleado ";
-    Statement statement = this.conexion.createStatement();
-    ResultSet resultado = statement.executeQuery(sentenciaSql);
-    while (resultado.next()) {
-    Empleado e = new Empleado();
-    e.setDui(resultado.getString("dui"));
-    e.setNombres(resultado.getString("nombre"));
-    e.setApellidos(resultado.getString("apellido"));
-    e.setCargo(resultado.getString("cargo"));
-    e.setNit(resultado.getString("nit"));
-    e.setNup(resultado.getString("nup"));
-    e.setNumIss(resultado.getString("numIsss"));
+        try {
+            String sentenciaSql = "SELECT * FROM Empleado";
+            Statement statement = this.conexion.createStatement();
+            ResultSet resultado = statement.executeQuery(sentenciaSql);
+            while (resultado.next()) {
+                Empleado e = new Empleado();
+                e.setDui(resultado.getString("dui"));
+                e.setNombres(resultado.getString("nombre"));
+                e.setApellidos(resultado.getString("apellido"));
+                e.setCargo(resultado.getString("cargo"));
+                e.setNit(resultado.getString("nit"));
+                e.setNup(resultado.getString("nup"));
+                e.setNumIss(resultado.getString("numIsss"));
 
-    this.empleadoTM.empleados.add(e);
+                this.empleadoTM.empleados.add(e);
+            }
+            tablaEmpleados.repaint();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al recuperar los productos de la base de datos");
+            ex.printStackTrace();
+        }
     }
-    tablaEmpleados.repaint();
-    } catch (SQLException ex) {
-    JOptionPane.showMessageDialog(this, "Error al recuperar los productos de la base de datos");
-    ex.printStackTrace();
-    }
-}
     
     
     
