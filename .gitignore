@@ -23,3 +23,7 @@
 hs_err_pid*
 /ProyectoContables2018/build/
 /ProyectoContables2018/nbproject/private/
+/ProyectoContables2018/dist/
+/SistemaContabilidad/nbproject/private/
+/SistemaContabilidad-Java-K/nbproject/private/
+*.lock
