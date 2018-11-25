@@ -3,79 +3,107 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelos;
+package Modelos;
 
 /**
  *
- * @author Gonzalo
+ * @author Dalton
  */
 public class Cuenta {
-    private int idcuenta;
-   private String nomcuenta;
-   private String grupocuenta;
-   private double saldoDeudor;
-   private double salfoAcreedor;
-   private double saldofinal;
+    
+    private int codigo;
+    private String nombreCuenta;
+    private String descripcion;
+    private char estadoFinanciero;
+    private String grupoCuenta;
+    private double saldoDeudor;
+    private double saldoAcreedor;
+    private double saldoFinal;
+    private Cuenta cuentaPadre;
 
-    public Cuenta(int idcuenta, String nomcuenta, String grupocuenta, double saldoDeudor, double salfoAcreedor, double saldofinal) {
-        this.idcuenta = idcuenta;
-        this.nomcuenta = nomcuenta;
-        this.grupocuenta = grupocuenta;
-        this.saldoDeudor = saldoDeudor;
-        this.salfoAcreedor = salfoAcreedor;
-        this.saldofinal = saldofinal;
+    public Cuenta(String nombreCuenta, String descripcion, Cuenta cuentaPadre,char estadoFinanciero, String grupoCuenta) {
+        this.nombreCuenta = nombreCuenta;
+        this.descripcion = descripcion;
+        this.cuentaPadre = cuentaPadre;
+        this.estadoFinanciero = estadoFinanciero;
+        this.grupoCuenta = grupoCuenta;
     }
 
-    public Cuenta() {
+    public int getCodigo() {
+        return codigo;
     }
 
-    public int getIdcuenta() {
-        return idcuenta;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
-    public String getNomcuenta() {
-        return nomcuenta;
+    public String getNombreCuenta() {
+        return nombreCuenta;
     }
 
-    public String getGrupocuenta() {
-        return grupocuenta;
+    public void setNombreCuenta(String nombreCuenta) {
+        this.nombreCuenta = nombreCuenta;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public char getEstadoFinanciero() {
+        return estadoFinanciero;
+    }
+
+    public void setEstadoFinanciero(char estadoFinanciero) {
+        this.estadoFinanciero = estadoFinanciero;
+    }
+
+    public String getGrupoCuenta() {
+        return grupoCuenta;
+    }
+
+    public void setGrupoCuenta(String grupoCuenta) {
+        this.grupoCuenta = grupoCuenta;
     }
 
     public double getSaldoDeudor() {
         return saldoDeudor;
     }
 
-    public double getSalfoAcreedor() {
-        return salfoAcreedor;
-    }
-
-    public double getSaldofinal() {
-        return saldofinal;
-    }
-
-    public void setIdcuenta(int idcuenta) {
-        this.idcuenta = idcuenta;
-    }
-
-    public void setNomcuenta(String nomcuenta) {
-        this.nomcuenta = nomcuenta;
-    }
-
-    public void setGrupocuenta(String grupocuenta) {
-        this.grupocuenta = grupocuenta;
-    }
-
     public void setSaldoDeudor(double saldoDeudor) {
         this.saldoDeudor = saldoDeudor;
     }
 
-    public void setSalfoAcreedor(double salfoAcreedor) {
-        this.salfoAcreedor = salfoAcreedor;
+    public double getSaldoAcreedor() {
+        return saldoAcreedor;
     }
 
-    public void setSaldofinal(double saldofinal) {
-        this.saldofinal = saldofinal;
+    public void setSaldoAcreedor(double saldoAcreedor) {
+        this.saldoAcreedor = saldoAcreedor;
     }
-   
-   
+
+    public double getSaldoFinal() {
+        return saldoFinal;
+    }
+
+    public void setSaldoFinal(double saldoFinal) {
+        this.saldoFinal = saldoFinal;
+    }
+
+    public Cuenta getCuentaPadre() {
+        return cuentaPadre;
+    }
+
+    public void setCuentaPadre(Cuenta cuentaPadre) {
+        this.cuentaPadre = cuentaPadre;
+    }
+    
+     @Override
+    public String toString() {
+        return "Cuenta: " + "Código: " + codigo + ", Cuenta: " + nombreCuenta + ", Descripcion: " + descripcion + ", Cuenta Mayor: " + cuentaPadre.nombreCuenta + ", Estado Financiero Perteneciente: " + estadoFinanciero + ", Grupo de la Cuenta: " + grupoCuenta + '}';
+    }
+    
 }

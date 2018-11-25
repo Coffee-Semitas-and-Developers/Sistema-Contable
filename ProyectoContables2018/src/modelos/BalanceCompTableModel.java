@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelos;
+package Modelos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,15 +33,15 @@ public class BalanceCompTableModel extends AbstractTableModel{
     public Object getValueAt(int columindex, int rowindex) {
         Cuenta cuenta = cuentas.get(rowindex);
         Object c = null;
-        
+      
         switch(columindex){
-            case 0:c = cuenta.getIdcuenta();
+            case 0:c = cuenta.getCodigo();
                    break;
-            case 1: c = cuenta.getNomcuenta() ;
+            case 1: c = cuenta.getNombreCuenta();
             break;
             case 2:c = cuenta.getSaldoDeudor() ;
             break;
-            case 3: c = cuenta.getSalfoAcreedor();
+            case 3: c = cuenta.getSaldoAcreedor();
         }
         return c;
     }  
