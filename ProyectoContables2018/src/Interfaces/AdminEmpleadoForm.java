@@ -57,7 +57,7 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
     
        private void background() {
         Fondo f = new Fondo();
-        f.setSize(this.getSize());
+        f.setSize(1333, 629);
         this.add(f);
     }    
     
@@ -71,7 +71,7 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEmpleados = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jbVolver = new javax.swing.JButton();
 
         editarMenuItem.setText("Editar datos");
         editarMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -82,7 +82,6 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         popupMenu.add(editarMenuItem);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -96,20 +95,21 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
 
         tablaEmpleados.setModel(empleadoTM);
         tablaEmpleados.setName("tablaEmpleados"); // NOI18N
-        tablaEmpleados.setOpaque(false);
         jScrollPane1.setViewportView(tablaEmpleados);
 
         jButton1.setText("Agregar Empleado");
+        jButton1.setOpaque(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Volver");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jbVolver.setText("Volver");
+        jbVolver.setOpaque(false);
+        jbVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jbVolverActionPerformed(evt);
             }
         });
 
@@ -119,31 +119,32 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton1)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(29, 29, 29)
-                            .addComponent(jLabel1)
-                            .addGap(961, 961, 961)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1261, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addComponent(jbVolver))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 40, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(3, 3, 3)
+                .addGap(4, 4, 4)
                 .addComponent(jButton1)
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jbVolver)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -166,9 +167,9 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "La conexión a la base de datos ha sido cerrada");
     }//GEN-LAST:event_formWindowClosing
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jbVolverActionPerformed
 
     private void editarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarMenuItemActionPerformed
         // TODO add your handling code here:
@@ -176,9 +177,6 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         EditarEmpleadoForm e = new EditarEmpleadoForm();
         e.setVisible(true);
         this.setVisible(false);
-               
-        
-        
     }//GEN-LAST:event_editarMenuItemActionPerformed
 
     private void inicializarColumnas() {
@@ -321,9 +319,9 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem editarMenuItem;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbVolver;
     private javax.swing.JPopupMenu popupMenu;
     private javax.swing.JTable tablaEmpleados;
     // End of variables declaration//GEN-END:variables

@@ -316,11 +316,7 @@ public class EditarEmpleadoForm extends javax.swing.JFrame {
         Fondo f =new Fondo();
         f.setSize(this.getSize());
         this.add(f);
-}
-    
-    
-    
-    
+}  
     
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
