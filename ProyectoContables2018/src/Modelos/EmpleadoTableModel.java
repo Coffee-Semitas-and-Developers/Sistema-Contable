@@ -16,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class EmpleadoTableModel extends AbstractTableModel{
 
- List<Empleado> empleados = new ArrayList<Empleado>();
+ public List<Empleado> empleados = new ArrayList<Empleado>();
  
  @Override
  public int getRowCount() {

@@ -179,8 +179,9 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
     private void editarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarMenuItemActionPerformed
         // TODO add your handling code here:
         int currentRow =  tablaEmpleados.getSelectedRow();
-        EditarEmpleadoForm e = new EditarEmpleadoForm();
-        e.setVisible(true);
+        Empleado e = empleadoTM.empleados.get(currentRow);
+        EditarEmpleadoForm f = new EditarEmpleadoForm(e);
+        f.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_editarMenuItemActionPerformed
 
@@ -240,6 +241,7 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
                 e.setNit(resultado.getString("nit"));
                 e.setNup(resultado.getString("nup"));
                 e.setNumIss(resultado.getString("numIsss"));
+                e.setTel(resultado.getString("tel"));
 
                 this.empleadoTM.add(e);
             }

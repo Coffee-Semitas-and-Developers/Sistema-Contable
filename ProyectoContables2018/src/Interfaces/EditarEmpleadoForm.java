@@ -35,7 +35,7 @@ public class EditarEmpleadoForm extends javax.swing.JFrame {
     Calendar fecha = new GregorianCalendar();
     Date d= new Date();
     java.sql.Date sqlDate;
-
+    Empleado em;
     
     /**
      * Creates new form AgregarEmpForm
@@ -44,6 +44,13 @@ public class EditarEmpleadoForm extends javax.swing.JFrame {
         initComponents();
         conectar();
         background();
+    }
+     public EditarEmpleadoForm(Empleado e) {
+        initComponents();
+        conectar();
+        background();
+        em=e;
+        llenarElementos();
     }
 
     /**
@@ -72,7 +79,6 @@ public class EditarEmpleadoForm extends javax.swing.JFrame {
         txtIs = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        btnVolver = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -246,14 +252,7 @@ public class EditarEmpleadoForm extends javax.swing.JFrame {
                 .addContainerGap(60, Short.MAX_VALUE))
         );
 
-        btnVolver.setText("Volver");
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
-            }
-        });
-
-        btnAgregar.setText("Agregar Empleado");
+        btnAgregar.setText("Actualizar Empleado");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -278,12 +277,9 @@ public class EditarEmpleadoForm extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnVolver)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAgregar)))
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(34, 34, 34))))
         );
         layout.setVerticalGroup(
@@ -299,12 +295,8 @@ public class EditarEmpleadoForm extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnAgregar)
-                        .addGap(29, 29, 29))
-                    .addComponent(btnVolver, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addComponent(btnAgregar)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pack();
@@ -326,13 +318,6 @@ public class EditarEmpleadoForm extends javax.swing.JFrame {
         this.add(f);
 }  
     
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        // TODO add your handling code here:
-        AdminEmpleadoForm a= new AdminEmpleadoForm();
-        a.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btnVolverActionPerformed
-
     
     
     
@@ -376,46 +361,46 @@ public class EditarEmpleadoForm extends javax.swing.JFrame {
         }    
     }//GEN-LAST:event_txtApelKeyTyped
 
-    
-    
-    
+       
     
     //INSERTAR EMPLEADO
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
           try {
-                Empleado e = new Empleado();
-                e.setDui(txtDui.getText());
-                e.setNombres(txtNombre.getText());
-                e.setApellidos(txtApel.getText());
-                e.setCargo(txtCargo.getText());
-                e.setNit(txtNit.getText());
-                e.setNup(txtNup.getText());
-                e.setNumIss(txtIs.getText());
-                e.setTel(txtNum.getText());
-                
-                //d=dateFormat.parse(dat);
+            Empleado e = new Empleado();
+            e.setDui(txtDui.getText());
+            e.setNombres(txtNombre.getText());
+            e.setApellidos(txtApel.getText());
+            e.setCargo(txtCargo.getText());
+            e.setNit(txtNit.getText());
+            e.setNup(txtNup.getText());
+            e.setNumIss(txtIs.getText());
+            e.setTel(txtNum.getText());
 
-                //Clase Empleado
-                String sentenciaSql = "INSERT INTO Empleado(dui, nombre, apellido,tel,cargo, fechacontrato,nit,nup,numisss)  VALUES "
-                + "(?,?,?,?,?,?,?,?,?)";
-                PreparedStatement preparedStatement = conexion.prepareStatement(sentenciaSql);
-                preparedStatement.setString(1, e.getDui());
-                preparedStatement.setString(2, e.getNombres());
-                preparedStatement.setString(3, e.getApellidos());
-                preparedStatement.setString(4, e.getTel());
-                preparedStatement.setString(5, e.getCargo());
-                preparedStatement.setDate(6, sqlDate);
-                preparedStatement.setString(7, e.getNit());
-                preparedStatement.setString(8, e.getNup());
-                preparedStatement.setString(9, e.getNumIss());
-                preparedStatement.execute();
-              
-     } catch (SQLException ex) {
-     JOptionPane.showMessageDialog(this, "Error al guardar el empleado");
-     ex.printStackTrace();
- }
-        JOptionPane.showMessageDialog(null,"Empleado registrado con exito","Registro Completo",JOptionPane.INFORMATION_MESSAGE);
-        vaciarElementos();        
+            //d=dateFormat.parse(dat);
+            //Clase Empleado
+            String sentenciaSql = "UPDATE Empleado SET dui=?, nombre=?, apellido=?, tel=?, cargo=?, nit=?, nup=?, numisss=? WHERE Empleado.dui= ? ";
+            PreparedStatement preparedStatement = conexion.prepareStatement(sentenciaSql);
+            preparedStatement.setString(1, e.getDui());
+            preparedStatement.setString(2, e.getNombres());
+            preparedStatement.setString(3, e.getApellidos());
+            preparedStatement.setString(4, e.getTel());
+            preparedStatement.setString(5, e.getCargo());
+            preparedStatement.setString(6, e.getNit());
+            preparedStatement.setString(7, e.getNup());
+            preparedStatement.setString(8, e.getNumIss());
+            preparedStatement.setString(9, em.getDui());
+            preparedStatement.execute();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el empleado");
+            ex.printStackTrace();
+        }
+        JOptionPane.showMessageDialog(null, "Empleado actualizado con exito", "Registro Completo", JOptionPane.INFORMATION_MESSAGE);
+        vaciarElementos();     
+        
+        AdminEmpleadoForm a= new AdminEmpleadoForm();
+        a.setVisible(true);
+        this.setVisible(false);
         
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -452,7 +437,16 @@ if(txtIs.getText().length()>17){
         JOptionPane.showMessageDialog(this, "La conexión a la base de datos ha sido cerrada");
     }//GEN-LAST:event_formWindowClosing
 
-    
+    private void llenarElementos(){
+        txtNombre.setText(em.getNombres());        
+        txtApel.setText(em.getApellidos());
+        txtDui.setText(em.getDui());
+        txtIs.setText(em.getNumIss());
+        txtNit.setText(em.getNit());
+        txtNup.setText(em.getNup());
+        txtNum.setText(em.getTel());
+        txtCargo.setText(em.getCargo());
+    }
     
     private void vaciarElementos(){
         txtNombre.setText(null);        
@@ -513,7 +507,6 @@ if(txtIs.getText().length()>17){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;

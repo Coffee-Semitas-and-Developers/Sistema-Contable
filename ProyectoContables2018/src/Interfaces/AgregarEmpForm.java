@@ -477,20 +477,20 @@ public class AgregarEmpForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIsActionPerformed
 
     private void txtNupKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNupKeyTyped
- if(txtNup.getText().length()>12){
+ if(txtNup.getText().length()>11){
             getToolkit().beep();    
             evt.consume();
             }  
      }//GEN-LAST:event_txtNupKeyTyped
 
     private void txtIsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIsKeyTyped
-if(txtIs.getText().length()>9){
+if(txtIs.getText().length()>8){
             getToolkit().beep();    
             evt.consume();
             }      }//GEN-LAST:event_txtIsKeyTyped
 
     private void txtNitKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNitKeyTyped
-if(txtIs.getText().length()>17){
+if(txtNit.getText().length()>16){
             getToolkit().beep();    
             evt.consume();
             }     }//GEN-LAST:event_txtNitKeyTyped
