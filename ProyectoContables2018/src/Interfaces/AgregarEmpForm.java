@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package planillas;
+package Interfaces;
+
+import Modelos.Empleado;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Calendar;
@@ -78,6 +80,7 @@ public class AgregarEmpForm extends javax.swing.JFrame {
         btnVolver = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
+        lbFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -279,7 +282,11 @@ public class AgregarEmpForm extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnVolver)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnVolver)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(296, 296, 296)
+                                    .addComponent(lbFondo)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAgregar)
                             .addGap(7, 7, 7)))
@@ -300,7 +307,7 @@ public class AgregarEmpForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lbDate))
@@ -310,7 +317,8 @@ public class AgregarEmpForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregar)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbFondo)
+                        .addGap(8, 8, 8)
                         .addComponent(btnVolver)))
                 .addGap(31, 31, 31))
         );
@@ -553,6 +561,7 @@ if(txtIs.getText().length()>17){
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbDate;
+    private javax.swing.JLabel lbFondo;
     private javax.swing.JTextField txtApel;
     private javax.swing.JTextField txtCargo;
     private javax.swing.JTextField txtDui;

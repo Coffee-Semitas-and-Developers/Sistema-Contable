@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package planillas;
+package Interfaces;
 
+import javax.swing.table.AbstractTableModel;
+import Modelos.EmpleadoTableModel;
+import Modelos.Empleado;
+import Modelos.TableMouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.*;
@@ -41,6 +45,7 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         consultaInicial();
         tablaEmpleados.setComponentPopupMenu(popupMenu);
         tablaEmpleados.addMouseListener(new TableMouseListener(tablaEmpleados));
+        background();
     }
 
     /**
@@ -50,14 +55,11 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     
-    
-    
-    
-    
-    
-    
-    
-    
+       private void background() {
+        Fondo f = new Fondo();
+        f.setSize(this.getSize());
+        this.add(f);
+    }    
     
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -80,6 +82,7 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         popupMenu.add(editarMenuItem);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -93,6 +96,7 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
 
         tablaEmpleados.setModel(empleadoTM);
         tablaEmpleados.setName("tablaEmpleados"); // NOI18N
+        tablaEmpleados.setOpaque(false);
         jScrollPane1.setViewportView(tablaEmpleados);
 
         jButton1.setText("Agregar Empleado");
@@ -114,27 +118,32 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1)
-                        .addComponent(jButton2)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton1)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(29, 29, 29)
+                            .addComponent(jLabel1)
+                            .addGap(961, 961, 961)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1261, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(3, 3, 3)
                 .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addGap(31, 31, 31))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -229,7 +238,7 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
                 e.setNup(resultado.getString("nup"));
                 e.setNumIss(resultado.getString("numIsss"));
 
-                this.empleadoTM.empleados.add(e);
+                this.empleadoTM.add(e);
             }
             tablaEmpleados.repaint();
         } catch (SQLException ex) {
