@@ -13,13 +13,23 @@ import java.util.ArrayList;
  * @author jorge
  */
 public class LineaPlanilla {
+    private Boolean selected;
+
+    public Boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
+    }
     private Empleado emp;
     private double salarioReal;
     private List<Extra> extras= new ArrayList <Extra>();
 
     public LineaPlanilla() {
     }
-
+    
+   
     public LineaPlanilla(Empleado emp) {
         this.emp = emp;
     }
