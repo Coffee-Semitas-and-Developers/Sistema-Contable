@@ -5,12 +5,19 @@
  */
 package Usuarios;
 
+import Conexion.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Daniel Mejia
  */
 public class Login extends javax.swing.JFrame {
-
+    Connection con = Conexion.getConexion();
     /**
      * Creates new form Login
      */
@@ -49,8 +56,18 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setText("Contraseña:");
 
         jButton1.setText("Iniciar Sesión");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Daniel Mejia\\Desktop\\Sistema-Contable2\\Archivos de diseño\\imagenes_para_logo\\login.png")); // NOI18N
 
@@ -114,6 +131,34 @@ public class Login extends javax.swing.JFrame {
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        char contra[] = txtContraseña.getPassword();
+        String usuario = txtUsuario.getText();
+        String contra1 = null,usuario1 = null;
+        try{
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM login where username=? AND password=?");
+            stmt.setString(1, usuario);
+            stmt.setString(2, new String(contra));
+            stmt.executeQuery();
+            ResultSet res = stmt.executeQuery();
+            while (res.next()) {
+                usuario1 = res.getString("idusuario");
+                contra1 = res.getString("contraseña");
+            }
+            if (usuario1.equals(usuario) && contra1.equals(new String(contra))) {
+            JOptionPane.showMessageDialog(this,"Bienvenido");
+            }
+            else{
+            JOptionPane.showMessageDialog(this,"Usuario o Contraseña incorrectos","Error",JOptionPane.ERROR_MESSAGE);
+            }
+        }catch(SQLException ex){
+            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

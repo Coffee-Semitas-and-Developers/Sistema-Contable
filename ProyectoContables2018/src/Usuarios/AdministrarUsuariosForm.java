@@ -28,7 +28,7 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
      * Creates new form AdministrarUsuariosForm
      */
     Connection con = Conexion.getConexion();
-    
+    String idActualizar;
     public AdministrarUsuariosForm() {
         initComponents();
         try{
@@ -84,6 +84,7 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         comboBoxPermisos = new javax.swing.JComboBox<>();
+        btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +101,11 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
                 "Usuario", "Contraseña", "Permisos"
             }
         ));
+        tablaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaUsuarios);
         if (tablaUsuarios.getColumnModel().getColumnCount() > 0) {
             tablaUsuarios.getColumnModel().getColumn(0).setHeaderValue("Usuario");
@@ -108,6 +114,7 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         }
 
         btnEditar.setText("Editar");
+        btnEditar.setEnabled(false);
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -169,6 +176,14 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         comboBoxPermisos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboBoxPermisos.setEnabled(false);
 
+        btnActualizar.setText("Actualizar");
+        btnActualizar.setEnabled(false);
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -208,13 +223,17 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboBoxPermisos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(comboBoxPermisos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(160, 160, 160))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGuardar)
-                        .addGap(68, 68, 68)
-                        .addComponent(btnCancelar)))
-                .addGap(79, 79, 79)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCancelar)
+                        .addGap(32, 32, 32)))
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -255,7 +274,8 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGuardar)
-                            .addComponent(btnCancelar))))
+                            .addComponent(btnCancelar)
+                            .addComponent(btnActualizar))))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
 
@@ -329,25 +349,28 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         comboBoxPermisos.setEnabled(false);
         txtContraseña.setText("");
         txtUsuario.setText("");
-        btnEditar.setEnabled(true);
         btnEliminar.setEnabled(true);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int row = tablaUsuarios.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel)tablaUsuarios.getModel();
-        String seleccion = model.getValueAt(row,0).toString();
-        if(row>=0){
-            try{
-                String query = "DELETE FROM usuario WHERE idusuario="+seleccion;
-                PreparedStatement pstm = con.prepareStatement(query);
-                pstm.executeUpdate();
-                pstm.close();
-                llenarTabla();
-                JOptionPane.showMessageDialog(this,"Usuario Eliminado Correctamente");
-            }catch(SQLException ex){
-                JOptionPane.showMessageDialog(this,"Ocurrio un Error al conectar a la base de usuarios");
+        int x = JOptionPane.showConfirmDialog(this, "Se eliminara el Usuario Seleccionado","Confirm Close",JOptionPane.YES_NO_OPTION);
+        if(x==JOptionPane.YES_OPTION){
+            int row = tablaUsuarios.getSelectedRow();
+            DefaultTableModel model = (DefaultTableModel)tablaUsuarios.getModel();
+            String seleccion = model.getValueAt(row,0).toString();
+            if(row>=0){
+                try{
+                    String query = "DELETE FROM usuario WHERE idusuario="+seleccion;
+                    PreparedStatement pstm = con.prepareStatement(query);
+                    pstm.executeUpdate();
+                    pstm.close();
+                    llenarTabla();
+                    JOptionPane.showMessageDialog(this,"Usuario Eliminado Correctamente");
+                }catch(SQLException ex){
+                    JOptionPane.showMessageDialog(this,"Ocurrio un Error al conectar a la base de usuarios");
+                }
             }
+            btnEditar.setEnabled(false);
         }
         
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -357,7 +380,7 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         btnNuevo.setEnabled(false);
         txtContraseña.setEnabled(true);
         txtUsuario.setEnabled(true);
-        btnGuardar.setEnabled(true);
+        btnActualizar.setEnabled(true);
         btnCancelar.setEnabled(true);
         comboBoxPermisos.setEnabled(true);
         comboBoxPermisos.setModel(new DefaultComboBoxModel<>(new String[]{"Usuario","Administrador"} ));
@@ -366,8 +389,45 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel)tablaUsuarios.getModel();
         txtUsuario.setText(model.getValueAt(row,1).toString());
         txtContraseña.setText(model.getValueAt(row,2).toString());
+        idActualizar = model.getValueAt(row,0).toString();
         
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        String usuario,contra,rol;
+        usuario = txtUsuario.getText();
+        contra = txtContraseña.getText();
+        rol = (String)comboBoxPermisos.getSelectedItem();
+        try{
+            
+            String query = " UPDATE usuario SET nombreusuario ='"+usuario+"', contrasena='"+contra+"', rol='"+rol+"' WHERE idusuario="+idActualizar;
+            PreparedStatement pstm = con.prepareStatement(query);
+           pstm.executeUpdate();
+           pstm.close();
+           JOptionPane.showMessageDialog(this,"Usuario Actualizado Correctamente");
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(this, "Error al conectar a la base de Datos");
+        }
+        try{
+            llenarTabla();
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(this, "Error al conectar a la base de Datos");
+        }
+        
+        btnNuevo.setEnabled(true);
+        txtContraseña.setEnabled(false);
+        txtUsuario.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        comboBoxPermisos.setEnabled(false);
+        txtContraseña.setText("");
+        txtUsuario.setText("");
+        btnEliminar.setEnabled(true);
+        btnActualizar.setEnabled(false);
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void tablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosMouseClicked
+        btnEditar.setEnabled(true);
+    }//GEN-LAST:event_tablaUsuariosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -405,6 +465,7 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
