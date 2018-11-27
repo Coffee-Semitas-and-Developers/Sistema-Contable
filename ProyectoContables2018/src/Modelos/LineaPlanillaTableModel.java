@@ -50,9 +50,9 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
             break;
             case 5: valor = l.getEmp().calcularHorasExtras();
             break;
-             case 6: valor = l.calcISSS();
+             case 6: valor = l.calcISSS(0);
             break;
-            case 7: valor = l.calcAFP();
+            case 7: valor = l.calcAFP(0);
             break;
             case 8: valor = l.calcRenta();
             break;
