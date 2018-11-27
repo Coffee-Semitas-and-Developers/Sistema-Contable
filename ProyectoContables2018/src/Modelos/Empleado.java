@@ -6,7 +6,10 @@
 package Modelos;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -16,6 +19,7 @@ public class Empleado {
 
     private String dui, nombres, apellidos, cargo, tel, nit, nup, numIss;
     private Date fechaContrato, fechaDespido;
+    public List<TarjetaDeTiempo> t = new ArrayList<TarjetaDeTiempo>();
 
     public Empleado(String dui, String nombres, String apellidos, String cargo, String nit, String nup, String numIss, Date fechaContrato) {
         this.dui = dui;
@@ -111,5 +115,50 @@ public class Empleado {
     public void setNumIss(String numIss) {
         this.numIss = numIss;
     }
-
+    
+    public int calcularHoras(){
+        Iterator<TarjetaDeTiempo> i=t.iterator();
+        int horas=0;
+        
+        while(i.hasNext()){
+            TarjetaDeTiempo tt=i.next();
+            horas+=tt.calcularHoras();
+        }
+        return horas;       
+    }
+    
+    public int calcularHorasExtras(){
+        Iterator<TarjetaDeTiempo> i=t.iterator();
+        int horas=0;
+        
+        while(i.hasNext()){
+            TarjetaDeTiempo tt=i.next();
+            horas+=tt.calcularHorasExtras();
+        }
+        return horas;       
+    }
+    
+    public double calcularSalarioHoras(){
+        Iterator<TarjetaDeTiempo> i=t.iterator();
+        double sal=0;
+        
+        while(i.hasNext()){
+            TarjetaDeTiempo tt=i.next();
+            sal+=tt.SalHoras();
+        }
+        return sal;  
+    }
+      public double calcularSalarioHorasExtras(){
+        Iterator<TarjetaDeTiempo> i=t.iterator();
+        double sal=0;
+        
+        while(i.hasNext()){
+            TarjetaDeTiempo tt=i.next();
+            sal+=tt.SalHorasExtras();
+        }
+        return sal;  
+    }
+       public double calcularSalario(){
+        return calcularSalarioHorasExtras()+calcularSalarioHoras();  
+    }
 }
