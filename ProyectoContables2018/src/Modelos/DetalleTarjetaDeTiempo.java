@@ -12,35 +12,29 @@ import java.util.Date;
  * @author jorge
  */
 public class DetalleTarjetaDeTiempo {
-     private int diaDeTrabajo,idTrabajo,horasTrabajadas,horasExtras;
-    private Date fehcaTarjeta;
+    private int horasTrabajadas,horasExtras;
+    private String diaDeTrabajo;
+    private Date fechaTarjeta;
+    private Empleado empleado;
 
        public DetalleTarjetaDeTiempo() {        
     }
     
     
-    public DetalleTarjetaDeTiempo(int diaDeTrabajo, int idTrabajo, int horasTrabajadas, int horasExtras, Date fehcaTarjeta) {
+    public DetalleTarjetaDeTiempo(int horasTrabajadas, int horasExtras, String diaDeTrabajo, Date fechaTarjeta, Empleado empleado) {
         this.diaDeTrabajo = diaDeTrabajo;
-        this.idTrabajo = idTrabajo;
         this.horasTrabajadas = horasTrabajadas;
         this.horasExtras = horasExtras;
-        this.fehcaTarjeta = fehcaTarjeta;
+        this.fechaTarjeta = fechaTarjeta;
+        this.empleado = empleado;
     }   
 
-    public int getDiaDeTrabajo() {
+    public String getDiaDeTrabajo() {
         return diaDeTrabajo;
     }
 
-    public void setDiaDeTrabajo(int diaDeTrabajo) {
+    public void setDiaDeTrabajo(String diaDeTrabajo) {
         this.diaDeTrabajo = diaDeTrabajo;
-    }
-
-    public int getIdTrabajo() {
-        return idTrabajo;
-    }
-
-    public void setIdTrabajo(int idTrabajo) {
-        this.idTrabajo = idTrabajo;
     }
 
     public int getHorasTrabajadas() {
@@ -59,11 +53,20 @@ public class DetalleTarjetaDeTiempo {
         this.horasExtras = horasExtras;
     }
 
-    public Date getFehcaTarjeta() {
-        return fehcaTarjeta;
+    public Date getFechaTarjeta() {
+        return fechaTarjeta;
     }
 
-    public void setFehcaTarjeta(Date fehcaTarjeta) {
-        this.fehcaTarjeta = fehcaTarjeta;
+    public void setFechaTarjeta(Date fechaTarjeta) {
+        this.fechaTarjeta = fechaTarjeta;
     }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+    
 }

@@ -161,4 +161,7 @@ public class Empleado {
        public double calcularSalario(){
         return calcularSalarioHorasExtras()+calcularSalarioHoras();  
     }
+       public String getNombreCompleto(){
+           return this.nombres+" "+this.apellidos;
+       }
 }
