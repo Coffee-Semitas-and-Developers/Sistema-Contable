@@ -51,12 +51,11 @@ public class PlanillaForm extends javax.swing.JFrame {
         consultaInicial();
     }
 
-    private void background() {
-        Fondo f = new Fondo();
-        f.setSize(1333, 629);
+       private void background() {
+        Fondo f =new Fondo();
+        f.setSize(this.getSize());
         this.add(f);
-    }       
-    
+}  
     public void setFecha(){
 
         //Instanciamos el objeto Calendar
