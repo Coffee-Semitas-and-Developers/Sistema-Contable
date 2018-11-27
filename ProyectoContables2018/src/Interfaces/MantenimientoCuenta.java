@@ -14,7 +14,7 @@ import javax.swing.table.TableColumnModel;
 
 public class MantenimientoCuenta extends javax.swing.JFrame {
 
-    private Conexion conexion = new Conexion();
+    private final Conexion conexion = new Conexion();
     public CuentaTableModel cuentaTabla = new CuentaTableModel();
     private int cantidadCaracteres = 0;
     private Cuenta cuentaActual = null;
@@ -86,7 +86,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));
                 cuenta.setSaldoDeudor(resultado.getDouble("saldodeudor"));
                 cuenta.setSaldoAcreedor(resultado.getDouble("saldoacreedor"));
-                cuenta.setDescripcion(resultado.getString("descricion"));
+                cuenta.setDescripcion(resultado.getString("descripcion"));
                 cuenta.setNombreMayor(getNombreCuentaPadre(resultado.getInt("cue_codigocuenta")));
                 cuenta.setCodigoMayor(resultado.getInt("cue_codigocuenta"));
                 //System.out.println(resultado.getInt("cue_codigocuenta"));
@@ -97,7 +97,6 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al recuperar los datos");
-            ex.printStackTrace();
         }
     }
 
@@ -138,7 +137,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));
                 cuenta.setSaldoDeudor(resultado.getDouble("saldodeudor"));
                 cuenta.setSaldoAcreedor(resultado.getDouble("saldoacreedor"));
-                cuenta.setDescripcion(resultado.getString("descricion"));
+                cuenta.setDescripcion(resultado.getString("descripcion"));
                 cuenta.setNombreMayor(getNombreCuentaPadre(resultado.getInt("cue_codigocuenta")));
                 cuenta.setCodigoMayor(resultado.getInt("cue_codigocuenta"));
                 cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0));
@@ -599,11 +598,11 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                     c.setSaldoDeudor(Double.parseDouble(txtSaldoDeudor.getText()));
                     c.setSaldoAcreedor(Double.parseDouble(txtSaldoAcreedor.getText()));
 
-                    String sentenciaSql = null;
-                    PreparedStatement statement = null;
+                    String sentenciaSql;
+                    PreparedStatement statement;
                     switch (c.getCodigoMayor()) {
                         case 0:
-                            sentenciaSql = "INSERT INTO cuenta(codigocuenta,nombrecuenta,descricion,grupocuenta,estadofinanciero) VALUES" + "(?,?,?,?,?)";
+                            sentenciaSql = "INSERT INTO cuenta(codigocuenta,nombrecuenta,descripcion,grupocuenta,estadofinanciero) VALUES" + "(?,?,?,?,?)";
 
                             statement = this.conexion.prepareStatement(sentenciaSql);
                             statement.setInt(1, c.getCodigo());
@@ -613,7 +612,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                             statement.setObject(5, c.getEstadoFinanciero(), 1);
                             break;
                         default:
-                            sentenciaSql = "INSERT INTO cuenta(codigocuenta,cue_codigocuenta,nombrecuenta,descricion,grupocuenta,estadofinanciero) VALUES" + "(?,?,?,?,?,?)";
+                            sentenciaSql = "INSERT INTO cuenta(codigocuenta,cue_codigocuenta,nombrecuenta,descripcion,grupocuenta,estadofinanciero) VALUES" + "(?,?,?,?,?,?)";
 
                             statement = this.conexion.prepareStatement(sentenciaSql);
                             statement.setInt(1, c.getCodigo());
@@ -636,7 +635,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 PreparedStatement preparedStatement = null;
                 switch (m.getCodigo()) {
                     case 0:
-                        sentenciaSql = "UPDATE cuenta SET nombrecuenta= ? , descricion = ? , grupocuenta = ?, estadofinanciero= ? WHERE codigocuenta = ?";
+                        sentenciaSql = "UPDATE cuenta SET nombrecuenta= ? , descripcion = ? , grupocuenta = ?, estadofinanciero= ? WHERE codigocuenta = ?";
                         preparedStatement = this.conexion.prepareStatement(sentenciaSql);
                         preparedStatement.setString(1, txtNombre.getText());
                         preparedStatement.setString(2, txtADescripcion.getText());
@@ -645,7 +644,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                         preparedStatement.setInt(5, Integer.parseInt(txtCodigo.getText()));
                         break;
                     default:
-                        sentenciaSql = "UPDATE cuenta SET cue_codigocuenta=?, nombrecuenta= ? , descricion = ? , grupocuenta = ?, estadofinanciero= ? WHERE codigocuenta = ?";
+                        sentenciaSql = "UPDATE cuenta SET cue_codigocuenta=?, nombrecuenta= ? , descripcion = ? , grupocuenta = ?, estadofinanciero= ? WHERE codigocuenta = ?";
                         preparedStatement = this.conexion.prepareStatement(sentenciaSql);
                         preparedStatement.setInt(1, m.getCodigo());
                         preparedStatement.setString(2, txtNombre.getText());
@@ -673,7 +672,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 System.exit(0);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error al cerrar la conexión con la base de datos");
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al cerrar la conexión con la base de datos "+ex);
         }
     }
 
@@ -721,18 +720,14 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
             } else {
                 String sql = "SELECT nombrecuenta FROM cuenta where codigocuenta=?";
                 PreparedStatement statement = this.conexion.prepareStatement(sql);
-
                 statement.setInt(1, codigo);
-
                 ResultSet resultado = statement.executeQuery();
-
                 while (resultado.next()) {
                     nombre = resultado.getString(1);
                 }
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al recuperar los datos");
-            ex.printStackTrace();
         }
         return nombre;
     }
@@ -756,7 +751,6 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 break;
             }
         }
-        //Integer.parseInt(txtCodigo.getText())
         return existe;
     }
 

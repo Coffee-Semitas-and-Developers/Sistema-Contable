@@ -28,14 +28,14 @@ public class Conexion {
 
     }
 
-    public static Connection getConexion() {
+    public Connection getConexion() {
         if (con == null) {
             conectar();
         }
         return con;
     }
 
-    public static void close() {
+    public void close() {
         try {
             con.close();
         } catch (SQLException ex) {
@@ -44,7 +44,7 @@ public class Conexion {
 
     }
 
-    public static Statement createStatement() {
+    public Statement createStatement() {
         Statement statement = null;
         try {
             statement = con.createStatement();
@@ -54,7 +54,7 @@ public class Conexion {
         return statement;
     }
 
-    public static PreparedStatement prepareStatement(String sql) {
+    public PreparedStatement prepareStatement(String sql) {
         PreparedStatement statement = null;
         try {
             statement = con.prepareStatement(sql);

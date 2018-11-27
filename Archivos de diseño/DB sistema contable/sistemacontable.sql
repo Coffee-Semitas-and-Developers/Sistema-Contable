@@ -146,7 +146,7 @@ create table CUENTA (
    CODIGOCUENTA         INT4                 not null,
    CUE_CODIGOCUENTA     INT4                 null,
    NOMBRECUENTA         VARCHAR(30)          not null,
-   DESCRICION           VARCHAR(100)         null,
+   DESCRIPCION           VARCHAR(100)         null,
    GRUPOCUENTA          VARCHAR(20)          not null,
    ESTADOFINANCIERO     VARCHAR(1)           not null,
    SALDODEUDOR          DECIMAL(10,2)        null,
@@ -503,6 +503,8 @@ create table TARJETADETIEMPO (
    FECHATARJETA         DATE                 not null,
    IDORDEN              INT4                 not null,
    DUI                  VARCHAR(10)          not null,
+   SALARIOHORANORMAL    DECIMAL(10,2)        not null,
+   SALARIOHORAEXTRA     DECIMAL(10,2)        not null,
    TOTALHORASTRABAJADAS INT4                 null,
    TOTALHORASEXTRAS     INT4                 null,
    constraint PK_TARJETADETIEMPO primary key (IDTARJETA, FECHATARJETA)
