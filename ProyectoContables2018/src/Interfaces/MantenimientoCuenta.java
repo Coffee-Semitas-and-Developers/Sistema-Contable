@@ -146,7 +146,6 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
             tableCuenta.repaint();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al recuperar las peliculas de la base de datos.");
-            ex.printStackTrace();
         }
     }
 
@@ -574,7 +573,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                     }
                 }
             }
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error en la eliminación. " + ex.getMessage());
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -631,8 +630,8 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 }
 
             } else {
-                String sentenciaSql = null;
-                PreparedStatement preparedStatement = null;
+                String sentenciaSql;
+                PreparedStatement preparedStatement;
                 switch (m.getCodigo()) {
                     case 0:
                         sentenciaSql = "UPDATE cuenta SET nombrecuenta= ? , descripcion = ? , grupocuenta = ?, estadofinanciero= ? WHERE codigocuenta = ?";
@@ -833,10 +832,8 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MantenimientoCuenta().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MantenimientoCuenta().setVisible(true);
         });
     }
 
