@@ -21,7 +21,6 @@ public class Kardex {
     private double costoUnitarioTotales;
     private double montoTotales;
     private List<detalleKardex> detalle = new ArrayList<detalleKardex>();
-    private Producto prod = new Producto();
     private materiaPrima mp = new materiaPrima();
 
     public Kardex() {
