@@ -28,8 +28,15 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         consultaInicial();
         txtSaldoDeudor.setText("0.00");
         txtSaldoAcreedor.setText("0.00");
+        background();
     }
 
+    private void background() {
+        Fondo f = new Fondo();
+        f.setSize(this.getSize());
+        this.add(f);
+    }
+    
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
 
