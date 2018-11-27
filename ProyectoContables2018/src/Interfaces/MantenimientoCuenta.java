@@ -2,18 +2,15 @@ package Interfaces;
 
 import Conexion.Conexion;
 import Modelos.*;
-import java.io.Reader;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.DefaultComboBoxModel;
 
 public class MantenimientoCuenta extends javax.swing.JFrame {
 
