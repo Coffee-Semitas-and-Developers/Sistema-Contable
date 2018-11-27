@@ -10,7 +10,7 @@ package Modelos;
  * @author Dalton
  */
 public class Cuenta {
-    
+
     private int codigo;
     private String nombreCuenta;
     private String descripcion;
@@ -19,14 +19,38 @@ public class Cuenta {
     private double saldoDeudor;
     private double saldoAcreedor;
     private double saldoFinal;
-    private Cuenta cuentaPadre;
+    private int codigoMayor;
+    private String nombreMayor;
 
-    public Cuenta(String nombreCuenta, String descripcion, Cuenta cuentaPadre,char estadoFinanciero, String grupoCuenta) {
+    public Cuenta(String nombreCuenta, String descripcion, char estadoFinanciero, String grupoCuenta) {
         this.nombreCuenta = nombreCuenta;
         this.descripcion = descripcion;
-        this.cuentaPadre = cuentaPadre;
         this.estadoFinanciero = estadoFinanciero;
         this.grupoCuenta = grupoCuenta;
+    }
+
+    public Cuenta() {
+    }
+
+    public Cuenta(int codigo, String nombreCuenta) {
+        this.codigo = codigo;
+        this.nombreCuenta = nombreCuenta;
+    }
+
+    public int getCodigoMayor() {
+        return codigoMayor;
+    }
+
+    public void setCodigoMayor(int codigoMayor) {
+        this.codigoMayor = codigoMayor;
+    }
+
+    public String getNombreMayor() {
+        return nombreMayor;
+    }
+
+    public void setNombreMayor(String nombreMayor) {
+        this.nombreMayor = nombreMayor;
     }
 
     public int getCodigo() {
@@ -93,17 +117,15 @@ public class Cuenta {
         this.saldoFinal = saldoFinal;
     }
 
-    public Cuenta getCuentaPadre() {
-        return cuentaPadre;
-    }
-
-    public void setCuentaPadre(Cuenta cuentaPadre) {
-        this.cuentaPadre = cuentaPadre;
-    }
-    
-     @Override
+    @Override
     public String toString() {
-        return "Cuenta: " + "Código: " + codigo + ", Cuenta: " + nombreCuenta + ", Descripcion: " + descripcion + ", Cuenta Mayor: " + cuentaPadre.nombreCuenta + ", Estado Financiero Perteneciente: " + estadoFinanciero + ", Grupo de la Cuenta: " + grupoCuenta + '}';
+        String s=null;
+        if(codigo==0){
+            s= nombreCuenta;
+        }else {
+            s=codigo + " " + nombreCuenta;
+        }
+        return s;
     }
     
 }
