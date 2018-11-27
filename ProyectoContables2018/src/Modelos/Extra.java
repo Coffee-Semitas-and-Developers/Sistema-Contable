@@ -10,10 +10,15 @@ package Modelos;
  * @author jorge
  */
 public class Extra {
-   // '0'-Descuento, '1'-Bonificación
    private boolean estado;
    private String descrip;
    private double porcentaje,monto;
+
+    public Extra(boolean estado, String descrip, double porcentaje) {
+        this.estado = estado;
+        this.descrip = descrip;
+        this.porcentaje = porcentaje;
+    }
 
     //Escribir nulll en porcentaje para establecer un monto definido
     public Extra(boolean estado, String descrip, double porcentaje, double monto) {
@@ -22,11 +27,6 @@ public class Extra {
         this.porcentaje = porcentaje;
         this.monto = monto;
     }   
-        public Extra(boolean estado, String descrip, double monto) {
-        this.estado = estado;
-        this.descrip = descrip;
-        this.monto = monto;
-    }  
    
     public boolean isEstado() {
         return estado;
@@ -62,5 +62,12 @@ public class Extra {
    
     public void calcularMonto(double salario){
         this.monto= salario* this.porcentaje;
-    }  
+    }
+    
+   
+   
+   
+   
+   
+   
 }
