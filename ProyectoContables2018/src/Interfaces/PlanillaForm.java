@@ -41,9 +41,6 @@ public class PlanillaForm extends javax.swing.JFrame {
     java.sql.Date sqlDate;
     LineaPlanillaTableModel lineaTM= new LineaPlanillaTableModel();
     
-    
-    
- 
     public PlanillaForm() {
         initComponents();
         background();
@@ -94,7 +91,7 @@ public class PlanillaForm extends javax.swing.JFrame {
 
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
-        for (int i = 0; i < 14; i++) {
+        for (int i = 0; i < 12; i++) {
             TableColumn col = new TableColumn(i);
             switch (i) {
                 case 0:
@@ -116,27 +113,21 @@ public class PlanillaForm extends javax.swing.JFrame {
                     col.setHeaderValue("Horas Extra");
                     break;
                 case 6:
-                    col.setHeaderValue("Salario x hora");
-                    break;
-                case 7:
-                    col.setHeaderValue("Salario x horas extra");
-                    break;
-                case 8:
                     col.setHeaderValue("ISSS");
                     break;
-                case 9:
+                case 7:
                     col.setHeaderValue("AFP");
                     break;
-                case 10:
+                case 8:
                     col.setHeaderValue("Renta");
                     break;
-                case 11:
+                case 9:
                     col.setHeaderValue("Bonificaciones");
                     break;
-                case 12:
+                case 10:
                     col.setHeaderValue("Otros descuentos");
                     break;
-                case 13:
+                case 11:
                     col.setHeaderValue("Salario");
                     break;
             }
@@ -260,10 +251,6 @@ public class PlanillaForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -277,7 +264,11 @@ public class PlanillaForm extends javax.swing.JFrame {
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1659, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jbProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1659, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -315,42 +306,7 @@ public class PlanillaForm extends javax.swing.JFrame {
         jcOcasion.addItem("Salarios");
         jcOcasion.addItem("Vacaciones");
         jcOcasion.addItem("Aguinaldo");
-    }
-            
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    }  
     
     
     /**
