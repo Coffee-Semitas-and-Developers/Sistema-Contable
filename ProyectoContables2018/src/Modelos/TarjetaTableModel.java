@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author AxlHrndz
  */
-public class detalleTarjetaTableModel {
+public class TarjetaTableModel {
     public List<DetalleTarjetaDeTiempo> detalle = new ArrayList();
     
     public int getRowCount() {
