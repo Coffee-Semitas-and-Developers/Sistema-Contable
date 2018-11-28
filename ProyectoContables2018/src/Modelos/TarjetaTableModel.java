@@ -20,7 +20,7 @@ public class TarjetaTableModel {
     }
 
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -32,9 +32,12 @@ public class TarjetaTableModel {
                 valor = det.getDiaDeTrabajo();
                 break;
             case 1:
-                valor = det.getHorasTrabajadas();
+                valor = det.getEmpleado().getNombreCompleto();
                 break;
             case 2:
+                valor = det.getHorasTrabajadas();
+                break;
+            case 3:
                 valor = det.getHorasExtras();
                 break;
         }
