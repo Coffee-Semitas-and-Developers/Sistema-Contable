@@ -95,7 +95,7 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
             break;
             case 7: valor = l.calcAFP(1);
             break;
-            case 8: valor = l.calcRenta();
+            case 8: valor = 0;
             break;
             case 9: valor = l.totalBonificacion();
             break;
