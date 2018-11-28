@@ -12,10 +12,13 @@ import java.util.Date;
  * @author jorge
  */
 public class DetalleTarjetaDeTiempo {
-     private int diaDeTrabajo,idTrabajo,horasTrabajadas,horasExtras;
+     private int diaDeTrabajo,idTrabajo,horasTrabajadas,horasExtras=0;
     private Date fehcaTarjeta;
 
        public DetalleTarjetaDeTiempo() {        
+    }
+    public DetalleTarjetaDeTiempo(int horasTrabajadas) {    
+        this.horasTrabajadas = horasTrabajadas;
     }
     
     

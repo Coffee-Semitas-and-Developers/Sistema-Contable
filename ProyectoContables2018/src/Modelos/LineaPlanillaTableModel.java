@@ -12,12 +12,24 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import static java.time.Clock.system;
 
 /**
  *
  * @author jorge
  */
 public class LineaPlanillaTableModel extends AbstractTableModel{
+    
+    private int tipo=0;
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+    
     public List<LineaPlanilla> ln= new ArrayList<LineaPlanilla>();
 
     
@@ -36,7 +48,9 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
  LineaPlanilla l = ln.get(rowIndex);
     Object valor = null;
- 
+    
+      
+    if(getTipo()==0){
         switch(columnIndex){
             case 0: valor= l.isSelected();
             break;
@@ -60,9 +74,39 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
             break;
             case 10: valor = l.totalDescuento();
             break;
+            case 11: valor =  l.calcSalarioReal()- l.calcAFP(0)- l.calcISSS(0)-l.calcRenta();System.out.println( l.calcSalarioReal()- l.calcAFP(0)- l.calcISSS(0)-l.calcRenta());
+            break;
+        }
+    }if(tipo==1){
+        switch(columnIndex){
+            case 0: valor= l.isSelected();
+            break;
+            case 1: valor = l.getEmp().getNombres();
+            break;
+            case 2: valor = l.getEmp().getApellidos();
+            break;
+            case 3: valor = l.getEmp().getCargo();
+            break;
+            case 4: valor = l.getEmp().calcularHoras();
+            break;
+            case 5: valor = l.getEmp().calcularHorasExtras();
+            break;
+             case 6: valor = l.calcISSS(1);
+            break;
+            case 7: valor = l.calcAFP(1);
+            break;
+            case 8: valor = l.calcRenta();
+            break;
+            case 9: valor = l.totalBonificacion();
+            break;
+            case 10: valor = l.totalDescuento();
+            break;
             case 11: valor = l.calcSalarioReal();
             break;
         }
+    }
+    
+        
     return valor;
     }
     
@@ -89,4 +133,8 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
             fireTableCellUpdated(rowIndex, columnIndex);          
         }
     
+    public void cambiarTipo(int t){
+        setTipo(t);
+       	fireTableDataChanged();
+    }
 }

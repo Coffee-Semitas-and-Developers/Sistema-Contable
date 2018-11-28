@@ -70,8 +70,10 @@ public class LineaPlanilla {
 
         while (i.hasNext()) {
             Extra e = i.next();
-            if (!(e.isEstado()) || !(e.getDescrip() == "AFP") || !(e.getDescrip() == "ISSS") || !(e.getDescrip() == "Renta")) {
+            if (e.isEstado()==false && e.getDescrip() != "AFP" && e.getDescrip() != "ISSS" && e.getDescrip() != "Renta") {
                 desc += e.getMonto();
+                System.out.println(e.getMonto());
+
             }
         }
         return desc;

@@ -7,6 +7,7 @@ package Interfaces;
 
 import Modelos.*;
 import Modelos.Empleado;
+import java.awt.event.ItemListener;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Calendar;
@@ -49,6 +50,7 @@ public class PlanillaForm extends javax.swing.JFrame {
         conectar();
         inicializarColumnas();
         consultaInicial();
+        
     }
 
        private void background() {
@@ -150,7 +152,9 @@ public class PlanillaForm extends javax.swing.JFrame {
                 e.setNup(resultado.getString("nup"));
                 e.setNumIss(resultado.getString("numIsss"));
                 e.setTel(resultado.getString("tel"));
-
+                TarjetaDeTiempo ta=new TarjetaDeTiempo(5.00);
+                ta.detalle.add(new DetalleTarjetaDeTiempo(160));                        
+                e.t.add(ta);
                 this.lineaTM.ln.add(new LineaPlanilla(e));
             }
             tablaLinea.repaint();
@@ -191,6 +195,17 @@ public class PlanillaForm extends javax.swing.JFrame {
         jLabel3.setText("Tipo:");
 
         jLabel4.setText("Ocasión:");
+
+        jcTipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcTipoItemStateChanged(evt);
+            }
+        });
+        jcTipo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jcTipoPropertyChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -293,6 +308,18 @@ public class PlanillaForm extends javax.swing.JFrame {
     private void jbProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbProcesarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbProcesarActionPerformed
+
+    private void jcTipoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jcTipoPropertyChange
+        // TODO add your handling code here:
+       lineaTM.setTipo(jcTipo.getSelectedIndex());
+       tablaLinea.repaint();
+    }//GEN-LAST:event_jcTipoPropertyChange
+
+    private void jcTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcTipoItemStateChanged
+        // TODO add your handling code here 
+        lineaTM.setTipo(jcTipo.getSelectedIndex());
+       tablaLinea.repaint();
+    }//GEN-LAST:event_jcTipoItemStateChanged
 
     private void llenarCombos(){
         //TIPO DE PLANILLA
