@@ -15,6 +15,7 @@ public class detalleKardex {
     private int cantidad;
     private double costoUnitario;
     private double montoDetalleKardex;
+    private ordenDeFabricacion orden;
 
     public detalleKardex(int idDetalle, boolean entrada, int cantidad, double costoUnitario, double montoDetalleKardex) {
         this.idDetalle = idDetalle;
