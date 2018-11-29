@@ -54,5 +54,7 @@ public class CIF {
         this.monto = monto;
     }
     
-    
+    private void calcularMonto(double base){
+        this.monto= base*tasaEstimada;
+    }
 }

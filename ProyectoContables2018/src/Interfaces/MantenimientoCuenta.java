@@ -29,6 +29,10 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         txtSaldoDeudor.setText("0.00");
         txtSaldoAcreedor.setText("0.00");
         background();
+        rbSaldoDeudor.setVisible(false);
+        rbSaldoAcreedor.setVisible(false);
+        txtSaldoDeudor.setVisible(false);
+        txtSaldoAcreedor.setVisible(false);
     }
 
     private void background() {
@@ -36,7 +40,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         f.setSize(this.getSize());
         this.add(f);
     }
-    
+
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
 
@@ -89,7 +93,6 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 cuenta.setDescripcion(resultado.getString("descripcion"));
                 cuenta.setNombreMayor(getNombreCuentaPadre(resultado.getInt("cue_codigocuenta")));
                 cuenta.setCodigoMayor(resultado.getInt("cue_codigocuenta"));
-                //System.out.println(resultado.getInt("cue_codigocuenta"));
                 cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0));
                 this.cuentaTabla.cuentas.add(cuenta);
             }
@@ -177,7 +180,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         btnNuevaCuenta = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtADescripcion = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
+        lblLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("MantenimientoCuenta");
@@ -305,7 +308,8 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         txtADescripcion.setName("txtADescripcion"); // NOI18N
         jScrollPane1.setViewportView(txtADescripcion);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGO PEQUEÑO.jpg"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGO PEQUEÑO.jpg"))); // NOI18N
+        lblLogo.setName("lblLogo"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -361,7 +365,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                                 .addComponent(btnEliminar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnNuevaCuenta))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(lblLogo, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -398,7 +402,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblLogo, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtSaldoDeudor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -671,7 +675,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 System.exit(0);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error al cerrar la conexión con la base de datos "+ex);
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al cerrar la conexión con la base de datos " + ex);
         }
     }
 
@@ -845,7 +849,6 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
     private javax.swing.JComboBox<Cuenta> cmbCuentaMayor;
     private javax.swing.JComboBox<String> cmbEstadoFin;
     private javax.swing.JComboBox<String> cmbGrupoCuenta;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblCuentaMayor;
@@ -853,6 +856,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
     private javax.swing.JLabel lblEstadoFin;
     private javax.swing.JLabel lblGrupoCuenta;
     private javax.swing.JLabel lblListadoCuenta;
+    private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JScrollPane panelTableCuenta;
     private javax.swing.JRadioButton rbSaldoAcreedor;
