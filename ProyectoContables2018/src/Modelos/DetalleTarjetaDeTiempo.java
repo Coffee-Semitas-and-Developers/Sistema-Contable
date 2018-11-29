@@ -19,8 +19,7 @@ public class DetalleTarjetaDeTiempo {
 
        public DetalleTarjetaDeTiempo() {        
     }
-    
-    
+     
     public DetalleTarjetaDeTiempo(int horasTrabajadas, int horasExtras, String diaDeTrabajo, Date fechaTarjeta, Empleado empleado) {
         this.diaDeTrabajo = diaDeTrabajo;
         this.horasTrabajadas = horasTrabajadas;
