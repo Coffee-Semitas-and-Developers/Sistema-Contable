@@ -26,6 +26,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 /**
  *
@@ -35,6 +41,11 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
 
     public TarjetaTableModel TarjetaTM = new TarjetaTableModel();
     private Connection conexion;
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    Calendar fecha = new GregorianCalendar();
+    Date d= new Date();
+    java.sql.Date sqlDate;
+    String dat;
 
     /**
      * Creates new form tarjetaDeTiempo
@@ -46,6 +57,8 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         conectar();
         consultaInicial();
         background();
+        setFecha();
+        lbDate.setText(dat);
     }
 
     private void inicializarColumnas() {
@@ -86,14 +99,14 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
 
     private void consultaInicial() {
         try {
-            String sentenciaSql = "SELECT * FROM Empleado";
+            String sentenciaSql = "SELECT * FROM detalletarjetadetiempo";
             Statement statement = this.conexion.createStatement();
             ResultSet resultado = statement.executeQuery(sentenciaSql);
             while (resultado.next()) {
                 DetalleTarjetaDeTiempo d = new DetalleTarjetaDeTiempo();
                 d.setDiaDeTrabajo(resultado.getString("diadetrabajo"));
                 d.setIdTarjeta(resultado.getInt("idtarjeta"));
-                d.setFechaTarjeta(resultado.getDate("fechatarjeta"));
+                d.setFechaTarjeta(resultado.getDate("fechatarjeta", fecha));
                 d.setHorasTrabajadas(resultado.getInt("horastrabajadas"));
                 d.setHorasExtras(resultado.getInt("horasextras"));
 
@@ -112,6 +125,27 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         this.add(f);
     }
 
+        public void setFecha(){
+
+        //Instanciamos el objeto Calendar
+        //en fecha obtenemos la fecha y hora del sistema
+        //Calendar fecha = new GregorianCalendar();
+        //Obtenemos el valor del año, mes, día,
+        //hora, minuto y segundo del sistema
+        //usando el método get y el parámetro correspondiente
+        int año = fecha.get(Calendar.YEAR);
+        int mes = fecha.get(Calendar.MONTH)+1;
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        dat= (""+dia+"/"+mes+"/"+año+"").toString(); 
+        try{   
+           d=dateFormat.parse(dat);
+           sqlDate = new java.sql.Date(d.getTime());;
+
+            }
+       catch ( Exception ex ){
+           System.out.println(ex);
+       }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,7 +170,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         horasExtraTextField = new javax.swing.JTextField();
         agregarButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lbDate = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -199,7 +233,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
 
         jLabel7.setText("Fecha:");
 
-        jLabel8.setText("jLabel8");
+        lbDate.setText("---------");
 
         jLabel9.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         jLabel9.setText("Muebles Rivera S.A. de C.V.");
@@ -281,7 +315,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8)
+                        .addComponent(lbDate)
                         .addGap(58, 58, 58)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -296,7 +330,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
+                            .addComponent(lbDate)
                             .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -414,10 +448,10 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lbDate;
     private javax.swing.JTextField ordenTextField;
     private javax.swing.JTable tarjetaTabla;
     private javax.swing.JTextField totalHorasTrabajadasTextField;
