@@ -14,7 +14,8 @@ import java.util.Iterator;
  * @author jorge
  */
 public class LineaPlanilla {
- 
+    final double isssEmpleado=0.03,isssPatrono=0.075,afpEmpleado=0.0725,afpPatrono=0.0775,tramoII=472.00,cuotaTramoII=17.67,pTramoII=0.10,tramoIII=895.24,cuotaTramoIII=60,pTramoIII=0.2,tramoIV=2038.10,pTramoIV=0.3,cuotaTramoIV=288.57;
+
 
     private Boolean selected = false;
 
@@ -145,7 +146,6 @@ public class LineaPlanilla {
 
         return afp;
     }
-   final double isssEmpleado=0.03,isssPatrono=0.075,afpEmpleado=0.0725,afpPatrono=0.0775,tramoII=472.00,cuotaTramoII=17.67,pTramoII=0.10,tramoIII=895.24,cuotaTramoIII=60,pTramoIII=0.2,tramoIV=2038.10,pTramoIV=0.3,cuotaTramoIV=288.57;
 
 
     
