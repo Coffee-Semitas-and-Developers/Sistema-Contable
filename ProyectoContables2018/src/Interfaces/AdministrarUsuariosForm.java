@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Modelos.Usuario;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +36,7 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
     public AdministrarUsuariosForm() { 
         initComponents();
         background();
+        getIconImage();
         setLocationRelativeTo(null);
         this.setResizable(false);
         setTitle("Administrador de Usuarios");
@@ -45,11 +48,15 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         
         
     }
-        private void background() {
-        Fondo f = new Fondo();
-        f.setSize(1333, 629);
-        this.add(f);
-    } 
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO PEQUEÑO.jpg"));
+        return retValue;
+    }
+        public void background() {
+            Fondo ima = new Fondo();
+            ima.setSize(this.getSize());
+            this.add(ima);
+        }
     
     
     private void llenarTabla() throws SQLException{
@@ -99,6 +106,7 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/login.png"))); // NOI18N
 
