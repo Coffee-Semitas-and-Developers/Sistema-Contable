@@ -166,9 +166,61 @@ public class LineaPlanilla {
        if(base>tramoIV){
             renta= (base-tramoIV)*pTramoIV+cuotaTramoIV;
         }  
+       Extra e = new Extra(false, "Renta", 0.0, renta);
+        extras.add(e);
+       
         return renta;
     }
+public double aportePatronal() {
+        double aporte = 0;
+        aporte = getISSS(1) + getAFP(1);
+        return aporte;
+    }
 
+    public double getISSS(int tipo) {
+        Iterator<Extra> i = extras.iterator();
+        double desc = 0;
+
+        while (i.hasNext()) {
+            Extra e = i.next();
+            if (tipo == 0 && e.getDescrip() == "ISSS") {
+                desc = e.getMonto();
+            }
+            if (tipo == 1 && e.getDescrip() == "ISSS Patrono") {
+                desc = e.getMonto();
+            }
+        }
+        return desc;
+    }
+
+    public double getAFP(int tipo) {
+        Iterator<Extra> i = extras.iterator();
+        double desc = 0;
+
+        while (i.hasNext()) {
+            Extra e = i.next();
+            if (tipo == 0 && e.getDescrip() == "AFP") {
+                desc = e.getMonto();
+            }
+            if (tipo == 1 && e.getDescrip() == "AFP Patrono") {
+                desc = e.getMonto();
+            }
+        }
+        return desc;
+    }
+
+    public double getRenta() {
+        Iterator<Extra> i = extras.iterator();
+        double desc = 0;
+
+        while (i.hasNext()) {
+            Extra e = i.next();
+            if (e.getDescrip() == "Renta") {
+                desc = e.getMonto();
+            }
+        }
+        return desc;
+    }
 }
     
             

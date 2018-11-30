@@ -28,20 +28,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
-
 /**
  *
  * @author jorge
  */
 public class PlanillaForm extends javax.swing.JFrame {
+
     String dat;
     private Connection conexion;
     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     Calendar fecha = new GregorianCalendar();
-    Date d= new Date();
+    Date d = new Date();
     java.sql.Date sqlDate;
-    LineaPlanillaTableModel lineaTM= new LineaPlanillaTableModel();
-    
+    LineaPlanillaTableModel lineaTM = new LineaPlanillaTableModel();
+    LineaPlanillaPatronoTableModel lineaPatronoTM = new LineaPlanillaPatronoTableModel();
+
     public PlanillaForm() {
         initComponents();
         background();
@@ -50,15 +51,18 @@ public class PlanillaForm extends javax.swing.JFrame {
         conectar();
         inicializarColumnas();
         consultaInicial();
-        
+        tablaLinea.setComponentPopupMenu(popmenu);
+        tablaLinea.addMouseListener(new TableMouseListener(tablaLinea));  
+
     }
 
-       private void background() {
-        Fondo f =new Fondo();
+    private void background() {
+        Fondo f = new Fondo();
         f.setSize(this.getSize());
         this.add(f);
-}  
-    public void setFecha(){
+    }
+
+    public void setFecha() {
 
         //Instanciamos el objeto Calendar
         //en fecha obtenemos la fecha y hora del sistema
@@ -79,7 +83,7 @@ public class PlanillaForm extends javax.swing.JFrame {
         }
         lbDate.setText(dat);
     }
-       
+
     private void conectar() {
         try {
             conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sic", "semitas",
@@ -92,11 +96,11 @@ public class PlanillaForm extends javax.swing.JFrame {
 
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 13; i++) {
             TableColumn col = new TableColumn(i);
             switch (i) {
                 case 0:
-                    col.setHeaderValue("Habilitado");
+                    col.setHeaderValue("");
                     break;
                 case 1:
                     col.setHeaderValue("Nombres");
@@ -114,29 +118,63 @@ public class PlanillaForm extends javax.swing.JFrame {
                     col.setHeaderValue("Horas Extra");
                     break;
                 case 6:
-                    col.setHeaderValue("ISSS");
-                    break;
-                case 7:
-                    col.setHeaderValue("AFP");
-                    break;
-                case 8:
-                    col.setHeaderValue("Renta");
-                    break;
-                case 9:
-                    col.setHeaderValue("Bonificaciones");
-                    break;
-                case 10:
-                    col.setHeaderValue("Otros descuentos");
-                    break;
-                case 11:
                     col.setHeaderValue("Salario");
                     break;
+                case 7:
+                    col.setHeaderValue("ISSS");
+                    break;
+                case 8:
+                    col.setHeaderValue("AFP");
+                    break;
+                case 9:
+                    col.setHeaderValue("Renta");
+                    break;
+                case 10:
+                    col.setHeaderValue("Bonificaciones");
+                    break;
+                case 11:
+                    col.setHeaderValue("Otros descuentos");
+                    break;
+                case 12:
+                    col.setHeaderValue("Salario");
+                    break;                
             }
             tColumnModel.addColumn(col);
         }
         tablaLinea.setColumnModel(tColumnModel);
-    }    
-        
+
+        TableColumnModel tColumnModel1 = new DefaultTableColumnModel();
+        for (int i = 0; i < 7; i++) {
+            TableColumn col = new TableColumn(i);
+            switch (i) {
+                case 0:
+                    col.setHeaderValue("Nombres");
+                    break;
+                case 1:
+                    col.setHeaderValue("Apellidos");
+                    break;
+                case 2:
+                    col.setHeaderValue("Cargo");
+                    break;
+                case 3:
+                    col.setHeaderValue("Salario");
+                    break;
+                case 4:
+                    col.setHeaderValue("ISSS");
+                    break;
+                case 5:
+                    col.setHeaderValue("AFP");
+                    break;
+                case 6:
+                    col.setHeaderValue("Aporte Patronal");
+                    break;
+            }
+            tColumnModel1.addColumn(col);
+        }
+        patronoTable.setColumnModel(tColumnModel1);
+
+    }
+
     private void consultaInicial() {
         try {
             String sentenciaSql = "SELECT * FROM Empleado";
@@ -152,23 +190,27 @@ public class PlanillaForm extends javax.swing.JFrame {
                 e.setNup(resultado.getString("nup"));
                 e.setNumIss(resultado.getString("numIsss"));
                 e.setTel(resultado.getString("tel"));
-                TarjetaDeTiempo ta=new TarjetaDeTiempo(5.00);
-                ta.detalle.add(new DetalleTarjetaDeTiempo(160));                        
+                TarjetaDeTiempo ta = new TarjetaDeTiempo(5.00);
+                ta.detalle.add(new DetalleTarjetaDeTiempo(160));
                 e.t.add(ta);
                 this.lineaTM.ln.add(new LineaPlanilla(e));
+                this.lineaPatronoTM.ln.add(new LineaPlanilla(e));
+
             }
             tablaLinea.repaint();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al recuperar los Empleados de la base de datos");
             ex.printStackTrace();
         }
-    }       
-        
-        
-   @SuppressWarnings("unchecked")
+    }
+
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popmenu = new javax.swing.JPopupMenu();
+        itemDesc = new javax.swing.JMenuItem();
+        itemBoni = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lbDate = new javax.swing.JLabel();
@@ -181,6 +223,24 @@ public class PlanillaForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaLinea = new javax.swing.JTable();
         jbProcesar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        patronoTable = new javax.swing.JTable();
+
+        itemDesc.setText("Agregar descuento");
+        itemDesc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemDescActionPerformed(evt);
+            }
+        });
+        popmenu.add(itemDesc);
+
+        itemBoni.setText("Agregar bonificación");
+        itemBoni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemBoniActionPerformed(evt);
+            }
+        });
+        popmenu.add(itemBoni);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -242,7 +302,7 @@ public class PlanillaForm extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jcTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcOcasion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGO PEQUEÑO.jpg"))); // NOI18N
@@ -261,45 +321,55 @@ public class PlanillaForm extends javax.swing.JFrame {
             }
         });
 
+        patronoTable.setModel(lineaPatronoTM);
+        jScrollPane2.setViewportView(patronoTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addGap(42, 42, 42))
             .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
                         .addComponent(jLabel11)
-                        .addGap(300, 300, 300)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(316, 316, 316)
-                                .addComponent(jLabel10))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jbProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(8, 8, 8))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1659, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                                .addGap(257, 257, 257)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(536, 536, 536)
+                                .addComponent(jLabel10))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1255, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(29, 29, 29)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jbProcesar)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(53, 53, 53))
         );
 
         pack();
@@ -311,28 +381,65 @@ public class PlanillaForm extends javax.swing.JFrame {
 
     private void jcTipoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jcTipoPropertyChange
         // TODO add your handling code here:
-       lineaTM.setTipo(jcTipo.getSelectedIndex());
-       tablaLinea.repaint();
+        lineaTM.setTipo(jcTipo.getSelectedIndex());
+        tablaLinea.repaint();
     }//GEN-LAST:event_jcTipoPropertyChange
 
     private void jcTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcTipoItemStateChanged
         // TODO add your handling code here 
         lineaTM.setTipo(jcTipo.getSelectedIndex());
-       tablaLinea.repaint();
+        tablaLinea.repaint();
     }//GEN-LAST:event_jcTipoItemStateChanged
 
-    private void llenarCombos(){
+    private void itemDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDescActionPerformed
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        int currentRow =  tablaLinea.getSelectedRow();
+        double monto=0;
+        String descrip="";
+       
+        descrip = JOptionPane.showInputDialog(null, "Ingrese el motivo de descuento","Descuento");   
+        try{
+         monto=Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese la cantidad a descontar","Descuento"));
+        }catch(Exception e){
+             monto=Double.parseDouble(JOptionPane.showInputDialog(null, "ngrese denuevo la cantidad a descontar, asegurese de ingresar un número","Descuento"));
+        } 
+       
+       lineaTM.ln.get(currentRow).extras.add(new Extra(false,descrip,monto));
+       lineaTM.fireTableDataChanged();
+
+       tablaLinea.repaint();
+    }//GEN-LAST:event_itemDescActionPerformed
+
+    private void itemBoniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBoniActionPerformed
+        // TODO add your handling code here:
+        int currentRow =  tablaLinea.getSelectedRow();
+        double monto=0;
+        String descrip="";
+       
+        descrip = JOptionPane.showInputDialog(null, "Ingrese el motivo de la bonificación","Bonificación");   
+        try{
+         monto=Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el monto de bonifiación","Bonificación"));
+        }catch(Exception e){
+             monto=Double.parseDouble(JOptionPane.showInputDialog(null, "ngrese denuevo la cantidad a bonificar, asegurese de ingresar un número","Bonificación"));
+         
+       }
+       lineaTM.ln.get(currentRow).extras.add(new Extra(true,descrip,monto));
+       lineaTM.fireTableDataChanged();
+       tablaLinea.repaint();
+    }//GEN-LAST:event_itemBoniActionPerformed
+
+    private void llenarCombos() {
         //TIPO DE PLANILLA
         jcTipo.addItem("Empleado");
         jcTipo.addItem("Patronal");
-        
+
         //OCASION DE LA PLANILLA
         jcOcasion.addItem("Salarios");
         jcOcasion.addItem("Vacaciones");
         jcOcasion.addItem("Aguinaldo");
-    }  
-    
-    
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -369,6 +476,8 @@ public class PlanillaForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem itemBoni;
+    private javax.swing.JMenuItem itemDesc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -376,10 +485,13 @@ public class PlanillaForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbProcesar;
     private javax.swing.JComboBox<String> jcOcasion;
     private javax.swing.JComboBox<String> jcTipo;
     private javax.swing.JLabel lbDate;
+    private javax.swing.JTable patronoTable;
+    private javax.swing.JPopupMenu popmenu;
     private javax.swing.JTable tablaLinea;
     // End of variables declaration//GEN-END:variables
 }
