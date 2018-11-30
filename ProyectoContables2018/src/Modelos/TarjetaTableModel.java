@@ -4,25 +4,28 @@
  * and open the template in the editor.
  */
 package Modelos;
-import Interfaces.MantenimientoCuenta;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumnModel;
 /**
  *
  * @author AxlHrndz
  */
-public class TarjetaTableModel {
-    public List<DetalleTarjetaDeTiempo> detalle = new ArrayList();
+public class TarjetaTableModel extends AbstractTableModel{ 
+    public List<DetalleTarjetaDeTiempo> detalle = new ArrayList<DetalleTarjetaDeTiempo>();
     
+    @Override
     public int getRowCount() {
         return detalle.size();
     }
 
+    @Override
     public int getColumnCount() {
         return 4;
     }
 
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         DetalleTarjetaDeTiempo det = detalle.get(rowIndex);
         Object valor = null;
@@ -40,7 +43,13 @@ public class TarjetaTableModel {
             case 3:
                 valor = det.getHorasExtras();
                 break;
+            case 4:
+                valor = det.getHorasTrabajadas()*det.getHorasExtras();
         }
         return valor;
     }
+    
+     public void add(DetalleTarjetaDeTiempo a){
+     detalle.add(a);
+ }
 }

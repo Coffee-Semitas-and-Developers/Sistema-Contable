@@ -5,17 +5,111 @@
  */
 package Interfaces;
 
+import Modelos.DetalleTarjetaDeTiempo;
+import Modelos.TarjetaTableModel;
+import Modelos.TarjetaDeTiempo;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author AxlHrndz
  */
 public class tarjetaDeTiempo extends javax.swing.JFrame {
 
+    public TarjetaTableModel TarjetaTM = new TarjetaTableModel();
+    private Connection conexion;
+
     /**
      * Creates new form tarjetaDeTiempo
      */
+
     public tarjetaDeTiempo() {
         initComponents();
+        inicializarColumnas();
+        conectar();
+        consultaInicial();
+        background();
+    }
+
+    private void inicializarColumnas() {
+        TableColumnModel tColumnModel = new DefaultTableColumnModel();
+        for (int i = 0; i < 4; i++) {
+            TableColumn col = new TableColumn(i);
+            switch (i) {
+                case 0:
+                    col.setHeaderValue("Días");
+                    break;
+                case 1:
+                    col.setHeaderValue("Nombre completo");
+                    break;
+                case 2:
+                    col.setHeaderValue("Horas trabajadas");
+                    break;
+                case 3:
+                    col.setHeaderValue("Horas extra trabajadas");
+                    break;
+                case 4:
+                    col.setHeaderValue("Total horas");
+                    break;
+            }
+            tColumnModel.addColumn(col);
+        }
+        tarjetaTabla.setColumnModel(tColumnModel);
+    }
+
+    private void conectar() {
+        try {
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sic", "semitas",
+                    "semita");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminEmpleadoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void consultaInicial() {
+        try {
+            String sentenciaSql = "SELECT * FROM Empleado";
+            Statement statement = this.conexion.createStatement();
+            ResultSet resultado = statement.executeQuery(sentenciaSql);
+            while (resultado.next()) {
+                DetalleTarjetaDeTiempo d = new DetalleTarjetaDeTiempo();
+                d.setDiaDeTrabajo(resultado.getString("diadetrabajo"));
+                d.setIdTarjeta(resultado.getInt("idtarjeta"));
+                d.setFechaTarjeta(resultado.getDate("fechatarjeta"));
+                d.setHorasTrabajadas(resultado.getInt("horastrabajadas"));
+                d.setHorasExtras(resultado.getInt("horasextras"));
+
+                this.TarjetaTM.add(d);
+            }
+            tarjetaTabla.repaint();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al recuperar los productos de la base de datos");
+            ex.printStackTrace();
+        }
+    }
+
+    private void background() {
+        Fondo f = new Fondo();
+        f.setSize(1333, 629);
+        this.add(f);
     }
 
     /**
@@ -29,7 +123,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tarjetaTabla = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         totalHorasTrabajadasTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -48,18 +142,22 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         costoHoraExtraTextField = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         comboEmpleado = new javax.swing.JComboBox<>();
         ordenTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         jLabel1.setText("Tarjeta de tiempo");
 
-        jScrollPane1.setViewportView(jTable1);
+        tarjetaTabla.setModel(TarjetaTM);
+        jScrollPane1.setViewportView(tarjetaTabla);
 
         jLabel2.setText("Total horas trabajadas:");
 
@@ -116,11 +214,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setText("ID:");
-
-        jLabel14.setText("jLabel14");
-
-        jLabel15.setText("Seleccione el DUI del empleado: ");
+        jLabel15.setText("Seleccione el nombre del empleado: ");
 
         comboEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -184,11 +278,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 794, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
@@ -205,13 +295,9 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel13)
-                                .addComponent(jLabel14))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel8)
-                                .addComponent(jLabel7)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,6 +351,16 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_costoHoraExtraTextFieldActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        try {
+            conexion.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al cerrar la conexión a la base de datos");
+        }
+        JOptionPane.showMessageDialog(this, "La conexión a la base de datos ha sido cerrada");
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -311,8 +407,6 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -324,8 +418,8 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField ordenTextField;
+    private javax.swing.JTable tarjetaTabla;
     private javax.swing.JTextField totalHorasTrabajadasTextField;
     // End of variables declaration//GEN-END:variables
 }
