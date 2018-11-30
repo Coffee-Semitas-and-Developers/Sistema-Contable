@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     18/11/2018 2:52:13 PM                        */
+/* Created on:     24/11/2018 1:33:40 AM                        */
 /*==============================================================*/
 
 
@@ -104,6 +104,14 @@ drop index USUARIO_PK;
 
 drop table USUARIO;
 
+CREATE SCHEMA public
+  AUTHORIZATION postgres;
+
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
+COMMENT ON SCHEMA public
+  IS 'standard public schema';
+
 /*==============================================================*/
 /* Table: COSTOINDIRECTOFABRICACION                             */
 /*==============================================================*/
@@ -135,29 +143,30 @@ IDORDEN
 /* Table: CUENTA                                                */
 /*==============================================================*/
 create table CUENTA (
-   IDCUENTA             INT4                 not null,
-   CUE_IDCUENTA         INT4                 null,
+   CODIGOCUENTA         INT4                 not null,
+   CUE_CODIGOCUENTA     INT4                 null,
    NOMBRECUENTA         VARCHAR(30)          not null,
-   DESCRICION           VARCHAR(100)         null,
+   DESCRIPCION           VARCHAR(100)         null,
    GRUPOCUENTA          VARCHAR(20)          not null,
+   ESTADOFINANCIERO     VARCHAR(1)           not null,
    SALDODEUDOR          DECIMAL(10,2)        null,
    SALDOACREEDOR        DECIMAL(10,2)        null,
    SALDOFINAL           DECIMAL(10,2)        null,
-   constraint PK_CUENTA primary key (IDCUENTA)
+   constraint PK_CUENTA primary key (CODIGOCUENTA)
 );
 
 /*==============================================================*/
 /* Index: CUENTA_PK                                             */
 /*==============================================================*/
 create unique index CUENTA_PK on CUENTA (
-IDCUENTA
+CODIGOCUENTA
 );
 
 /*==============================================================*/
 /* Index: POSEESUBCUENTAS_FK                                    */
 /*==============================================================*/
 create  index POSEESUBCUENTAS_FK on CUENTA (
-CUE_IDCUENTA
+CUE_CODIGOCUENTA
 );
 
 /*==============================================================*/
@@ -494,6 +503,8 @@ create table TARJETADETIEMPO (
    FECHATARJETA         DATE                 not null,
    IDORDEN              INT4                 not null,
    DUI                  VARCHAR(10)          not null,
+   SALARIOHORANORMAL    DECIMAL(10,2)        not null,
+   SALARIOHORAEXTRA     DECIMAL(10,2)        not null,
    TOTALHORASTRABAJADAS INT4                 null,
    TOTALHORASEXTRAS     INT4                 null,
    constraint PK_TARJETADETIEMPO primary key (IDTARJETA, FECHATARJETA)
@@ -570,8 +581,8 @@ alter table COSTOINDIRECTOFABRICACION
       on delete restrict on update cascade;
 
 alter table CUENTA
-   add constraint FK_CUENTA_POSEESUBC_CUENTA foreign key (CUE_IDCUENTA)
-      references CUENTA (IDCUENTA)
+   add constraint FK_CUENTA_POSEESUBC_CUENTA foreign key (CUE_CODIGOCUENTA)
+      references CUENTA (CODIGOCUENTA)
       on delete restrict on update cascade;
 
 alter table DETALLEKARDEX
@@ -596,7 +607,7 @@ alter table DETALLETRANSACCION
 
 alter table DETALLETRANSACCION
    add constraint FK_DETALLET_UTILIZA_CUENTA foreign key (IDCUENTA)
-      references CUENTA (IDCUENTA)
+      references CUENTA (CODIGOCUENTA)
       on delete restrict on update cascade;
 
 alter table EXTRA
@@ -632,11 +643,6 @@ alter table ORDENFABRICACION
 alter table TARJETADETIEMPO
    add constraint FK_TARJETAD_PERTENECE_EMPLEADO foreign key (DUI)
       references EMPLEADO (DUI)
-      on delete restrict on update cascade;
-
-alter table TARJETADETIEMPO
-   add constraint FK_TARJETAD_PRESENTA_LINEAPLA foreign key (IDLINEA)
-      references LINEAPLANILLA (IDLINEA)
       on delete restrict on update cascade;
 
 alter table TARJETADETIEMPO
