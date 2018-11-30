@@ -96,6 +96,15 @@ drop index USUARIO_PK;
 
 drop table USUARIO;
 
+
+CREATE SCHEMA public
+  AUTHORIZATION postgres;
+
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
+COMMENT ON SCHEMA public
+  IS 'standard public schema';
+
 /*==============================================================*/
 /* Table: CUENTA                                                */
 /*==============================================================*/
