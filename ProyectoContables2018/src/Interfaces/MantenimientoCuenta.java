@@ -2,6 +2,8 @@ package Interfaces;
 
 import Conexion.Conexion;
 import Modelos.*;
+import java.awt.HeadlessException;
+import java.io.StringReader;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +18,6 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
 
     private final Conexion conexion = new Conexion();
     public CuentaTableModel cuentaTabla = new CuentaTableModel();
-    private int cantidadCaracteres = 0;
     private Cuenta cuentaActual = null;
     private boolean guardar = true;
 
@@ -26,13 +27,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         conexion.getConexion();
         listarCuentaMayores();
         consultaInicial();
-        txtSaldoDeudor.setText("0.00");
-        txtSaldoAcreedor.setText("0.00");
         background();
-        rbSaldoDeudor.setVisible(false);
-        rbSaldoAcreedor.setVisible(false);
-        txtSaldoDeudor.setVisible(false);
-        txtSaldoAcreedor.setVisible(false);
     }
 
     private void background() {
@@ -87,19 +82,18 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 cuenta.setCodigo(resultado.getInt("codigocuenta"));
                 cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
                 cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
-                cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));
-                cuenta.setSaldoDeudor(resultado.getDouble("saldodeudor"));
-                cuenta.setSaldoAcreedor(resultado.getDouble("saldoacreedor"));
+                cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));;
                 cuenta.setDescripcion(resultado.getString("descripcion"));
                 cuenta.setNombreMayor(getNombreCuentaPadre(resultado.getInt("cue_codigocuenta")));
                 cuenta.setCodigoMayor(resultado.getInt("cue_codigocuenta"));
-                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0));
+                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0), 0);
+                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(1), 1);
                 this.cuentaTabla.cuentas.add(cuenta);
             }
             tableCuenta.repaint();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al recuperar los datos");
+            JOptionPane.showMessageDialog(this, "Error al recuperar los datos" + ex);
         }
     }
 
@@ -137,18 +131,19 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 cuenta.setCodigo(resultado.getInt("codigocuenta"));
                 cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
                 cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
-                cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));
-                cuenta.setSaldoDeudor(resultado.getDouble("saldodeudor"));
-                cuenta.setSaldoAcreedor(resultado.getDouble("saldoacreedor"));
+                if (cbSaldoFinal.isSelected()) {
+                    cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));
+                }
                 cuenta.setDescripcion(resultado.getString("descripcion"));
                 cuenta.setNombreMayor(getNombreCuentaPadre(resultado.getInt("cue_codigocuenta")));
                 cuenta.setCodigoMayor(resultado.getInt("cue_codigocuenta"));
-                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0));
+                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0), 0);
+                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(1), 1);
                 this.cuentaTabla.cuentas.add(cuenta);
             }
             tableCuenta.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al recuperar las peliculas de la base de datos.");
+            JOptionPane.showMessageDialog(this, "Error al recuperar las peliculas de la base de datos." + ex);
         }
     }
 
@@ -171,16 +166,15 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         cmbCuentaMayor = new javax.swing.JComboBox<>();
         cmbGrupoCuenta = new javax.swing.JComboBox<>();
         cmbEstadoFin = new javax.swing.JComboBox<>();
-        txtSaldoDeudor = new javax.swing.JTextField();
-        txtSaldoAcreedor = new javax.swing.JTextField();
-        rbSaldoDeudor = new javax.swing.JRadioButton();
-        rbSaldoAcreedor = new javax.swing.JRadioButton();
         btnGuardar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnNuevaCuenta = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtADescripcion = new javax.swing.JTextArea();
         lblLogo = new javax.swing.JLabel();
+        lblEstadoFin2 = new javax.swing.JLabel();
+        cmbEstadoFin2 = new javax.swing.JComboBox<>();
+        cbSaldoFinal = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("MantenimientoCuenta");
@@ -199,6 +193,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         tableCuenta.setModel(cuentaTabla);
         tableCuenta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tableCuenta.setName("tableCuenta"); // NOI18N
+        tableCuenta.setRowHeight(48);
         tableCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableCuentaMouseClicked(evt);
@@ -243,40 +238,6 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         cmbEstadoFin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estado de Resultado", "Estado de Capital", "Balance General" }));
         cmbEstadoFin.setName("cmbEstadoFinanciero"); // NOI18N
 
-        txtSaldoDeudor.setEnabled(false);
-        txtSaldoDeudor.setName("txtSaldoDeudor"); // NOI18N
-        txtSaldoDeudor.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtSaldoDeudorKeyTyped(evt);
-            }
-        });
-
-        txtSaldoAcreedor.setEnabled(false);
-        txtSaldoAcreedor.setName("txtSaldoAcreedor"); // NOI18N
-        txtSaldoAcreedor.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtSaldoAcreedorKeyTyped(evt);
-            }
-        });
-
-        btnGRadio.add(rbSaldoDeudor);
-        rbSaldoDeudor.setText("Saldo Deudor");
-        rbSaldoDeudor.setName("rbSaldoDeudor"); // NOI18N
-        rbSaldoDeudor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbSaldoDeudorActionPerformed(evt);
-            }
-        });
-
-        btnGRadio.add(rbSaldoAcreedor);
-        rbSaldoAcreedor.setText("Saldo Acreedor");
-        rbSaldoAcreedor.setName("rbSaldoAcreedor"); // NOI18N
-        rbSaldoAcreedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbSaldoAcreedorActionPerformed(evt);
-            }
-        });
-
         btnGuardar.setText("Guardar");
         btnGuardar.setName("btnGuardar"); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -311,6 +272,19 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGO PEQUEÑO.jpg"))); // NOI18N
         lblLogo.setName("lblLogo"); // NOI18N
 
+        lblEstadoFin2.setText("Estado Financiero 2");
+        lblEstadoFin2.setName("lblEstadoFin"); // NOI18N
+
+        cmbEstadoFin2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N/A", "Estado de Resultado", "Estado de Capital", "Balance General" }));
+        cmbEstadoFin2.setName("cmbEstadoFinanciero"); // NOI18N
+
+        cbSaldoFinal.setText("Saldo Final");
+        cbSaldoFinal.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                cbSaldoFinalStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -320,52 +294,50 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelTableCuenta)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblDescripcion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblEstadoFin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbEstadoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblEstadoFin2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbEstadoFin2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblLogo))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNuevaCuenta))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(lblGrupoCuenta)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbGrupoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(lblCodigo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(lblNombre)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblGrupoCuenta)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(cmbGrupoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(lblEstadoFin)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbEstadoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblCuentaMayor)))
                         .addGap(18, 18, 18)
-                        .addComponent(lblCuentaMayor)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbCuentaMayor, 0, 151, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblDescripcion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(rbSaldoAcreedor)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(rbSaldoDeudor)
-                                        .addGap(16, 16, 16)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtSaldoDeudor)
-                                    .addComponent(txtSaldoAcreedor, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnEliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNuevaCuenta))
-                            .addComponent(lblLogo, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(cmbCuentaMayor, 0, 151, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbSaldoFinal)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -378,7 +350,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblListadoCuenta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelTableCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                .addComponent(panelTableCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCodigo)
@@ -387,36 +359,32 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                     .addComponent(lblNombre)
                     .addComponent(lblCuentaMayor)
                     .addComponent(cmbCuentaMayor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblGrupoCuenta)
                             .addComponent(cmbGrupoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblEstadoFin)
-                            .addComponent(cmbEstadoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(cbSaldoFinal))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblDescripcion)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblLogo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtSaldoDeudor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(rbSaldoDeudor))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtSaldoAcreedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(rbSaldoAcreedor))))
-                        .addGap(18, 18, 18)
+                                    .addComponent(lblEstadoFin)
+                                    .addComponent(cmbEstadoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(47, 47, 47)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblEstadoFin2)
+                                    .addComponent(cmbEstadoFin2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblDescripcion)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGuardar)
-                            .addComponent(btnNuevaCuenta)
-                            .addComponent(btnEliminar))))
-                .addGap(31, 31, 31))
+                            .addComponent(btnEliminar)
+                            .addComponent(btnNuevaCuenta)))
+                    .addComponent(lblLogo))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -430,44 +398,6 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtCodigoKeyTyped
 
-    private void txtSaldoDeudorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSaldoDeudorKeyTyped
-        // TODO add your handling code here:
-        if (txtSaldoDeudor.getText().contains(".")) {
-            if (txtSaldoDeudor.getText().length() >= cantidadCaracteres + 3) {
-                getToolkit().beep();
-                evt.consume();
-            }
-        }
-
-        if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.') {
-            getToolkit().beep();
-            evt.consume();
-        }
-        if (evt.getKeyChar() == '.' && txtSaldoDeudor.getText().contains(".")) {
-            getToolkit().beep();
-            evt.consume();
-        } else {
-            if (evt.getKeyChar() == '.') {
-                cantidadCaracteres = txtSaldoDeudor.getText().length();
-            }
-        }
-
-    }//GEN-LAST:event_txtSaldoDeudorKeyTyped
-
-    private void rbSaldoDeudorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSaldoDeudorActionPerformed
-        // TODO add your handling code here:
-        txtSaldoAcreedor.setEnabled(false);
-        txtSaldoAcreedor.setText("0.00");
-        txtSaldoDeudor.setEnabled(true);
-    }//GEN-LAST:event_rbSaldoDeudorActionPerformed
-
-    private void rbSaldoAcreedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSaldoAcreedorActionPerformed
-        // TODO add your handling code here:
-        txtSaldoDeudor.setEnabled(false);
-        txtSaldoDeudor.setText("0.00");
-        txtSaldoAcreedor.setEnabled(true);
-    }//GEN-LAST:event_rbSaldoAcreedorActionPerformed
-
     private void btnNuevaCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaCuentaActionPerformed
         // TODO add your handling code here:
         txtCodigo.setText("");
@@ -475,40 +405,12 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         txtNombre.setText("");
         txtADescripcion.setText("");
         btnGRadio.clearSelection();
-        txtSaldoDeudor.setText("0.00");
-        txtSaldoAcreedor.setText("0.00");
-        txtSaldoDeudor.setEnabled(false);
-        txtSaldoAcreedor.setEnabled(false);
-        rbSaldoDeudor.setEnabled(true);
-        rbSaldoAcreedor.setEnabled(true);
         cmbCuentaMayor.setSelectedIndex(0);
         cmbGrupoCuenta.setSelectedIndex(0);
         cmbEstadoFin.setSelectedIndex(0);
+        cmbEstadoFin2.setSelectedIndex(0);
         guardar = true;
     }//GEN-LAST:event_btnNuevaCuentaActionPerformed
-
-    private void txtSaldoAcreedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSaldoAcreedorKeyTyped
-        // TODO add your handling code here:
-        if (txtSaldoAcreedor.getText().contains(".")) {
-            if (txtSaldoAcreedor.getText().length() >= cantidadCaracteres + 3) {
-                getToolkit().beep();
-                evt.consume();
-            }
-        }
-
-        if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.') {
-            getToolkit().beep();
-            evt.consume();
-        }
-        if (evt.getKeyChar() == '.' && txtSaldoAcreedor.getText().contains(".")) {
-            getToolkit().beep();
-            evt.consume();
-        } else {
-            if (evt.getKeyChar() == '.') {
-                cantidadCaracteres = txtSaldoAcreedor.getText().length();
-            }
-        }
-    }//GEN-LAST:event_txtSaldoAcreedorKeyTyped
 
     private void tableCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCuentaMouseClicked
         // TODO add your handling code here:
@@ -519,15 +421,12 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
             Cuenta c = cuentaTabla.cuentas.get(row);
             cuentaActual = c;
 
-            rbSaldoDeudor.setEnabled(false);
-            rbSaldoAcreedor.setEnabled(false);
             txtCodigo.setText(String.valueOf(c.getCodigo()));
             txtNombre.setText(c.getNombreCuenta());
             txtADescripcion.setText(c.getDescripcion());
-            txtSaldoDeudor.setText(String.valueOf(c.getSaldoDeudor()));
-            txtSaldoAcreedor.setText(String.valueOf(c.getSaldoAcreedor()));
             txtCodigo.setEnabled(false);
-            cmbEstadoFin.setSelectedItem(tipoBalance(c.getEstadoFinanciero()));
+            cmbEstadoFin.setSelectedItem(tipoBalance(c.getEstadoFinanciero(0)));
+            cmbEstadoFin2.setSelectedItem(tipoBalance(c.getEstadoFinanciero(1)));
             cmbGrupoCuenta.setSelectedItem(c.getGrupoCuenta());
             cmbCuentaMayor.setSelectedIndex(indexPadre(c.getCodigoMayor()));
             guardar = false;
@@ -548,8 +447,8 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 int respuesta = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar?", "Eliminación", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (respuesta == JOptionPane.YES_OPTION) {
 
-                    double deudor = Double.parseDouble(txtSaldoDeudor.getText());
-                    double acreedor = Double.parseDouble(txtSaldoAcreedor.getText());
+                    /*double deudor = Double.parseDouble(txtSaldoDeudor.getText());
+                    double acreedor = Double.parseDouble(txtSaldoAcreedor.getText());*/
                     boolean padre = false;
 
                     Iterator<Cuenta> i = cuentaTabla.cuentas.iterator();
@@ -564,10 +463,10 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                     if (padre) {
                         JOptionPane.showMessageDialog(this, "¡No es posible eliminar una cuenta de Mayor. Debe Eliminar las subcuentas, previamente!", "Información", JOptionPane.WARNING_MESSAGE);
                     } else {
-                        if (!(saldoFinal(deudor, acreedor))) {
+                        if (true) {
                             JOptionPane.showMessageDialog(this, "¡No es posible eliminar una cuenta con saldos mayores a cero!", "Información", JOptionPane.WARNING_MESSAGE);
                         } else {
-                            String sqlE = "delete FROM cuenta where codigocuenta=?";
+                            String sqlE = "Delete FROM cuenta where codigocuenta=?";
                             PreparedStatement statementE = this.conexion.prepareStatement(sqlE);
                             statementE.setInt(1, Integer.parseInt(txtCodigo.getText()));
                             statementE.execute();
@@ -597,9 +496,13 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                     c.setCodigoMayor(m.getCodigo());
                     c.setNombreMayor(m.getNombreCuenta());
                     c.setGrupoCuenta(cmbGrupoCuenta.getSelectedItem().toString());
-                    c.setEstadoFinanciero(tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()));
-                    c.setSaldoDeudor(Double.parseDouble(txtSaldoDeudor.getText()));
-                    c.setSaldoAcreedor(Double.parseDouble(txtSaldoAcreedor.getText()));
+                    c.setEstadoFinanciero(tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 0);
+                    c.setEstadoFinanciero(tipoBalanceLetra(cmbEstadoFin2.getSelectedItem().toString()), 1);
+
+                    //Conversion de chars (Estado Financiero) a string 
+                    StringBuilder str = new StringBuilder(2);
+                    str.append(c.getEstadoFinanciero(0));
+                    str.append(c.getEstadoFinanciero(1));
 
                     String sentenciaSql;
                     PreparedStatement statement;
@@ -612,7 +515,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                             statement.setString(2, c.getNombreCuenta());
                             statement.setString(3, c.getDescripcion());
                             statement.setString(4, c.getGrupoCuenta());
-                            statement.setObject(5, c.getEstadoFinanciero(), 1);
+                            statement.setCharacterStream(5, new StringReader(str.toString()), 2);
                             break;
                         default:
                             sentenciaSql = "INSERT INTO cuenta(codigocuenta,cue_codigocuenta,nombrecuenta,descripcion,grupocuenta,estadofinanciero) VALUES" + "(?,?,?,?,?,?)";
@@ -623,7 +526,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                             statement.setString(3, c.getNombreCuenta());
                             statement.setString(4, c.getDescripcion());
                             statement.setString(5, c.getGrupoCuenta());
-                            statement.setObject(6, c.getEstadoFinanciero(), 1);
+                            statement.setCharacterStream(6, new StringReader(str.toString()), 2);
                             break;
                     }
 
@@ -634,27 +537,42 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 }
 
             } else {
+                Cuenta c = new Cuenta();
+                c.setCodigo(Integer.parseInt(txtCodigo.getText()));
+                c.setNombreCuenta(txtNombre.getText());
+                c.setDescripcion(txtADescripcion.getText());
+                c.setCodigoMayor(m.getCodigo());
+                c.setNombreMayor(m.getNombreCuenta());
+                c.setGrupoCuenta(cmbGrupoCuenta.getSelectedItem().toString());
+                c.setEstadoFinanciero(tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 0);
+                c.setEstadoFinanciero(tipoBalanceLetra(cmbEstadoFin2.getSelectedItem().toString()), 1);
+
+                //Conversion de chars (Estado Financiero) a string 
+                StringBuilder str = new StringBuilder(2);
+                str.append(c.getEstadoFinanciero(0));
+                str.append(c.getEstadoFinanciero(1));
+
                 String sentenciaSql;
                 PreparedStatement preparedStatement;
                 switch (m.getCodigo()) {
                     case 0:
                         sentenciaSql = "UPDATE cuenta SET nombrecuenta= ? , descripcion = ? , grupocuenta = ?, estadofinanciero= ? WHERE codigocuenta = ?";
                         preparedStatement = this.conexion.prepareStatement(sentenciaSql);
-                        preparedStatement.setString(1, txtNombre.getText());
-                        preparedStatement.setString(2, txtADescripcion.getText());
-                        preparedStatement.setString(3, cmbGrupoCuenta.getSelectedItem().toString());
-                        preparedStatement.setObject(4, tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 1);
-                        preparedStatement.setInt(5, Integer.parseInt(txtCodigo.getText()));
+                        preparedStatement.setString(1, c.getNombreCuenta());
+                        preparedStatement.setString(2, c.getDescripcion());
+                        preparedStatement.setString(3, c.getGrupoCuenta());
+                        preparedStatement.setCharacterStream(4, new StringReader(str.toString()), 2);
+                        preparedStatement.setInt(5, c.getCodigo());
                         break;
                     default:
                         sentenciaSql = "UPDATE cuenta SET cue_codigocuenta=?, nombrecuenta= ? , descripcion = ? , grupocuenta = ?, estadofinanciero= ? WHERE codigocuenta = ?";
                         preparedStatement = this.conexion.prepareStatement(sentenciaSql);
                         preparedStatement.setInt(1, m.getCodigo());
-                        preparedStatement.setString(2, txtNombre.getText());
-                        preparedStatement.setString(3, (txtADescripcion.getText()));
-                        preparedStatement.setString(4, cmbGrupoCuenta.getSelectedItem().toString());
-                        preparedStatement.setObject(5, tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 1);
-                        preparedStatement.setInt(6, Integer.parseInt(txtCodigo.getText()));
+                        preparedStatement.setString(2, c.getNombreCuenta());
+                        preparedStatement.setString(3, c.getDescripcion());
+                        preparedStatement.setString(4, c.getGrupoCuenta());
+                        preparedStatement.setCharacterStream(5, new StringReader(str.toString()), 2);
+                        preparedStatement.setInt(6, c.getCodigo());
                         break;
                 }
                 preparedStatement.execute();
@@ -667,6 +585,11 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         UpdateJTable();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void cbSaldoFinalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cbSaldoFinalStateChanged
+        // TODO add your handling code here:
+        UpdateJTable();
+    }//GEN-LAST:event_cbSaldoFinalStateChanged
+
     private void cerrar() {
         try {
             int respuesta = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea cerrar el programa?", "Cerrar aplicación", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -674,24 +597,27 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 conexion.close();
                 System.exit(0);
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error al cerrar la conexión con la base de datos " + ex);
         }
     }
 
     //Transforma el char correspondiente al Estado Financiero en String
     public static String tipoBalance(char estado) {
-        String estadoFinanciero = null;
+        String estadoFinanciero = "";
 
         switch (estado) {
             case 'G':
                 estadoFinanciero = "Balance General";
                 break;
             case 'R':
-                estadoFinanciero = " Estado de Resultado";
+                estadoFinanciero = "Estado de Resultado";
                 break;
             case 'C':
                 estadoFinanciero = "Estado de Capital";
+                break;
+            case ' ':
+                estadoFinanciero = "";
                 break;
         }
 
@@ -701,6 +627,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
     //Transforma el String correspondiente al Estado Financiero en char para guardar en la Base
     private char tipoBalanceLetra(String estado) {
         char estadoFin = ' ';
+
         switch (estado) {
             case "Balance General":
                 estadoFin = 'G';
@@ -711,7 +638,11 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
             case "Estado de Capital":
                 estadoFin = 'C';
                 break;
+            case "N/A":
+                estadoFin = ' ';
+                break;
         }
+
         return estadoFin;
     }
 
@@ -730,17 +661,9 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al recuperar los datos");
+            JOptionPane.showMessageDialog(this, "Error al recuperar los datos" + ex);
         }
         return nombre;
-    }
-
-    private boolean saldoFinal(double deudor, double acreedor) {
-        boolean r = false;
-        if ((deudor - acreedor) == 0) {
-            r = true;
-        }
-        return r;
     }
 
     private boolean codigoExistente(int codigo) {
@@ -777,7 +700,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         return index;
     }
 
-    private Cuenta getCuentaPadre(int codigoMayor) {
+    private Cuenta getCuentaPadreDB(int codigoMayor) {
         Cuenta padre = new Cuenta();
         try {
             if (codigoMayor == 0) {
@@ -846,27 +769,26 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGRadio;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevaCuenta;
+    public static javax.swing.JCheckBox cbSaldoFinal;
     private javax.swing.JComboBox<Cuenta> cmbCuentaMayor;
     private javax.swing.JComboBox<String> cmbEstadoFin;
+    private javax.swing.JComboBox<String> cmbEstadoFin2;
     private javax.swing.JComboBox<String> cmbGrupoCuenta;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblCuentaMayor;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblEstadoFin;
+    private javax.swing.JLabel lblEstadoFin2;
     private javax.swing.JLabel lblGrupoCuenta;
     private javax.swing.JLabel lblListadoCuenta;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JScrollPane panelTableCuenta;
-    private javax.swing.JRadioButton rbSaldoAcreedor;
-    private javax.swing.JRadioButton rbSaldoDeudor;
     private javax.swing.JTable tableCuenta;
     private javax.swing.JTextArea txtADescripcion;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtSaldoAcreedor;
-    private javax.swing.JTextField txtSaldoDeudor;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -14,7 +14,7 @@ public class Cuenta {
     private int codigo;
     private String nombreCuenta;
     private String descripcion;
-    private char estadoFinanciero;
+    private char[] estadoFinanciero = new char[2];
     private String grupoCuenta;
     private double saldoDeudor;
     private double saldoAcreedor;
@@ -22,7 +22,7 @@ public class Cuenta {
     private int codigoMayor;
     private String nombreMayor;
 
-    public Cuenta(String nombreCuenta, String descripcion, char estadoFinanciero, String grupoCuenta) {
+    public Cuenta(String nombreCuenta, String descripcion, char[] estadoFinanciero, String grupoCuenta) {
         this.nombreCuenta = nombreCuenta;
         this.descripcion = descripcion;
         this.estadoFinanciero = estadoFinanciero;
@@ -77,12 +77,12 @@ public class Cuenta {
         this.descripcion = descripcion;
     }
 
-    public char getEstadoFinanciero() {
-        return estadoFinanciero;
+    public char getEstadoFinanciero(int i) {
+        return estadoFinanciero[i];
     }
 
-    public void setEstadoFinanciero(char estadoFinanciero) {
-        this.estadoFinanciero = estadoFinanciero;
+    public void setEstadoFinanciero(char estadoFinanciero, int i) {
+        this.estadoFinanciero[i] = estadoFinanciero;
     }
 
     public String getGrupoCuenta() {
