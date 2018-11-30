@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Usuarios;
+package Interfaces;
 
 
 
 import javax.swing.DefaultComboBoxModel;
+
 import Conexion.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import Modelos.Usuario;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,15 +29,14 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
     /**
      * Creates new form AdministrarUsuariosForm
      */
-    Connection con = Conexion.getConexion();
+    private Connection con = Conexion.getConexion();
     String idActualizar;
-    public AdministrarUsuariosForm() {
-        
+    public AdministrarUsuariosForm() { 
         initComponents();
+        background();
         setLocationRelativeTo(null);
         this.setResizable(false);
         setTitle("Administrador de Usuarios");
-        
         try{
             llenarTabla();
         }catch(SQLException ex){
@@ -44,6 +45,11 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         
         
     }
+        private void background() {
+        Fondo f = new Fondo();
+        f.setSize(1333, 629);
+        this.add(f);
+    } 
     
     
     private void llenarTabla() throws SQLException{
@@ -91,11 +97,10 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         comboBoxPermisos = new javax.swing.JComboBox<>();
         btnActualizar = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Daniel Mejia\\Desktop\\Sistema-Contable2\\Archivos de diseño\\imagenes_para_logo\\login.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/login.png"))); // NOI18N
 
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -191,8 +196,6 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("jLabel5");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -206,10 +209,8 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(43, 43, 43)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(btnNuevo))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnNuevo)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,8 +287,7 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGuardar)
                             .addComponent(btnCancelar)
-                            .addComponent(btnActualizar)
-                            .addComponent(jLabel5))))
+                            .addComponent(btnActualizar))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -489,7 +489,6 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaUsuarios;
     private javax.swing.JTextField txtContraseña;

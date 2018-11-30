@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Usuarios;
+package Interfaces;
 
 import Conexion.Conexion;
 import java.awt.HeadlessException;
@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -73,7 +74,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Daniel Mejia\\Desktop\\Sistema-Contable2\\Archivos de diseño\\imagenes_para_logo\\login.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/login.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Rockwell Condensed", 2, 36)); // NOI18N
         jLabel4.setText("Muebles Rivera, S.A. de C.V.");
