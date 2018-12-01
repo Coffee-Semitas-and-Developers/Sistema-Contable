@@ -142,6 +142,9 @@ public class TarjetaDeTiempo {
     public void setDui(String dui) {
         this.dui = dui;
     }
-    
+
+    public void setDetalle(List<DetalleTarjetaDeTiempo> detalle) {
+        this.detalle = detalle;
+    }
     
 }    

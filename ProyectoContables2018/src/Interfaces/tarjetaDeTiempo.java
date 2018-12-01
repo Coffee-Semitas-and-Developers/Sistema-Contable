@@ -6,34 +6,30 @@
 package Interfaces;
 
 import Modelos.DetalleTarjetaDeTiempo;
+import Modelos.TarjetaDeTiempo;
 //import Modelos.Empleado;
 import Modelos.TarjetaTableModel;
-import Modelos.TarjetaDeTiempo;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.AbstractTableModel;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.table.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -48,6 +44,8 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
     Date d = new Date();
     java.sql.Date sqlDate;
     String dat;
+    int id;
+    TarjetaDeTiempo tar = new TarjetaDeTiempo();
 
     /**
      * Creates new form tarjetaDeTiempo
@@ -60,6 +58,8 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         background();
         setFecha();
         lbDate.setText(dat);
+        comboDia.removeAllItems();
+        comboEmpleado.removeAllItems();
         comboDia.addItem("Lunes");
         comboDia.addItem("Martes");
         comboDia.addItem("Miércoles");
@@ -67,7 +67,9 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         comboDia.addItem("Viernes");
         comboDia.addItem("Sábado");
         comboDia.addItem("Domingo");
-        comboDia.addItemListener((ItemListener) this);
+        comboDia.addActionListener(comboDia);
+        comboEmpleado.addActionListener(comboEmpleado);
+        getEmpleados();
     }
 
     private void inicializarColumnas() {
@@ -106,45 +108,95 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
             Statement statement = this.conexion.createStatement();
             ResultSet resultado = statement.executeQuery(sentenciaSql);
             while (resultado.next()) {
-                DetalleTarjetaDeTiempo d = new DetalleTarjetaDeTiempo();
-                d.setDiaDeTrabajo(resultado.getString("diadetrabajo"));
-                d.setHorasTrabajadas(resultado.getInt("horastrabajadas"));
-                d.setHorasExtras(resultado.getInt("horasextras"));
-
-                this.TarjetaTM.add(d);
+                int dia = resultado.getInt("diadetrabajo");
+                DetalleTarjetaDeTiempo de = new DetalleTarjetaDeTiempo();
+                switch (dia) {
+                    case 1:
+                        de.setDiaSeleccionado("Lunes");
+                        break;
+                    case 2:
+                        de.setDiaSeleccionado("Martes");
+                        break;
+                    case 3:
+                        de.setDiaSeleccionado("Miércoles");
+                        break;
+                    case 4:
+                        de.setDiaSeleccionado("Jueves");
+                        break;
+                    case 5:
+                        de.setDiaSeleccionado("Viernes");
+                        break;
+                    case 6:
+                        de.setDiaSeleccionado("Sábado");
+                        break;
+                    case 7:
+                        de.setDiaSeleccionado("Domingo");
+                        break;
+                }
+                de.setHorasTrabajadas(resultado.getInt("horastrabajadas"));
+                de.setHorasExtras(resultado.getInt("horasextras"));
+                id = resultado.getInt("idtarjeta");
+                this.TarjetaTM.add(de);
             }
             tarjetaTabla.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al recuperar los productos de la base de datos");
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al recuperar los datos de la base de datos.");
         }
     }
 
     private void background() {
         Fondo f = new Fondo();
-        f.setSize(1333, 629);
+        f.setSize(1333, 650);
         this.add(f);
     }
 
     public void setFecha() {
 
-        //Instanciamos el objeto Calendar
-        //en fecha obtenemos la fecha y hora del sistema
-        //Calendar fecha = new GregorianCalendar();
-        //Obtenemos el valor del año, mes, día,
-        //hora, minuto y segundo del sistema
-        //usando el método get y el parámetro correspondiente
+        //Instanciamos el objeto Calendar en fecha obtenemos la fecha y hora del sistema
+        //Calendar fecha = new GregorianCalendar(); Obtenemos el valor del año, mes, día,
+        //hora, minuto y segundo del sistema usando el método get y el parámetro correspondiente
         int año = fecha.get(Calendar.YEAR);
         int mes = fecha.get(Calendar.MONTH) + 1;
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
         dat = ("" + dia + "/" + mes + "/" + año + "").toString();
         try {
             d = dateFormat.parse(dat);
-            sqlDate = new java.sql.Date(d.getTime());;
+            sqlDate = new java.sql.Date(d.getTime());
 
         } catch (Exception ex) {
             System.out.println(ex);
         }
+    }
+
+    private void getEmpleados() {
+        try {
+            String sentenciaSql = "SELECT * FROM empleado";
+            String nombreCompleto;
+            Statement statement = this.conexion.createStatement();
+            ResultSet resultado = statement.executeQuery(sentenciaSql);
+            while (resultado.next()) {
+                nombreCompleto = resultado.getString("nombre") + " " + resultado.getString("apellido");
+                comboEmpleado.addItem(nombreCompleto);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al recuperar los empleados de la base de datos");
+        }
+    }
+
+    private String getDui() {
+        String dui = "";
+        try {
+            String sentenciaSql = "SELECT * FROM empleado";
+            Statement statement = this.conexion.createStatement();
+            ResultSet resultado = statement.executeQuery(sentenciaSql);
+            while (!dui.equals(resultado.getString("dui"))) {
+                dui = resultado.getString("dui");
+                resultado.next();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(tarjetaDeTiempo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dui;
     }
 
     /**
@@ -180,6 +232,8 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         comboEmpleado = new javax.swing.JComboBox<>();
         ordenTextField = new javax.swing.JTextField();
+        guardarButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -265,13 +319,22 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
             }
         });
 
+        guardarButton.setText("Guardar tarjeta");
+        guardarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarButtonActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Volver");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -281,20 +344,25 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
                         .addGap(254, 254, 254))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(totalHorasTrabajadasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
+                        .addGap(27, 27, 27)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(costoHoraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
+                        .addGap(29, 29, 29)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(costoHoraExtraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(270, 270, 270))))
+                        .addGap(18, 18, 18)
+                        .addComponent(guardarButton)
+                        .addGap(220, 220, 220))))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -320,11 +388,11 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ordenTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(149, 149, 149))))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 794, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -352,7 +420,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
                         .addComponent(ordenTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -363,15 +431,17 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
                     .addComponent(agregarButton))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(totalHorasTrabajadasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(costoHoraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(costoHoraExtraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
+                    .addComponent(costoHoraExtraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(guardarButton)
+                    .addComponent(jButton1))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -379,6 +449,56 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
 
     private void agregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarButtonActionPerformed
         // TODO add your handling code here:
+        try {
+            DetalleTarjetaDeTiempo det = new DetalleTarjetaDeTiempo();
+            String dia = (String) comboDia.getSelectedItem();
+            switch (dia) {
+                case "Lunes":
+                    det.setDiaDeTrabajo(1);
+                    break;
+                case "Martes":
+                    det.setDiaDeTrabajo(2);
+                    break;
+                case "Miércoles":
+                    det.setDiaDeTrabajo(3);
+                    break;
+                case "Jueves":
+                    det.setDiaDeTrabajo(4);
+                    break;
+                case "Viernes":
+                    det.setDiaDeTrabajo(5);
+                    break;
+                case "Sábado":
+                    det.setDiaDeTrabajo(6);
+                    break;
+                case "Domingo":
+                    det.setDiaDeTrabajo(7);
+                    break;
+            }
+            det.setIdTarjeta(id++);
+            det.setHorasTrabajadas(Integer.parseInt(horasTrabajadasTextField.getText()));
+            det.setHorasExtras(Integer.parseInt(horasExtraTextField.getText()));
+
+            String sentenciaSql = "INSERT INTO detalletarjetadetiempo(diadetrabajo,idtarjeta,fechatarjeta,horastrabajadas,horasextras) VALUES "
+                    + "(?,?,?,?,?)";
+            PreparedStatement preparedStatement = conexion.prepareStatement(sentenciaSql);
+            preparedStatement.setInt(1, det.getDiaDeTrabajo());
+            preparedStatement.setInt(2, id++);
+            preparedStatement.setDate(3, sqlDate);
+            preparedStatement.setInt(4, det.getHorasTrabajadas());
+            preparedStatement.setInt(5, det.getHorasExtras());
+            preparedStatement.execute();
+            tar.setDetalle((List<DetalleTarjetaDeTiempo>) det);
+            this.TarjetaTM.add(det);
+            tarjetaTabla.repaint();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar.");
+        }
+        JOptionPane.showMessageDialog(null, "Detalle registrado con éxito", "Registro Completo", JOptionPane.INFORMATION_MESSAGE);
+        ordenTextField.setText(null);
+        horasTrabajadasTextField.setText(null);
+        horasExtraTextField.setText(null);
+        totalHorasTrabajadasTextField.setText(Integer.toString(tar.calcularHoras()));
     }//GEN-LAST:event_agregarButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -440,12 +560,38 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getSource() == comboDia) {
             String seleccionado = (String) comboDia.getSelectedItem();
-            setTitle(seleccionado);
         }
     }//GEN-LAST:event_comboDiaItemStateChanged
 
+    private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+            tar.setIdOrden(Integer.parseInt(ordenTextField.getText()));
+            tar.setDui(getDui());
+            tar.setSalHora(Double.parseDouble(costoHoraTextField.getText()));
+            tar.setSalHoraExtra(Double.parseDouble(costoHoraTextField.getText()));
+            String sentenciaSql = "INSERT INTO tarjetadetiempo(idtarjeta,fechatarjeta,idorden,dui,salariohoranormal,salariohoraextra,totalhorastrabajadas,totalhorasextras) VALUES "
+                    + "(?,?,?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = conexion.prepareStatement(sentenciaSql);
+            preparedStatement.setInt(1, id++);
+            preparedStatement.setDate(2, sqlDate);
+            preparedStatement.setInt(3, tar.getIdOrden());
+            preparedStatement.setString(4, tar.getDui());
+            preparedStatement.setDouble(5, tar.SalHoras());
+            preparedStatement.setDouble(6, tar.SalHorasExtras());
+            preparedStatement.setInt(7, tar.calcularHoras());
+            preparedStatement.setInt(8, tar.calcularHorasExtras());
+            preparedStatement.execute();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar.");
+        } 
+        JOptionPane.showMessageDialog(null, "Tarjeta registrada con éxito", "Registro Completo", JOptionPane.INFORMATION_MESSAGE);
+        totalHorasTrabajadasTextField.setText(null);
+        costoHoraTextField.setText(null);
+        costoHoraExtraTextField.setText(null);
+    }//GEN-LAST:event_guardarButtonActionPerformed
+
     //String seleccionado=(String)combo1Dia.getSelectedItem();
-    
     /**
      * @param args the command line arguments
      */
@@ -487,8 +633,10 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboEmpleado;
     private javax.swing.JTextField costoHoraExtraTextField;
     private javax.swing.JTextField costoHoraTextField;
+    private javax.swing.JButton guardarButton;
     private javax.swing.JTextField horasExtraTextField;
     private javax.swing.JTextField horasTrabajadasTextField;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
