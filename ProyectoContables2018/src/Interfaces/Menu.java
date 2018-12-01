@@ -18,13 +18,22 @@ public class Menu extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
-    public Menu() {
+    public Menu(){
+        initComponents();
+    }
+    
+    
+    public Menu(int a) {
         initComponents();
         background();
         getIconImage();
         setLocationRelativeTo(null);
         this.setResizable(false);
         setTitle("Menu Principal");
+        if(a==1){
+            btnAdminUs.setEnabled(false);
+        }  
+        
     }
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO PEQUEÑO.jpg"));
@@ -57,13 +66,19 @@ public class Menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnMovimientos = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnPlanillas = new javax.swing.JButton();
+        btnCostos = new javax.swing.JButton();
+        btnBalances = new javax.swing.JButton();
+        btnAdminUs = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -87,38 +102,91 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("jButton1");
+        btnPlanillas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnPlanillas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo2.png"))); // NOI18N
+        btnPlanillas.setText("Planillas");
+        btnPlanillas.setBorderPainted(false);
+        btnPlanillas.setContentAreaFilled(false);
+        btnPlanillas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPlanillas.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
+        btnPlanillas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        btnCostos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnCostos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo2.png"))); // NOI18N
+        btnCostos.setText("Costos");
+        btnCostos.setBorderPainted(false);
+        btnCostos.setContentAreaFilled(false);
+        btnCostos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCostos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo1.png"))); // NOI18N
+        btnCostos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        btnBalances.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnBalances.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finanza2.png"))); // NOI18N
+        btnBalances.setText("Reportes y Balances");
+        btnBalances.setBorderPainted(false);
+        btnBalances.setContentAreaFilled(false);
+        btnBalances.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBalances.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finanza.png"))); // NOI18N
+        btnBalances.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        btnAdminUs.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAdminUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojo2.png"))); // NOI18N
+        btnAdminUs.setText("Administrar Usuarios");
+        btnAdminUs.setBorderPainted(false);
+        btnAdminUs.setContentAreaFilled(false);
+        btnAdminUs.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdminUs.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojo1.png"))); // NOI18N
+        btnAdminUs.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAdminUs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminUsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(183, 183, 183)
-                .addComponent(jLabel2)
-                .addGap(0, 223, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(btnMovimientos)
-                .addGap(131, 131, 131)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBalances, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMovimientos))))
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAdminUs, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnPlanillas, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(btnCostos, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(89, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
                         .addGap(48, 48, 48)
-                        .addComponent(btnMovimientos, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(jButton1)))
-                .addGap(0, 190, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnMovimientos, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                            .addComponent(btnCostos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnPlanillas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBalances, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdminUs, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -129,8 +197,18 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMovimientosActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        cerrar();
+        
     }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        cerrar();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void btnAdminUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminUsActionPerformed
+        AdministrarUsuariosForm obj = new AdministrarUsuariosForm();
+        obj.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAdminUsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,12 +242,16 @@ public class Menu extends javax.swing.JFrame {
             public void run() {
                 new Menu().setVisible(true);
             }
+
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdminUs;
+    private javax.swing.JButton btnBalances;
+    private javax.swing.JButton btnCostos;
     private javax.swing.JButton btnMovimientos;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnPlanillas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
