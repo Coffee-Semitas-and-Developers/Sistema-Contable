@@ -9,6 +9,8 @@ import Modelos.DetalleTarjetaDeTiempo;
 import Modelos.TarjetaDeTiempo;
 //import Modelos.Empleado;
 import Modelos.TarjetaTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -44,7 +46,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
     Date d = new Date();
     java.sql.Date sqlDate;
     String dat;
-    int id;
+    int id, diaSeleccionado;
     TarjetaDeTiempo tar = new TarjetaDeTiempo();
 
     /**
@@ -60,6 +62,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         lbDate.setText(dat);
         comboDia.removeAllItems();
         comboEmpleado.removeAllItems();
+        comboDia.addActionListener(comboDia);
         comboDia.addItem("Lunes");
         comboDia.addItem("Martes");
         comboDia.addItem("Miércoles");
@@ -67,14 +70,13 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         comboDia.addItem("Viernes");
         comboDia.addItem("Sábado");
         comboDia.addItem("Domingo");
-        comboDia.addActionListener(comboDia);
         comboEmpleado.addActionListener(comboEmpleado);
         getEmpleados();
     }
 
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             TableColumn col = new TableColumn(i);
             switch (i) {
                 case 0:
@@ -161,7 +163,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         dat = ("" + dia + "/" + mes + "/" + año + "").toString();
         try {
             d = dateFormat.parse(dat);
-            sqlDate = new java.sql.Date(d.getTime());
+            sqlDate = new java.sql.Date(d.getTime());;
 
         } catch (Exception ex) {
             System.out.println(ex);
@@ -266,6 +268,11 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         comboDia.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 comboDiaItemStateChanged(evt);
+            }
+        });
+        comboDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboDiaActionPerformed(evt);
             }
         });
 
@@ -454,32 +461,32 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
             String dia = (String) comboDia.getSelectedItem();
             switch (dia) {
                 case "Lunes":
-                    det.setDiaDeTrabajo(1);
+                    diaSeleccionado = 1;
                     break;
                 case "Martes":
-                    det.setDiaDeTrabajo(2);
+                    diaSeleccionado = 2;
                     break;
                 case "Miércoles":
-                    det.setDiaDeTrabajo(3);
+                    diaSeleccionado = 3;
                     break;
                 case "Jueves":
-                    det.setDiaDeTrabajo(4);
+                    diaSeleccionado = 4;
                     break;
                 case "Viernes":
-                    det.setDiaDeTrabajo(5);
+                    diaSeleccionado = 5;
                     break;
                 case "Sábado":
-                    det.setDiaDeTrabajo(6);
+                    diaSeleccionado = 6;
                     break;
                 case "Domingo":
-                    det.setDiaDeTrabajo(7);
+                    diaSeleccionado = 7;
                     break;
             }
-            det.setIdTarjeta(id++);
+            det.setDiaDeTrabajo(diaSeleccionado);
             det.setHorasTrabajadas(Integer.parseInt(horasTrabajadasTextField.getText()));
             det.setHorasExtras(Integer.parseInt(horasExtraTextField.getText()));
-
-            String sentenciaSql = "INSERT INTO detalletarjetadetiempo(diadetrabajo,idtarjeta,fechatarjeta,horastrabajadas,horasextras) VALUES "
+            String sentenciaSql;
+            sentenciaSql = "INSERT INTO detalletarjetadetiempo(diadetrabajo,idtarjeta,fechatarjeta,horastrabajadas,horasextras) VALUES"
                     + "(?,?,?,?,?)";
             PreparedStatement preparedStatement = conexion.prepareStatement(sentenciaSql);
             preparedStatement.setInt(1, det.getDiaDeTrabajo());
@@ -494,6 +501,7 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al guardar.");
         }
+
         JOptionPane.showMessageDialog(null, "Detalle registrado con éxito", "Registro Completo", JOptionPane.INFORMATION_MESSAGE);
         ordenTextField.setText(null);
         horasTrabajadasTextField.setText(null);
@@ -584,12 +592,17 @@ public class tarjetaDeTiempo extends javax.swing.JFrame {
             preparedStatement.execute();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al guardar.");
-        } 
+        }
         JOptionPane.showMessageDialog(null, "Tarjeta registrada con éxito", "Registro Completo", JOptionPane.INFORMATION_MESSAGE);
         totalHorasTrabajadasTextField.setText(null);
         costoHoraTextField.setText(null);
         costoHoraExtraTextField.setText(null);
     }//GEN-LAST:event_guardarButtonActionPerformed
+
+    private void comboDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDiaActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_comboDiaActionPerformed
 
     //String seleccionado=(String)combo1Dia.getSelectedItem();
     /**

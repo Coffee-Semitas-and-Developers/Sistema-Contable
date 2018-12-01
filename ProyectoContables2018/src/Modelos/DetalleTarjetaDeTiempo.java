@@ -78,6 +78,5 @@ public class DetalleTarjetaDeTiempo {
 
     public void setDiaSeleccionado(String diaSeleccionado) {
         this.diaSeleccionado = diaSeleccionado;
-    }
-    
+    }  
 }
