@@ -58,10 +58,7 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
             ima.setSize(this.getSize());
             this.add(ima);
         }
-    
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
-        cerrar();
-    }      
+       
     public void cerrar() {
         Object[] opciones = {"Aceptar", "Cancelar"};
         int eleccion = JOptionPane.showOptionDialog // Sigue en la siguiente linea

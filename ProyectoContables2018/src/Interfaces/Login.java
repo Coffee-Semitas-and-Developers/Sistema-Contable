@@ -150,14 +150,30 @@ public class Login extends javax.swing.JFrame {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         String sql="select * from usuario where nombreusuario=? and contrasena=?";
+        int validate;
         try{
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, txtUsuario.getText());
             stmt.setString(2, new String (txtContraseña.getPassword()));
             ResultSet res = stmt.executeQuery();
+            
             if(res.next())
             {
-                //Envia al Menu
+                if(res.getString(4).equals("Administrador")){
+                    validate=0;
+                    Menu menuU = new Menu(validate);
+                    menuU.setVisible(true);
+                    this.dispose();
+                }
+                else{
+                    if(res.getString(4).equals("Usuario")){
+                        validate = 1;
+                        Menu menuAdmin = new Menu(validate);
+                        menuAdmin.setVisible(true);
+                        this.dispose();
+                    }
+                }
+                
             }else
             {
                 JOptionPane.showMessageDialog(null, "Nombre de Usuario o contraseña incorrectos");
