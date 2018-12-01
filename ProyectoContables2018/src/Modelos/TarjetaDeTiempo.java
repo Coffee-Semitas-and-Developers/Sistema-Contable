@@ -18,15 +18,16 @@ import java.util.Iterator;
  */
 public class TarjetaDeTiempo {
     private Date fechaTarjeta;
-    private int idOrden, totalHorasTrabajadas, totalHorasExtras;
-    private int id;
+    private int idOrden, totalHorasTrabajadas, totalHorasExtras, id;
+    private String dui;
     private Double salHora, salHoraExtra;
     public List<DetalleTarjetaDeTiempo> detalle = new ArrayList<DetalleTarjetaDeTiempo>();
 
-    public TarjetaDeTiempo(Date fechaTarjeta, int idOrden, int id, Double salHora, Double salHoraExtra) {
+    public TarjetaDeTiempo(Date fechaTarjeta, int idOrden, int id, String dui, Double salHora, Double salHoraExtra) {
         this.fechaTarjeta = fechaTarjeta;
         this.idOrden = idOrden;
         this.id = id;
+        this.dui=dui;
         this.salHora = salHora;
         this.salHoraExtra = salHoraExtra;
     }
@@ -132,5 +133,15 @@ public class TarjetaDeTiempo {
 
     public Double salHoja() {
         return SalHoras() + SalHorasExtras();
-    }   
+    }
+
+    public String getDui() {
+        return dui;
+    }
+
+    public void setDui(String dui) {
+        this.dui = dui;
+    }
+    
+    
 }    
