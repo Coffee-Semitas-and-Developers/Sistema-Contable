@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Iterator;
 
 /**
  *
@@ -42,7 +43,10 @@ public class PlanillaForm extends javax.swing.JFrame {
     java.sql.Date sqlDate;
     LineaPlanillaTableModel lineaTM = new LineaPlanillaTableModel();
     LineaPlanillaPatronoTableModel lineaPatronoTM = new LineaPlanillaPatronoTableModel();
-
+    List <LineaPlanilla> ln= new ArrayList<LineaPlanilla>();
+    
+    
+    
     public PlanillaForm() {
         initComponents();
         background();
@@ -53,7 +57,9 @@ public class PlanillaForm extends javax.swing.JFrame {
         consultaInicial();
         tablaLinea.setComponentPopupMenu(popmenu);
         tablaLinea.addMouseListener(new TableMouseListener(tablaLinea));  
-
+        itemDesc.setEnabled(true);
+        itemBoni.setEnabled(true);
+        
     }
 
     private void background() {
@@ -193,9 +199,9 @@ public class PlanillaForm extends javax.swing.JFrame {
                 TarjetaDeTiempo ta = new TarjetaDeTiempo(5.00);
                 ta.detalle.add(new DetalleTarjetaDeTiempo(160));
                 e.t.add(ta);
+                ln.add(new LineaPlanilla(e));
                 this.lineaTM.ln.add(new LineaPlanilla(e));
                 this.lineaPatronoTM.ln.add(new LineaPlanilla(e));
-
             }
             tablaLinea.repaint();
         } catch (SQLException ex) {
@@ -268,22 +274,32 @@ public class PlanillaForm extends javax.swing.JFrame {
             }
         });
 
+        jcOcasion.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcOcasionItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel3)
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jcTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
+                        .addGap(10, 10, 10)
                         .addComponent(lbDate, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(257, 257, 257)
+                        .addGap(255, 255, 255)
                         .addComponent(jLabel4)
                         .addGap(35, 35, 35)
                         .addComponent(jcOcasion, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -292,14 +308,14 @@ public class PlanillaForm extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(lbDate, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
-                        .addComponent(jcOcasion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jcOcasion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(lbDate, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -438,6 +454,52 @@ public class PlanillaForm extends javax.swing.JFrame {
        tablaLinea.repaint();
     }//GEN-LAST:event_itemBoniActionPerformed
 
+    private void jcOcasionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcOcasionItemStateChanged
+        // TODO add your handling code here:
+        if (jcOcasion.getSelectedIndex()==0) {
+            itemDesc.setEnabled(true);
+            itemBoni.setEnabled(true);
+            int c = 0;
+            tablaLinea.removeAll();
+            lineaTM.ln.clear();
+            Iterator<LineaPlanilla> i = ln.iterator();
+            while (i.hasNext()) {
+                LineaPlanilla e = i.next();
+                this.lineaTM.ln.add(e);
+                this.lineaTM.fireTableDataChanged();
+                c++;
+            }
+            tablaLinea.setModel(lineaTM);
+            
+            System.out.print("eMPLEADOS" + c);
+            c = 0;
+            patronoTable.removeAll();
+            Iterator<LineaPlanilla> i1 = ln.iterator();
+            i1 = this.ln.iterator();
+            while (i1.hasNext()) {
+                LineaPlanilla l = i1.next();
+                this.lineaPatronoTM.ln.add(l);
+                this.lineaPatronoTM.fireTableDataChanged();
+                c++;
+            }
+            patronoTable.setModel(lineaPatronoTM);
+
+            System.out.println("Lista patro" + c);
+
+                tablaLinea.repaint();
+                patronoTable.repaint();
+
+
+        }if(jcOcasion.getSelectedItem()=="Vacaciones"){
+            itemDesc.setEnabled(false);
+            itemBoni.setEnabled(false);
+        }if(jcOcasion.getSelectedItem()=="Aguinaldo"){
+            itemDesc.setEnabled(false);
+            itemBoni.setEnabled(false);
+        
+        
+    }//GEN-LAST:event_jcOcasionItemStateChanged
+    }
     private void llenarCombos() {
         //TIPO DE PLANILLA
         jcTipo.addItem("Empleado");

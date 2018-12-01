@@ -221,6 +221,15 @@ public double aportePatronal() {
         }
         return desc;
     }
+    
+    public double salarioVacaciones(){
+        double salDia=5.00;
+        return salDia*1.30;         
+    }
+    
+    
+    
+    
 }
     
             
