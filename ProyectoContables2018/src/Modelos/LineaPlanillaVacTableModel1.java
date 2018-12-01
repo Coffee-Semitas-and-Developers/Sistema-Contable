@@ -47,8 +47,7 @@ public class LineaPlanillaVacTableModel1 extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
  LineaPlanilla l = ln.get(rowIndex);
-    Object valor = null;
-    
+    Object valor = null;   
       
             switch(columnIndex){
             case 0: valor= l.isSelected();
@@ -59,23 +58,23 @@ public class LineaPlanillaVacTableModel1 extends AbstractTableModel{
             break;
             case 3: valor = l.getEmp().getCargo();
             break;
-            case 4: valor = l.getEmp().calcularHoras();
+            case 4: valor = 120;
             break;
-            case 5: valor = l.getEmp().calcularHorasExtras();
+            case 5: valor = 0;
             break;
-            case 6: valor = l.getEmp().calcularSalario();
+            case 6: valor = l.salarioVacaciones();
             break;            
-             case 7: valor = l.calcISSS(0);
+             case 7: valor = l.calcISSSVacaciones(0);
             break;
-            case 8: valor = l.calcAFP(0);
+            case 8: valor = l.calcAFPVacaciones(0);
             break;
-            case 9: valor = l.calcRenta();
+            case 9: valor = l.calcRentaVacaciones();
             break;
-            case 10: valor = l.totalBonificacion();
+            case 10: valor = 0;
             break;
-            case 11: valor = l.totalDescuento();
+            case 11: valor = 0;
             break;
-            case 12: valor =l.calcSalarioReal()- l.getAFP(0)- l.getISSS(0)-l.getRenta();System.out.println( l.calcSalarioReal()- l.calcAFP(0)- l.calcISSS(0)-l.calcRenta());
+            case 12: valor =l.salarioVacaciones()- l.getAFPVacaciones(0)- l.getISSSVacaciones(0)-l.getRentaVacaciones();System.out.println( l.calcSalarioReal()- l.calcAFP(0)- l.calcISSS(0)-l.calcRenta());
             break;
         }
     

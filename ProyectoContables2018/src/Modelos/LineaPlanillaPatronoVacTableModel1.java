@@ -44,13 +44,13 @@ public class LineaPlanillaPatronoVacTableModel1 extends AbstractTableModel{
             break;
             case 2: valor = l.getEmp().getCargo();
             break;         
-            case 3: valor = l.getEmp().calcularSalario();
+            case 3: valor = l.salarioVacaciones();
             break;
-            case 4: valor = l.calcISSS(1);
+            case 4: valor = l.calcISSSVacaciones(1);
             break;
-            case 5: valor = l.calcAFP(1);
+            case 5: valor = l.calcAFPVacaciones(1);
             break;     
-            case 6: valor = l.aportePatronal();
+            case 6: valor = l.aportePatronalVacaciones();
             break;                
        }     
         

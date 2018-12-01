@@ -223,9 +223,133 @@ public double aportePatronal() {
     }
     
     public double salarioVacaciones(){
-        double salDia=5.00;
+        double salDia=5.00;       
         return salDia*1.30;         
     }
+    
+    public double calcISSSVacaciones(int tipo) {
+        double isss = 0;
+        
+        if(tipo==0){
+            if(salarioVacaciones()<=1000){
+                isss=salarioVacaciones()*0.03;
+            }else if(salarioVacaciones()>1000){
+            isss=30.0;
+            }        
+         Extra e = new Extra(false,"ISSS Vacaciones",3.0,isss);   
+            extras.add(e);
+        }else{
+            if(salarioVacaciones()<=1000){
+                isss=salarioVacaciones()*0.075;
+            }else if(salarioVacaciones()>1000){
+            isss=75.0;
+            }        
+         Extra e = new Extra(false,"ISSS Patrono Vacaciones",7.5,isss);   
+            extras.add(e);
+        }
+        
+        return isss;
+    }
+
+    public double calcAFPVacaciones(int tipo) {
+        double afp = 0;
+
+        if (tipo == 0) {
+            if (salarioVacaciones() <= 6500) {
+                afp = salarioVacaciones() * 0.0725;
+            } else if (salarioVacaciones() > 6500) {
+                afp = 500 * 0.0725;
+            }
+            Extra e = new Extra(false, "AFP Vacaciones", 7.25, afp);
+            extras.add(e);
+        } else {
+            if (salarioVacaciones() <= 6500) {
+                afp = salarioVacaciones() * 0.0775;
+            } else if (salarioVacaciones() > 6500) {
+                afp = 6500 * 0.0775;
+            }
+            Extra e = new Extra(false, "AFP Patrono Vacaciones", 7.5, afp);
+            extras.add(e);
+        }
+
+        return afp;
+    }
+
+
+    
+    public double calcRentaVacaciones() {
+        double  base = 0.0;
+        double renta=0.0;
+        base = salarioVacaciones() - (calcISSSVacaciones(0) + calcAFPVacaciones(0));
+
+        if(base<tramoII){
+            renta=0;
+        }
+        if(base>tramoII && base<tramoIII){
+            renta= (base-tramoII)*pTramoII+cuotaTramoII;
+        }
+        if(base>tramoIII&&base<tramoIV){
+            renta= (base-tramoIII)*pTramoIII+cuotaTramoIII;
+        }    
+       if(base>tramoIV){
+            renta= (base-tramoIV)*pTramoIV+cuotaTramoIV;
+        }  
+       Extra e = new Extra(false, "Renta Vacaciones", 0.0, renta);
+        extras.add(e);
+       
+        return renta;
+    }
+public double aportePatronalVacaciones() {
+        double aporte = 0;
+        aporte = getISSSVacaciones(1) + getAFPVacaciones(1);
+        return aporte;
+    }
+
+    public double getISSSVacaciones(int tipo) {
+        Iterator<Extra> i = extras.iterator();
+        double desc = 0;
+
+        while (i.hasNext()) {
+            Extra e = i.next();
+            if (tipo == 0 && e.getDescrip() == "ISSS Vacaciones") {
+                desc = e.getMonto();
+            }
+            if (tipo == 1 && e.getDescrip() == "ISSS Patrono Vacaciones") {
+                desc = e.getMonto();
+            }
+        }
+        return desc;
+    }
+
+    public double getAFPVacaciones(int tipo) {
+        Iterator<Extra> i = extras.iterator();
+        double desc = 0;
+
+        while (i.hasNext()) {
+            Extra e = i.next();
+            if (tipo == 0 && e.getDescrip() == "AFP Vacaciones") {
+                desc = e.getMonto();
+            }
+            if (tipo == 1 && e.getDescrip() == "AFP Patrono Vacaciones") {
+                desc = e.getMonto();
+            }
+        }
+        return desc;
+    }
+
+    public double getRentaVacaciones() {
+        Iterator<Extra> i = extras.iterator();
+        double desc = 0;
+
+        while (i.hasNext()) {
+            Extra e = i.next();
+            if (e.getDescrip() == "Renta Vacaciones") {
+                desc = e.getMonto();
+            }
+        }
+        return desc;
+    }
+    
     
     
     
