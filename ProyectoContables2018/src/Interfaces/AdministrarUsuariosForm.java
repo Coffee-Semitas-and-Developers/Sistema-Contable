@@ -48,6 +48,7 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
         
         
     }
+    
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO PEQUEÑO.jpg"));
         return retValue;
@@ -58,7 +59,18 @@ public class AdministrarUsuariosForm extends javax.swing.JFrame {
             this.add(ima);
         }
     
-    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
+        cerrar();
+    }      
+    public void cerrar() {
+        Object[] opciones = {"Aceptar", "Cancelar"};
+        int eleccion = JOptionPane.showOptionDialog // Sigue en la siguiente linea
+                (rootPane, "¿En realidad desea cerrar la aplicacion?", "Mensaje de Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, "Aceptar");
+        if (eleccion == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        } else {
+        }
+    }
     private void llenarTabla() throws SQLException{
         DefaultTableModel model = new DefaultTableModel(){
              public boolean isCellEditable(int row, int column)
