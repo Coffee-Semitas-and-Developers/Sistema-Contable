@@ -22,6 +22,7 @@ public class TarjetaDeTiempo {
     private String dui;
     private Double salHora, salHoraExtra;
     public List<DetalleTarjetaDeTiempo> detalle = new ArrayList<DetalleTarjetaDeTiempo>();
+    private Empleado emp;
 
     public TarjetaDeTiempo(Date fechaTarjeta, int idOrden, int id, String dui, Double salHora, Double salHoraExtra) {
         this.fechaTarjeta = fechaTarjeta;
@@ -145,6 +146,14 @@ public class TarjetaDeTiempo {
 
     public void setDetalle(List<DetalleTarjetaDeTiempo> detalle) {
         this.detalle = detalle;
+    }
+
+    public Empleado getEmp() {
+        return emp;
+    }
+
+    public void setEmp(Empleado emp) {
+        this.emp = emp;
     }
     
 }    
