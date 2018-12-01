@@ -41,7 +41,7 @@ public class LineaPlanillaVacTableModel1 extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-    return 13;
+    return 9;
     }
 
     @Override
@@ -58,23 +58,15 @@ public class LineaPlanillaVacTableModel1 extends AbstractTableModel{
             break;
             case 3: valor = l.getEmp().getCargo();
             break;
-            case 4: valor = 120;
-            break;
-            case 5: valor = 0;
-            break;
-            case 6: valor = l.salarioVacaciones();
+            case 4: valor = l.salarioVacaciones();
             break;            
-             case 7: valor = l.calcISSSVacaciones(0);
+            case 5: valor = l.calcISSSVacaciones(0);
             break;
-            case 8: valor = l.calcAFPVacaciones(0);
+            case 6: valor = l.calcAFPVacaciones(0);
             break;
-            case 9: valor = l.calcRentaVacaciones();
+            case 7: valor = l.calcRentaVacaciones();
             break;
-            case 10: valor = 0;
-            break;
-            case 11: valor = 0;
-            break;
-            case 12: valor =l.salarioVacaciones()- l.getAFPVacaciones(0)- l.getISSSVacaciones(0)-l.getRentaVacaciones();System.out.println( l.calcSalarioReal()- l.calcAFP(0)- l.calcISSS(0)-l.calcRenta());
+            case 8: valor =l.salarioVacaciones()- l.getAFPVacaciones(0)- l.getISSSVacaciones(0)-l.getRentaVacaciones();System.out.println( l.calcSalarioReal()- l.calcAFP(0)- l.calcISSS(0)-l.calcRenta());
             break;
         }
     

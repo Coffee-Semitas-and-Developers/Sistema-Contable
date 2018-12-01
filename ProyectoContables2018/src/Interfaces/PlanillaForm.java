@@ -43,10 +43,11 @@ public class PlanillaForm extends javax.swing.JFrame {
     java.sql.Date sqlDate;
     LineaPlanillaTableModel lineaTM = new LineaPlanillaTableModel();
     LineaPlanillaPatronoTableModel lineaPatronoTM = new LineaPlanillaPatronoTableModel();
-    List <LineaPlanilla> ln= new ArrayList<LineaPlanilla>();
-    
-    
-    
+    LineaPlanillaVacTableModel1 lineaVTM = new LineaPlanillaVacTableModel1();
+    LineaPlanillaPatronoVacTableModel1 lineaPatronoVTM = new LineaPlanillaPatronoVacTableModel1();
+
+    List<LineaPlanilla> ln = new ArrayList<LineaPlanilla>();
+
     public PlanillaForm() {
         initComponents();
         background();
@@ -56,10 +57,10 @@ public class PlanillaForm extends javax.swing.JFrame {
         inicializarColumnas();
         consultaInicial();
         tablaLinea.setComponentPopupMenu(popmenu);
-        tablaLinea.addMouseListener(new TableMouseListener(tablaLinea));  
+        tablaLinea.addMouseListener(new TableMouseListener(tablaLinea));
         itemDesc.setEnabled(true);
         itemBoni.setEnabled(true);
-        
+
     }
 
     private void background() {
@@ -102,6 +103,7 @@ public class PlanillaForm extends javax.swing.JFrame {
 
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
+
         for (int i = 0; i < 13; i++) {
             TableColumn col = new TableColumn(i);
             switch (i) {
@@ -143,7 +145,77 @@ public class PlanillaForm extends javax.swing.JFrame {
                     break;
                 case 12:
                     col.setHeaderValue("Salario");
-                    break;                
+                    break;
+            }
+            tColumnModel.addColumn(col);
+        }
+        tablaLinea.setColumnModel(tColumnModel);
+
+        TableColumnModel tColumnModel1 = new DefaultTableColumnModel();
+        for (int i = 0; i < 7; i++) {
+            TableColumn col = new TableColumn(i);
+            switch (i) {
+                case 0:
+                    col.setHeaderValue("Nombres");
+                    break;
+                case 1:
+                    col.setHeaderValue("Apellidos");
+                    break;
+                case 2:
+                    col.setHeaderValue("Cargo");
+                    break;
+                case 3:
+                    col.setHeaderValue("Salario");
+                    break;
+                case 4:
+                    col.setHeaderValue("ISSS");
+                    break;
+                case 5:
+                    col.setHeaderValue("AFP");
+                    break;
+                case 6:
+                    col.setHeaderValue("Aporte Patronal");
+                    break;
+            }
+            tColumnModel1.addColumn(col);
+        }
+        patronoTable.setColumnModel(tColumnModel1);
+
+    }
+
+    private void inicializarColumnasVacaciones() {
+        TableColumnModel tColumnModel = new DefaultTableColumnModel();
+
+        for (int i = 0; i < 9; i++) {
+            TableColumn col = new TableColumn(i);
+            switch (i) {
+                case 0:
+                    col.setHeaderValue("");
+                    break;
+                case 1:
+                    col.setHeaderValue("Nombres");
+                    break;
+                case 2:
+                    col.setHeaderValue("Apellidos");
+                    break;
+                case 3:
+                    col.setHeaderValue("Cargo");
+                    break;
+                case 4:
+                    col.setHeaderValue("Salario");
+                    break;
+                case 5:
+                    col.setHeaderValue("ISSS");
+                    break;
+                case 6:
+                    col.setHeaderValue("AFP");
+                    break;
+                case 7:
+                    col.setHeaderValue("Renta");
+                    break;
+                case 8:
+                    col.setHeaderValue("Salario");
+                    break;
             }
             tColumnModel.addColumn(col);
         }
@@ -202,6 +274,8 @@ public class PlanillaForm extends javax.swing.JFrame {
                 ln.add(new LineaPlanilla(e));
                 this.lineaTM.ln.add(new LineaPlanilla(e));
                 this.lineaPatronoTM.ln.add(new LineaPlanilla(e));
+                this.lineaVTM.ln.add(new LineaPlanilla(e));
+                this.lineaPatronoVTM.ln.add(new LineaPlanilla(e));
             }
             tablaLinea.repaint();
         } catch (SQLException ex) {
@@ -418,48 +492,53 @@ public class PlanillaForm extends javax.swing.JFrame {
 
     private void itemDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDescActionPerformed
         // TODO add your handling code here:
-         // TODO add your handling code here:
-        int currentRow =  tablaLinea.getSelectedRow();
-        double monto=0;
-        String descrip="";
-       
-        descrip = JOptionPane.showInputDialog(null, "Ingrese el motivo de descuento","Descuento");   
-        try{
-         monto=Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese la cantidad a descontar","Descuento"));
-        }catch(Exception e){
-             monto=Double.parseDouble(JOptionPane.showInputDialog(null, "ngrese denuevo la cantidad a descontar, asegurese de ingresar un número","Descuento"));
-        } 
-       
-       lineaTM.ln.get(currentRow).extras.add(new Extra(false,descrip,monto));
-       lineaTM.fireTableDataChanged();
+        // TODO add your handling code here:
+        int currentRow = tablaLinea.getSelectedRow();
+        double monto = 0;
+        String descrip = "";
 
-       tablaLinea.repaint();
+        descrip = JOptionPane.showInputDialog(null, "Ingrese el motivo de descuento", "Descuento");
+        try {
+            monto = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese la cantidad a descontar", "Descuento"));
+        } catch (Exception e) {
+            monto = Double.parseDouble(JOptionPane.showInputDialog(null, "ngrese denuevo la cantidad a descontar, asegurese de ingresar un número", "Descuento"));
+        }
+
+        lineaTM.ln.get(currentRow).extras.add(new Extra(false, descrip, monto));
+        lineaTM.fireTableDataChanged();
+
+        tablaLinea.repaint();
     }//GEN-LAST:event_itemDescActionPerformed
 
     private void itemBoniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBoniActionPerformed
         // TODO add your handling code here:
-        int currentRow =  tablaLinea.getSelectedRow();
-        double monto=0;
-        String descrip="";
-       
-        descrip = JOptionPane.showInputDialog(null, "Ingrese el motivo de la bonificación","Bonificación");   
-        try{
-         monto=Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el monto de bonifiación","Bonificación"));
-        }catch(Exception e){
-             monto=Double.parseDouble(JOptionPane.showInputDialog(null, "ngrese denuevo la cantidad a bonificar, asegurese de ingresar un número","Bonificación"));
-         
-       }
-       lineaTM.ln.get(currentRow).extras.add(new Extra(true,descrip,monto));
-       lineaTM.fireTableDataChanged();
-       tablaLinea.repaint();
+        int currentRow = tablaLinea.getSelectedRow();
+        double monto = 0;
+        String descrip = "";
+
+        descrip = JOptionPane.showInputDialog(null, "Ingrese el motivo de la bonificación", "Bonificación");
+        try {
+            monto = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese el monto de bonifiación", "Bonificación"));
+        } catch (Exception e) {
+            monto = Double.parseDouble(JOptionPane.showInputDialog(null, "ngrese denuevo la cantidad a bonificar, asegurese de ingresar un número", "Bonificación"));
+
+        }
+        lineaTM.ln.get(currentRow).extras.add(new Extra(true, descrip, monto));
+        lineaTM.fireTableDataChanged();
+        tablaLinea.repaint();
     }//GEN-LAST:event_itemBoniActionPerformed
 
     private void jcOcasionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcOcasionItemStateChanged
         // TODO add your handling code here:
-        if (jcOcasion.getSelectedIndex()==0) {
+        if (jcOcasion.getSelectedIndex() == 0) {
             itemDesc.setEnabled(true);
             itemBoni.setEnabled(true);
-            int c = 0;
+            tablaLinea.removeAll();
+            tablaLinea.setModel(lineaTM);
+            patronoTable.setModel(lineaPatronoTM);
+            inicializarColumnas();
+
+            /* int c = 0;
             tablaLinea.removeAll();
             lineaTM.ln.clear();
             Iterator<LineaPlanilla> i = ln.iterator();
@@ -485,21 +564,30 @@ public class PlanillaForm extends javax.swing.JFrame {
             patronoTable.setModel(lineaPatronoTM);
 
             System.out.println("Lista patro" + c);
+             */
+            tablaLinea.repaint();
+            patronoTable.repaint();
 
-                tablaLinea.repaint();
-                patronoTable.repaint();
-
-
-        }if(jcOcasion.getSelectedItem()=="Vacaciones"){
+        }
+        if (jcOcasion.getSelectedItem() == "Vacaciones") {
             itemDesc.setEnabled(false);
             itemBoni.setEnabled(false);
-        }if(jcOcasion.getSelectedItem()=="Aguinaldo"){
+
+            tablaLinea.setModel(lineaVTM);
+            patronoTable.setModel(lineaPatronoVTM);
+            inicializarColumnasVacaciones();
+            tablaLinea.repaint();
+            patronoTable.repaint();
+
+        }
+        if (jcOcasion.getSelectedItem() == "Aguinaldo") {
             itemDesc.setEnabled(false);
             itemBoni.setEnabled(false);
-        
-        
+
+
     }//GEN-LAST:event_jcOcasionItemStateChanged
     }
+
     private void llenarCombos() {
         //TIPO DE PLANILLA
         jcTipo.addItem("Empleado");
