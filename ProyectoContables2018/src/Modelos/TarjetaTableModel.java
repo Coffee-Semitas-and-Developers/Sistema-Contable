@@ -14,8 +14,7 @@ import javax.swing.table.AbstractTableModel;
  * @author AxlHrndz
  */
 public class TarjetaTableModel extends AbstractTableModel {
-
-    public List<DetalleTarjetaDeTiempo> detalle = new ArrayList<DetalleTarjetaDeTiempo>();
+    public List<TarjetaDeTiempo> detalle = new ArrayList<TarjetaDeTiempo>();
 
     @Override
     public int getRowCount() {
@@ -24,29 +23,51 @@ public class TarjetaTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 8;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        DetalleTarjetaDeTiempo det = detalle.get(rowIndex);
+        TarjetaDeTiempo tar = detalle.get(rowIndex);
         Object valor = null;
 
         switch (columnIndex) {
             case 0:
-                valor = det.getDiaDeTrabajo();
+                valor = tar.getId();
                 break;
             case 1:
-                valor = det.getHorasTrabajadas();
+                valor = tar.getIdOrden();
                 break;
             case 2:
-                valor = det.getHorasExtras();
+                valor = tar.getFechaTarjeta();
                 break;
+            case 3:
+                valor = tar.getDui();
+                break;
+            case 4:
+                valor = tar.getSalHora();
+                break;
+            case 5:
+                valor = tar.getSalHoraExtra();
+                break;
+            case 6:
+                valor = tar.getTotalHorasTrabajadas();
+                break;
+            case 7:
+                valor = tar.getTotalHorasExtras();
         }
         return valor;
     }
 
-    public void add(DetalleTarjetaDeTiempo a) {
+    public List<TarjetaDeTiempo> getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(List<TarjetaDeTiempo> detalle) {
+        this.detalle = detalle;
+    }
+    
+    public void add(TarjetaDeTiempo a) {
         detalle.add(a);
     }
 }

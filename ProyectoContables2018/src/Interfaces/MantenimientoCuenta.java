@@ -425,8 +425,8 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
             txtNombre.setText(c.getNombreCuenta());
             txtADescripcion.setText(c.getDescripcion());
             txtCodigo.setEnabled(false);
-            cmbEstadoFin.setSelectedItem(tipoBalance(c.getEstadoFinanciero(0)));
-            cmbEstadoFin2.setSelectedItem(tipoBalance(c.getEstadoFinanciero(1)));
+            cmbEstadoFin.setSelectedItem(Cuenta.tipoBalance(c.getEstadoFinanciero(0)));
+            cmbEstadoFin2.setSelectedItem(Cuenta.tipoBalance(c.getEstadoFinanciero(1)));
             cmbGrupoCuenta.setSelectedItem(c.getGrupoCuenta());
             cmbCuentaMayor.setSelectedIndex(indexPadre(c.getCodigoMayor()));
             guardar = false;
@@ -463,7 +463,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                     if (padre) {
                         JOptionPane.showMessageDialog(this, "¡No es posible eliminar una cuenta de Mayor. Debe Eliminar las subcuentas, previamente!", "Información", JOptionPane.WARNING_MESSAGE);
                     } else {
-                        if (true) {
+                        if (cuentaActual.getSaldoFinal()==0) {
                             JOptionPane.showMessageDialog(this, "¡No es posible eliminar una cuenta con saldos mayores a cero!", "Información", JOptionPane.WARNING_MESSAGE);
                         } else {
                             String sqlE = "Delete FROM cuenta where codigocuenta=?";
@@ -496,8 +496,8 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                     c.setCodigoMayor(m.getCodigo());
                     c.setNombreMayor(m.getNombreCuenta());
                     c.setGrupoCuenta(cmbGrupoCuenta.getSelectedItem().toString());
-                    c.setEstadoFinanciero(tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 0);
-                    c.setEstadoFinanciero(tipoBalanceLetra(cmbEstadoFin2.getSelectedItem().toString()), 1);
+                    c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 0);
+                    c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin2.getSelectedItem().toString()), 1);
 
                     //Conversion de chars (Estado Financiero) a string 
                     StringBuilder str = new StringBuilder(2);
@@ -544,8 +544,8 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 c.setCodigoMayor(m.getCodigo());
                 c.setNombreMayor(m.getNombreCuenta());
                 c.setGrupoCuenta(cmbGrupoCuenta.getSelectedItem().toString());
-                c.setEstadoFinanciero(tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 0);
-                c.setEstadoFinanciero(tipoBalanceLetra(cmbEstadoFin2.getSelectedItem().toString()), 1);
+                c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 0);
+                c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin2.getSelectedItem().toString()), 1);
 
                 //Conversion de chars (Estado Financiero) a string 
                 StringBuilder str = new StringBuilder(2);
@@ -600,50 +600,6 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error al cerrar la conexión con la base de datos " + ex);
         }
-    }
-
-    //Transforma el char correspondiente al Estado Financiero en String
-    public static String tipoBalance(char estado) {
-        String estadoFinanciero = "";
-
-        switch (estado) {
-            case 'G':
-                estadoFinanciero = "Balance General";
-                break;
-            case 'R':
-                estadoFinanciero = "Estado de Resultado";
-                break;
-            case 'C':
-                estadoFinanciero = "Estado de Capital";
-                break;
-            case ' ':
-                estadoFinanciero = "";
-                break;
-        }
-
-        return estadoFinanciero;
-    }
-
-    //Transforma el String correspondiente al Estado Financiero en char para guardar en la Base
-    private char tipoBalanceLetra(String estado) {
-        char estadoFin = ' ';
-
-        switch (estado) {
-            case "Balance General":
-                estadoFin = 'G';
-                break;
-            case "Estado de Resultado":
-                estadoFin = 'R';
-                break;
-            case "Estado de Capital":
-                estadoFin = 'C';
-                break;
-            case "N/A":
-                estadoFin = ' ';
-                break;
-        }
-
-        return estadoFin;
     }
 
     private String getNombreCuentaPadre(int codigo) {
