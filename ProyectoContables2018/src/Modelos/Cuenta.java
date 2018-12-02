@@ -99,6 +99,7 @@ public class Cuenta {
     }
 
     public double getSaldoFinal() {
+        obtenersaldo();
         return saldoFinal;
     }
 
@@ -117,6 +118,50 @@ public class Cuenta {
         return s;
     }
 
+    //Transforma el char correspondiente al Estado Financiero en String
+    public static String tipoBalance(char estado) {
+        String estadoFinanciero = "";
+
+        switch (estado) {
+            case 'G':
+                estadoFinanciero = "Balance General";
+                break;
+            case 'R':
+                estadoFinanciero = "Estado de Resultado";
+                break;
+            case 'C':
+                estadoFinanciero = "Estado de Capital";
+                break;
+            case ' ':
+                estadoFinanciero = "";
+                break;
+        }
+
+        return estadoFinanciero;
+    }
+
+    //Transforma el String correspondiente al Estado Financiero en char para guardar en la Base
+    public static char tipoBalanceLetra(String estado) {
+        char estadoFin = ' ';
+
+        switch (estado) {
+            case "Balance General":
+                estadoFin = 'G';
+                break;
+            case "Estado de Resultado":
+                estadoFin = 'R';
+                break;
+            case "Estado de Capital":
+                estadoFin = 'C';
+                break;
+            case "N/A":
+                estadoFin = ' ';
+                break;
+        }
+
+        return estadoFin;
+    }
+
     public double obtenerDebe() {
         double debe = 0;
 
@@ -125,7 +170,7 @@ public class Cuenta {
             Statement conexion = Conexion.getConexion().createStatement();
             ResultSet tabla = conexion.executeQuery(setencia);
             while (tabla.next()) {
-                debe+= tabla.getDouble("debe");
+                debe += tabla.getDouble("debe");
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error en la conexion");
@@ -140,8 +185,8 @@ public class Cuenta {
             String setencia = "select * from detalletransaccion where codigocuenta=" + String.valueOf(codigo);
             Statement conexion = Conexion.getConexion().createStatement();
             ResultSet tabla = conexion.executeQuery(setencia);
-            while (tabla.next()) {                
-                    haber += tabla.getDouble("haber");
+            while (tabla.next()) {
+                haber += tabla.getDouble("haber");
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error en la conexion");
@@ -153,12 +198,12 @@ public class Cuenta {
         double debe = 0;
         double haber = 0;
         try {
-            String setencia = "select * from detalletransaccion where codigocuenta="+ String.valueOf(codigo);
+            String setencia = "select * from detalletransaccion where codigocuenta=" + String.valueOf(codigo);
             Statement conexion = Conexion.getConexion().createStatement();
             ResultSet tabla = conexion.executeQuery(setencia);
             while (tabla.next()) {
-                    debe += tabla.getDouble("debe");
-                    haber += tabla.getDouble("haber");
+                debe += tabla.getDouble("debe");
+                haber += tabla.getDouble("haber");
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error en la conexion");
@@ -174,7 +219,7 @@ public class Cuenta {
 
         try {
             /*Sentencia SQL para las fecha registradas y las cuentas*/
-            String setencia = "select * from detalletransaccion where codigocuenta="+String.valueOf(codigo);
+            String setencia = "select * from detalletransaccion where codigocuenta=" + String.valueOf(codigo);
             String setenciafechainicio = "select * from (SELECT * FROM "
                     + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion asc limit 1";
