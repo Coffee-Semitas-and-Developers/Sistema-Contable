@@ -24,7 +24,7 @@ public class DetalleTarjetaTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 3;
     }
 
     @Override
@@ -34,18 +34,12 @@ public class DetalleTarjetaTableModel extends AbstractTableModel {
 
         switch (columnIndex) {
             case 0:
-                valor = det.getDiaDeTrabajo();
+                valor = det.getDiaSeleccionado();
                 break;
             case 1:
-                valor = det.getEmpleado().getNombres();
-                break;
-            case 2:
-                valor = det.getEmpleado().getApellidos();
-                break;
-            case 3:
                 valor = det.getHorasTrabajadas();
                 break;
-            case 4:
+            case 2:
                 valor = det.getHorasExtras();
                 break;
         }

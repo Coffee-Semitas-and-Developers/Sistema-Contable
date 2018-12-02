@@ -206,7 +206,7 @@ FECHATARJETA
 create table DETALLETRANSACCION (
    IDDETALLE            INT4                 not null,
    IDTRANSACCION        INT4                 not null,
-   IDCUENTA             INT4                 not null,
+   CODIGOCUENTA         INT4                 not null,
    DEBE                 DECIMAL(10,2)        not null,
    HABER                DECIMAL(10,2)        not null,
    constraint PK_DETALLETRANSACCION primary key (IDDETALLE)
@@ -230,7 +230,7 @@ IDTRANSACCION
 /* Index: UTILIZA_FK                                            */
 /*==============================================================*/
 create  index UTILIZA_FK on DETALLETRANSACCION (
-IDCUENTA
+CODIGOCUENTA         
 );
 
 /*==============================================================*/
@@ -369,7 +369,7 @@ CODIGOMATERIA
 /*==============================================================*/
 create table ORDENFABRICACION (
    IDORDEN              INT4                 not null,
-   IDPRODUCTO           INT4                 not null,
+   IDPRODUCTO           INT4                 null,
    ESPECIFICACION       VARCHAR(150)         null,
    FECHAEXPEDICION      DATE                 not null,
    FECHAREQUERIDA       DATE                 not null,

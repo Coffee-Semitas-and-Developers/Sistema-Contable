@@ -48,6 +48,7 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
     String dat;
     int diaSeleccionado;
     public TarjetaDeTiempo tar = new TarjetaDeTiempo();
+    public Date fechat;
 
     /**
      * Creates new form tarjetaDeTiempo
@@ -81,15 +82,9 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
                     col.setHeaderValue("Días");
                     break;
                 case 1:
-                    col.setHeaderValue("Nombres");
-                    break;
-                case 2:
-                    col.setHeaderValue("Apellidos");
-                    break;
-                case 3:
                     col.setHeaderValue("Horas trabajadas");
                     break;
-                case 4:
+                case 2:
                     col.setHeaderValue("Horas extra trabajadas");
                     break;
             }
@@ -113,34 +108,36 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
             String sentenciaSql = "SELECT * FROM detalletarjetadetiempo";
             Statement statement = this.conexion.createStatement();
             ResultSet resultado = statement.executeQuery(sentenciaSql);
+            
             while (resultado.next()) {
                 int dia = resultado.getInt("diadetrabajo");
+                String dias = null;
                 DetalleTarjetaDeTiempo de = new DetalleTarjetaDeTiempo();
                 switch (dia) {
                     case 1:
-                        de.setDiaSeleccionado("Lunes");
+                        dias="Lunes";
                         break;
                     case 2:
-                        de.setDiaSeleccionado("Martes");
+                        dias="Martes";
                         break;
                     case 3:
-                        de.setDiaSeleccionado("Miércoles");
+                        dias="Miércoles";
                         break;
                     case 4:
-                        de.setDiaSeleccionado("Jueves");
+                        dias="Jueves";
                         break;
                     case 5:
-                        de.setDiaSeleccionado("Viernes");
+                        dias="Viernes";
                         break;
                     case 6:
-                        de.setDiaSeleccionado("Sábado");
+                        dias="Sábado";
                         break;
                     case 7:
-                        de.setDiaSeleccionado("Domingo");
+                        dias="Domingo";
                         break;
                 }
-                de.getEmpleado().setNombres(resultado.getString("nombre"));
-                de.getEmpleado().setApellidos(resultado.getString("apellido"));
+                fechat = resultado.getDate("fechatarjeta");
+                de.setDiaSeleccionado(dias);
                 de.setHorasTrabajadas(resultado.getInt("horastrabajadas"));
                 de.setHorasExtras(resultado.getInt("horasextras"));
                 this.DetTarjetaTM.add(de);
@@ -354,6 +351,7 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
                     break;
             }
             det.setDiaDeTrabajo(diaSeleccionado);
+            det.setFechaTarjeta(fechat);
             det.setHorasTrabajadas(Integer.parseInt(horasTrabajadasTextField.getText()));
             det.setHorasExtras(Integer.parseInt(horasExtraTextField.getText()));
             tar.detalle.add(det);
@@ -362,7 +360,7 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
                     + "(?,?,?,?)";
             PreparedStatement preparedStatement = conexion.prepareStatement(sentenciaSql);
             preparedStatement.setInt(1, det.getDiaDeTrabajo());
-            preparedStatement.setDate(2, sqlDate);
+            preparedStatement.setDate(2, (java.sql.Date) det.getFechaTarjeta());
             preparedStatement.setInt(3, det.getHorasTrabajadas());
             preparedStatement.setInt(4, det.getHorasExtras());
             preparedStatement.execute();
