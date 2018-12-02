@@ -50,7 +50,7 @@ public class CuentaTableModel extends AbstractTableModel {
                 valor = cuenta.getGrupoCuenta();
                 break;
             case 5:
-                valor = MantenimientoCuenta.tipoBalance(cuenta.getEstadoFinanciero(0)) + " \n " + MantenimientoCuenta.tipoBalance(cuenta.getEstadoFinanciero(1));
+                valor = Cuenta.tipoBalance(cuenta.getEstadoFinanciero(0)) + " \n " + Cuenta.tipoBalance(cuenta.getEstadoFinanciero(1));
                 break;
             case 6:
                 if (MantenimientoCuenta.cbSaldoFinal.isSelected()) {
