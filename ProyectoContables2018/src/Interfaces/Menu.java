@@ -80,7 +80,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel2.setText("Menu Principal");
 
         btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal2.png"))); // NOI18N
+        btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/general1.png"))); // NOI18N
         btnMovimientos.setText("Contabilidad General");
         btnMovimientos.setToolTipText("");
         btnMovimientos.setBorderPainted(false);
@@ -95,13 +95,18 @@ public class Menu extends javax.swing.JFrame {
         });
 
         btnCostos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnCostos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo2.png"))); // NOI18N
+        btnCostos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/costos1.png"))); // NOI18N
         btnCostos.setText("Contabilidad de Costos");
         btnCostos.setBorderPainted(false);
         btnCostos.setContentAreaFilled(false);
         btnCostos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCostos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo1.png"))); // NOI18N
         btnCostos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCostos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCostosActionPerformed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal2.png"))); // NOI18N
@@ -111,6 +116,11 @@ public class Menu extends javax.swing.JFrame {
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal3.png"))); // NOI18N
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,11 +150,11 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnMovimientos, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                    .addComponent(btnMovimientos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCostos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pack();
@@ -163,6 +173,18 @@ public class Menu extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         cerrar();
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            Login ima = new Login();
+            ima.setVisible(true);
+            this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnCostosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCostosActionPerformed
+        MenuCostos ima = new MenuCostos();
+        ima.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCostosActionPerformed
 
     /**
      * @param args the command line arguments

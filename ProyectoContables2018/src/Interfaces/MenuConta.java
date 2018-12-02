@@ -30,9 +30,6 @@ public class MenuConta extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.setResizable(false);
         setTitle("Menu Principal");
-        if(a==1){
-            btnAdminUs.setEnabled(false);
-        }  
         
     }
     public Image getIconImage() {
@@ -66,11 +63,8 @@ public class MenuConta extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnMovimientos = new javax.swing.JButton();
-        btnPlanillas = new javax.swing.JButton();
-        btnCostos = new javax.swing.JButton();
-        btnBalances = new javax.swing.JButton();
-        btnAdminUs = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -103,47 +97,6 @@ public class MenuConta extends javax.swing.JFrame {
             }
         });
 
-        btnPlanillas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnPlanillas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo2.png"))); // NOI18N
-        btnPlanillas.setText("Planillas");
-        btnPlanillas.setBorderPainted(false);
-        btnPlanillas.setContentAreaFilled(false);
-        btnPlanillas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnPlanillas.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
-        btnPlanillas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-        btnCostos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnCostos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo2.png"))); // NOI18N
-        btnCostos.setText("Costos");
-        btnCostos.setBorderPainted(false);
-        btnCostos.setContentAreaFilled(false);
-        btnCostos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCostos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo1.png"))); // NOI18N
-        btnCostos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-        btnBalances.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnBalances.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finanza2.png"))); // NOI18N
-        btnBalances.setText("Reportes y Balances");
-        btnBalances.setBorderPainted(false);
-        btnBalances.setContentAreaFilled(false);
-        btnBalances.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnBalances.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finanza.png"))); // NOI18N
-        btnBalances.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-        btnAdminUs.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnAdminUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojo2.png"))); // NOI18N
-        btnAdminUs.setText("Administrar Usuarios");
-        btnAdminUs.setBorderPainted(false);
-        btnAdminUs.setContentAreaFilled(false);
-        btnAdminUs.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAdminUs.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojo1.png"))); // NOI18N
-        btnAdminUs.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnAdminUs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdminUsActionPerformed(evt);
-            }
-        });
-
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal2.png"))); // NOI18N
         jButton1.setText("SALIR");
@@ -152,6 +105,20 @@ public class MenuConta extends javax.swing.JFrame {
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal3.png"))); // NOI18N
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
+        btnReportes.setText("Generar Reportes");
+        btnReportes.setBorderPainted(false);
+        btnReportes.setContentAreaFilled(false);
+        btnReportes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnReportes.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
+        btnReportes.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo2.png"))); // NOI18N
+        btnReportes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,45 +129,38 @@ public class MenuConta extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBalances, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnMovimientos))))
+                        .addComponent(btnMovimientos)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(58, 58, 58)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addContainerGap(312, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(50, 50, 50)
-                                .addComponent(btnAdminUs, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnPlanillas, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(btnCostos, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel2)))
-                .addContainerGap(89, Short.MAX_VALUE))
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel2)
+                        .addContainerGap(266, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnMovimientos, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(btnCostos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(btnPlanillas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnBalances, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAdminUs, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(btnMovimientos, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(152, 152, 152))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
@@ -219,11 +179,12 @@ public class MenuConta extends javax.swing.JFrame {
         cerrar();
     }//GEN-LAST:event_formWindowClosing
 
-    private void btnAdminUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminUsActionPerformed
-        AdministrarUsuariosForm obj = new AdministrarUsuariosForm();
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        int a =0;
+        GenerarReporte obj = new GenerarReporte(a);
         obj.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_btnAdminUsActionPerformed
+    }//GEN-LAST:event_btnReportesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,11 +224,8 @@ public class MenuConta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdminUs;
-    private javax.swing.JButton btnBalances;
-    private javax.swing.JButton btnCostos;
     private javax.swing.JButton btnMovimientos;
-    private javax.swing.JButton btnPlanillas;
+    private javax.swing.JButton btnReportes;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
