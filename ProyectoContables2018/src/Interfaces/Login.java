@@ -160,15 +160,15 @@ public class Login extends javax.swing.JFrame {
             if(res.next())
             {
                 if(res.getString(4).equals("Administrador")){
-                    validate=0;
-                    Menu menuU = new Menu(validate);
+                    
+                    MenuAdmin menuU = new MenuAdmin();
                     menuU.setVisible(true);
                     this.dispose();
                 }
                 else{
                     if(res.getString(4).equals("Usuario")){
-                        validate = 1;
-                        Menu menuAdmin = new Menu(validate);
+                        
+                        Menu menuAdmin = new Menu();
                         menuAdmin.setVisible(true);
                         this.dispose();
                     }

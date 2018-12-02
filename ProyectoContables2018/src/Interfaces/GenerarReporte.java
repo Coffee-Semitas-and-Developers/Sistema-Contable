@@ -33,7 +33,7 @@ public class GenerarReporte extends javax.swing.JFrame {
 }
 
     public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO 2.jpg"));
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Imagenes/LOGO PEQUEÑO.jpg"));
         return retValue;
     }
     /**
@@ -64,6 +64,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/finanza.png"))); // NOI18N
         jButton1.setText("Balamce General");
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/finanza2.png"))); // NOI18N
         jButton1.setSelected(true);
@@ -77,6 +79,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fi1.png"))); // NOI18N
         jButton2.setText("Cambio en el Patrimonio");
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fi2.png"))); // NOI18N
         jButton2.setSelected(true);
@@ -90,6 +94,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton3.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/reflejo1.png"))); // NOI18N
         jButton3.setText("Estado de Resultado");
+        jButton3.setBorderPainted(false);
+        jButton3.setContentAreaFilled(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/reflejo2.png"))); // NOI18N
         jButton3.setSelected(true);
@@ -103,6 +109,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/in1.png"))); // NOI18N
         jButton4.setText("Estado de Costo");
+        jButton4.setBorderPainted(false);
+        jButton4.setContentAreaFilled(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/in2.png"))); // NOI18N
         jButton4.setSelected(true);
@@ -116,6 +124,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/repo1.png"))); // NOI18N
         jButton5.setText("Balance de Comprobacion");
+        jButton5.setBorderPainted(false);
+        jButton5.setContentAreaFilled(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/repo2.png"))); // NOI18N
         jButton5.setSelected(true);
@@ -129,6 +139,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton6.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cal1.png"))); // NOI18N
         jButton6.setText("Libro de Venta");
+        jButton6.setBorderPainted(false);
+        jButton6.setContentAreaFilled(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cal2.png"))); // NOI18N
         jButton6.setSelected(true);
@@ -142,6 +154,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton7.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/dine1.png"))); // NOI18N
         jButton7.setText("Libro de Compra");
+        jButton7.setBorderPainted(false);
+        jButton7.setContentAreaFilled(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton7.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/dine2.png"))); // NOI18N
         jButton7.setSelected(true);
@@ -155,7 +169,7 @@ public class GenerarReporte extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
         jLabel1.setText("GENERAR REPORTE");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/LOGO 2.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGO 2.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,7 +207,7 @@ public class GenerarReporte extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(48, 48, 48)
                         .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
