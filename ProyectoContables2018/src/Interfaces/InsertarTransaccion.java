@@ -33,6 +33,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
 
     private Connection conexion;
     public ServCuentaTableModel detalleTmodel = new ServCuentaTableModel();
+    double tDebe, tHaber = 0;
 
     /**
      * Creates new form InsertarMovimiento
@@ -42,6 +43,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         conectar();
         llenarCombobox();
         inicializarColumnas();
+        lbPartidaDoble.setVisible(false);
     }
 
     private void conectar() {
@@ -65,7 +67,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
                 cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
                 cuenta.setDescripcion(resultado.getString("descricion"));
                 cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
-                cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));               
+                cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));
                 cmbCuenta.addItem(cuenta);
             }
         } catch (SQLException ex) {
@@ -105,6 +107,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
 
         jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        btnGDebeHaber = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cmbCuenta = new javax.swing.JComboBox<>();
@@ -124,11 +127,12 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         txtDebe = new javax.swing.JTextField();
         txtHaber = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        lbPartidaDoble = new javax.swing.JLabel();
 
         jButton2.setText("jButton2");
 
@@ -166,6 +170,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
 
         jLabel4.setText("Tipo");
 
+        btnGDebeHaber.add(rbDebe);
         rbDebe.setText("Debe");
         rbDebe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +178,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
             }
         });
 
+        btnGDebeHaber.add(rbHaber);
         rbHaber.setText("Haber");
         rbHaber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,7 +292,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         jTable1.setModel(detalleTmodel);
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Guardar");
+        btnGuardar.setText("Guardar");
 
         txtDebe.setEditable(false);
 
@@ -295,6 +301,9 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         jLabel12.setText("Total (Dolares)");
 
         jLabel2.setText("Detalles de transaccion");
+
+        lbPartidaDoble.setForeground(new java.awt.Color(255, 0, 0));
+        lbPartidaDoble.setText("No cumple partida doble");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -306,10 +315,6 @@ public class InsertarTransaccion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(127, 127, 127))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(100, 100, 100))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -319,17 +324,22 @@ public class InsertarTransaccion extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel12)
-                                .addGap(53, 53, 53)
+                                .addGap(56, 56, 56)
                                 .addComponent(txtDebe, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtHaber, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtHaber, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbPartidaDoble)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(209, 209, 209)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(290, 290, 290)
                         .addComponent(jLabel10)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardar)
+                .addGap(90, 90, 90))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,14 +359,16 @@ public class InsertarTransaccion extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbPartidaDoble)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
                             .addComponent(txtDebe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtHaber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(btnGuardar)
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -364,14 +376,58 @@ public class InsertarTransaccion extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:   
-        /*JOptionPane.showMessageDialog(null, "Movimiento agregado");
-        txtMonto.setText(""); 
         DetalleTransaccion d = new DetalleTransaccion();
-        d.cuenta
-        detalleTmodel.detalles.add(d);*/
+        d.cuenta = (Cuenta) cmbCuenta.getSelectedItem();
+        if (rbDebe.isSelected() || rbHaber.isSelected()) {
+            if (rbDebe.isSelected()) {
+                d.debe = Double.parseDouble(txtMonto.getText());
+                tDebe += Double.parseDouble(txtMonto.getText());
+            } else {
+                d.haber = Double.parseDouble(txtMonto.getText());
+                tHaber += Double.parseDouble(txtMonto.getText());
+            }
+            detalleTmodel.detalles.add(d);
+            detalleTmodel.fireTableDataChanged();
+            txtMonto.setText("");
+            cmbCuenta.setSelectedIndex(0);
+            btnGDebeHaber.clearSelection();
+            txtDebe.setText(String.valueOf(tDebe));
+            txtHaber.setText(String.valueOf(tHaber));
+            if (tHaber == tDebe) {
+                lbPartidaDoble.setVisible(false);
+                btnGuardar.setEnabled(true);
+            } else {
+                lbPartidaDoble.setVisible(true);
+                btnGuardar.setEnabled(false);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Uno de los botones debe seleccionar el tipo de monto", "Seleccione una opcion", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    
+    /*private void UpdateJTable(){
+         detalleTmodel.detalles.clear();
+        try {
+            PreparedStatement statement = null;
+            String sentenciaSql = "SELECT idtransaccion,descripciondetalle,fechatransaccion,monto FROM transaccion ";
+            statement = this.conexion.prepareStatement(sentenciaSql);
+            ResultSet resultado = statement.executeQuery();
+            while (resultado.next()) {
+                DetalleTransaccion dt = new DetalleTransaccion();
+                
+                
+                transaccion.idTransaccion = resultado.getInt("idtransaccion");
+                transaccion.descripcion = resultado.getString("descripciondetalle");
+                transaccion.fecha = resultado.getDate("fechatransaccion");
+                transaccion.monto = resultado.getDouble("monto");
+                detalleTransaccionTModel.transacciones.add(transaccion);
+            }
+            jTable1.repaint();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al recuperar las transacciones de la base de datos");
+        }*/
+
     private void cmbCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCuentaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbCuentaActionPerformed
@@ -454,9 +510,10 @@ public class InsertarTransaccion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.ButtonGroup btnGDebeHaber;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<Cuenta> cmbCuenta;
     private datechooser.beans.DateChooserCombo dateChooserCombo1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -472,6 +529,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lbPartidaDoble;
     private javax.swing.JRadioButton rbDebe;
     private javax.swing.JRadioButton rbHaber;
     private javax.swing.JTextField txtDebe;
