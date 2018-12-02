@@ -407,11 +407,11 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
     private void calcularHorasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularHorasButtonActionPerformed
         // TODO add your handling code here:
         try {
-            String sentenciaSql = "SELECT * FROM detalletarjetadetiempo";
+            String sentenciaSql = "SELECT SUM(horastrabajadas) FROM detalletarjetadetiempo WHERE idtarjeta = "+idTextField.getText();
             Statement statement = this.conexion.createStatement();
             ResultSet resultado = statement.executeQuery(sentenciaSql);
             TarjetaDeTiempo ta = new TarjetaDeTiempo();
-            int i = Integer.parseInt(idTextField.getText());
+            /*int i = Integer.parseInt(idTextField.getText());
             while (resultado.next()) {
                 if (i == resultado.getInt("idtarjeta")) {
                     DetalleTarjetaDeTiempo de = new DetalleTarjetaDeTiempo();
@@ -419,9 +419,9 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
                     de.setHorasExtras(resultado.getInt("horasextras"));
                     ta.detalle.add(de);
                 }
-            }
-            ta.setTotalHorasTrabajadas(ta.calcularHoras());
-            ta.setTotalHorasExtras(ta.calcularHorasExtras());
+            }*/
+            ta.setTotalHorasTrabajadas(resultado.getInt("sum"));
+            //ta.setTotalHorasExtras(ta.calcularHorasExtras());
             String sentenciaSql1 = "INSERT INTO tarjetadetiempo(totalhorastrabajadas,totalhorasextra)"
                     + " VALUES(?,?)";
             PreparedStatement preparedStatement = conexion.prepareStatement(sentenciaSql1);
