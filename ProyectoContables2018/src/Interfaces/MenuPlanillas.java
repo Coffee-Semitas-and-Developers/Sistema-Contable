@@ -13,13 +13,13 @@ import javax.swing.JOptionPane;
  *
  * @author Daniel Mejia
  */
-public class MenuCostos extends javax.swing.JFrame {
+public class MenuPlanillas extends javax.swing.JFrame {
 
     /**
      * Creates new form Menu
      */
-
-    public MenuCostos() {
+    
+    public MenuPlanillas() {
         initComponents();
         background();
         getIconImage();
@@ -58,7 +58,7 @@ public class MenuCostos extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnMovimientos = new javax.swing.JButton();
+        btnAdmEmp = new javax.swing.JButton();
         btnPlanillas = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
@@ -78,28 +78,30 @@ public class MenuCostos extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Sitka Text", 0, 36)); // NOI18N
         jLabel2.setText("Contabilidad de Costos");
 
-        btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal2.png"))); // NOI18N
-        btnMovimientos.setText("Ordenes de Fabricación");
-        btnMovimientos.setToolTipText("");
-        btnMovimientos.setBorderPainted(false);
-        btnMovimientos.setContentAreaFilled(false);
-        btnMovimientos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnMovimientos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal1.png"))); // NOI18N
-        btnMovimientos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnMovimientos.addActionListener(new java.awt.event.ActionListener() {
+        btnAdmEmp.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnAdmEmp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojo1.png"))); // NOI18N
+        btnAdmEmp.setText("Administrar Empleados");
+        btnAdmEmp.setToolTipText("");
+        btnAdmEmp.setBorderPainted(false);
+        btnAdmEmp.setContentAreaFilled(false);
+        btnAdmEmp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdmEmp.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojo1.png"))); // NOI18N
+        btnAdmEmp.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojo2.png"))); // NOI18N
+        btnAdmEmp.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAdmEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMovimientosActionPerformed(evt);
+                btnAdmEmpActionPerformed(evt);
             }
         });
 
         btnPlanillas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnPlanillas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo2.png"))); // NOI18N
-        btnPlanillas.setText("Planillas");
+        btnPlanillas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
+        btnPlanillas.setText("Generar Planillas");
         btnPlanillas.setBorderPainted(false);
         btnPlanillas.setContentAreaFilled(false);
         btnPlanillas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnPlanillas.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
+        btnPlanillas.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal1.png"))); // NOI18N
         btnPlanillas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnPlanillas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,10 +130,10 @@ public class MenuCostos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(btnMovimientos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
-                .addComponent(btnPlanillas, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(127, 127, 127))
+                .addComponent(btnAdmEmp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
+                .addComponent(btnPlanillas, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -151,7 +153,7 @@ public class MenuCostos extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnMovimientos, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdmEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPlanillas, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,12 +163,16 @@ public class MenuCostos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimientosActionPerformed
-        
-    }//GEN-LAST:event_btnMovimientosActionPerformed
+    private void btnAdmEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmEmpActionPerformed
+        AdminEmpleadoForm obj = new AdminEmpleadoForm();
+        obj.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAdmEmpActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        
+        PlanillaForm obj = new PlanillaForm();
+        obj.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -174,15 +180,13 @@ public class MenuCostos extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Menu obj = new Menu();
+        MenuCostos obj = new MenuCostos();
         obj.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnPlanillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanillasActionPerformed
-        MenuPlanillas obj = new MenuPlanillas();
-        obj.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_btnPlanillasActionPerformed
 
     /**
@@ -202,28 +206,30 @@ public class MenuCostos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuCostos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPlanillas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuCostos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPlanillas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuCostos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPlanillas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuCostos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPlanillas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuCostos().setVisible(true);
+                new MenuPlanillas().setVisible(true);
             }
 
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMovimientos;
+    private javax.swing.JButton btnAdmEmp;
     private javax.swing.JButton btnPlanillas;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
