@@ -117,7 +117,7 @@ public class Cuenta {
         return s;
     }
 
-    private double obtenerdebe() {
+    public double obtenerDebe() {
         double debe = 0;
 
         try {
@@ -134,7 +134,7 @@ public class Cuenta {
         return debe;
     }
 
-    private double obtenerhaber() {
+    public double obtenerHaber() {
         double haber = 0;
         try {
             String setencia = "select * from detalletransaccion where codigocuenta=" + String.valueOf(codigo);
@@ -149,7 +149,7 @@ public class Cuenta {
         return haber;
     }
 
-    private void obtenersaldo() {
+    public void obtenersaldo() {
         double debe = 0;
         double haber = 0;
         try {
@@ -166,7 +166,7 @@ public class Cuenta {
         saldoFinal = debe - haber;
     }
 
-    private double obtenersaldoconfecha(int idcuenta, Date fechainicio, Date fechafinal) {
+    public double obtenersaldoconfecha(int idcuenta, Date fechainicio, Date fechafinal) {
         double debe = 0;
         double haber = 0;
         double saldo = 0;
@@ -215,7 +215,7 @@ public class Cuenta {
         return saldo;
     }
 
-    private double obtenerdebeconfecha(int idcuenta, Date fechainicio, Date fechafinal) {
+    public double obtenerdebeconfecha(int idcuenta, Date fechainicio, Date fechafinal) {
         double debe = 0;
         int cuenta = idcuenta;
 
@@ -261,7 +261,7 @@ public class Cuenta {
         return debe;
     }
 
-    private double obtenerhaberconfecha(int idcuenta, Date fechainicio, Date fechafinal) {
+    public double obtenerhaberconfecha(int idcuenta, Date fechainicio, Date fechafinal) {
         double haber = 0;
         int cuenta = idcuenta;
 
