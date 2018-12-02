@@ -28,7 +28,7 @@ public class Conexion {
 
     }
 
-    public Connection getConexion() {
+    public static Connection getConexion() {
         if (con == null) {
             conectar();
         }

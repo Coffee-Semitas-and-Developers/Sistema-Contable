@@ -18,15 +18,17 @@ import java.util.Iterator;
  */
 public class TarjetaDeTiempo {
     private Date fechaTarjeta;
-    private int idOrden, totalHorasTrabajadas, totalHorasExtras;
+    private int idOrden, totalHorasTrabajadas, totalHorasExtras, id;
     private String dui;
     private Double salHora, salHoraExtra;
     public List<DetalleTarjetaDeTiempo> detalle = new ArrayList<DetalleTarjetaDeTiempo>();
+    private Empleado emp;
 
-    public TarjetaDeTiempo(Date fechaTarjeta, int idOrden, String dui, Double salHora, Double salHoraExtra) {
+    public TarjetaDeTiempo(Date fechaTarjeta, int idOrden, int id, String dui, Double salHora, Double salHoraExtra) {
         this.fechaTarjeta = fechaTarjeta;
         this.idOrden = idOrden;
-        this.dui = dui;
+        this.id = id;
+        this.dui=dui;
         this.salHora = salHora;
         this.salHoraExtra = salHoraExtra;
     }
@@ -90,12 +92,12 @@ public class TarjetaDeTiempo {
         this.totalHorasExtras = totalHorasExtras;
     }
 
-    public String getDui() {
-        return dui;
+    public int getId() {
+        return id;
     }
 
-    public void setDui(String dui) {
-        this.dui = dui;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int calcularHoras() {
@@ -132,5 +134,26 @@ public class TarjetaDeTiempo {
 
     public Double salHoja() {
         return SalHoras() + SalHorasExtras();
-    }   
+    }
+
+    public String getDui() {
+        return dui;
+    }
+
+    public void setDui(String dui) {
+        this.dui = dui;
+    }
+
+    public void setDetalle(List<DetalleTarjetaDeTiempo> detalle) {
+        this.detalle = detalle;
+    }
+
+    public Empleado getEmp() {
+        return emp;
+    }
+
+    public void setEmp(Empleado emp) {
+        this.emp = emp;
+    }
+    
 }    
