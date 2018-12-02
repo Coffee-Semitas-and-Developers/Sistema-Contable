@@ -81,7 +81,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Sitka Text", 0, 36)); // NOI18N
         jLabel2.setText("Menu Administrador");
 
-        btnAdminUs.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAdminUs.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAdminUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojo1.png"))); // NOI18N
         btnAdminUs.setText("Administrar Usuarios");
         btnAdminUs.setBorderPainted(false);
@@ -96,7 +96,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal3.png"))); // NOI18N
         jButton1.setText("SALIR");
         jButton1.setBorderPainted(false);
@@ -111,6 +111,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btnReportes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
         btnReportes.setText("Generar Reportes");
         btnReportes.setBorderPainted(false);

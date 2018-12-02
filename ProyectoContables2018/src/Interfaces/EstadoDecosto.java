@@ -17,12 +17,17 @@ public class EstadoDecosto extends javax.swing.JFrame {
     /**
      * Creates new form estadoDecosto
      */
-    public EstadoDecosto() {
+    int b;
+    public EstadoDecosto(){
+        initComponents();
+    }
+    public EstadoDecosto(int a) {
         initComponents();
         getIconImage();
         setLocationRelativeTo(null);
         this.setResizable(false);
         background();
+        this.b=a;
     }
     
     public void background() {
@@ -78,7 +83,7 @@ public class EstadoDecosto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
-        GenerarReporte  regresar = new GenerarReporte();
+       GenerarReporte  regresar = new GenerarReporte(this.b);
        regresar.setVisible(true);
        this.setVisible(false);
         // TODO add your handling code here:

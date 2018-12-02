@@ -68,7 +68,7 @@ public class GenerarReporte extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/finanza.png"))); // NOI18N
-        jButton1.setText("Balamce General");
+        jButton1.setText("Balance General");
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -252,21 +252,21 @@ public class GenerarReporte extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-      BalanceDeComprobacion balance = new BalanceDeComprobacion();
+      BalanceDeComprobacion balance = new BalanceDeComprobacion(this.b);
       balance.setVisible(true);
       this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        BalanceGeneral balance =new BalanceGeneral();
+        BalanceGeneral balance =new BalanceGeneral(this.b);
         balance.setVisible(true);
         this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-EstadoDecosto estado = new EstadoDecosto();
+EstadoDecosto estado = new EstadoDecosto(this.b);
 estado.setVisible(true);
 this.setVisible(false);
         // TODO add your handling code here:
