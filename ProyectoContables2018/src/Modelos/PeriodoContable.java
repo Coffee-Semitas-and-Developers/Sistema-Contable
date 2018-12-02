@@ -1,4 +1,4 @@
-package contabilidadgeneral;
+package Modelos;
 import java.sql.Date;
 
 /**
