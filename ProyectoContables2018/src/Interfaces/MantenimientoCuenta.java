@@ -175,6 +175,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         lblEstadoFin2 = new javax.swing.JLabel();
         cmbEstadoFin2 = new javax.swing.JComboBox<>();
         cbSaldoFinal = new javax.swing.JCheckBox();
+        btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("MantenimientoCuenta");
@@ -285,6 +286,13 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
             }
         });
 
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -315,7 +323,10 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnNuevaCuenta))
+                        .addComponent(btnNuevaCuenta)
+                        .addGap(33, 33, 33)
+                        .addComponent(btnSalir)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -382,7 +393,8 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGuardar)
                             .addComponent(btnEliminar)
-                            .addComponent(btnNuevaCuenta)))
+                            .addComponent(btnNuevaCuenta)
+                            .addComponent(btnSalir)))
                     .addComponent(lblLogo))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -590,6 +602,12 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         UpdateJTable();
     }//GEN-LAST:event_cbSaldoFinalStateChanged
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        MenuAdmin obj = new MenuAdmin();
+        obj.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
     private void cerrar() {
         try {
             int respuesta = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea cerrar el programa?", "Cerrar aplicación", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -725,6 +743,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGRadio;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevaCuenta;
+    private javax.swing.JButton btnSalir;
     public static javax.swing.JCheckBox cbSaldoFinal;
     private javax.swing.JComboBox<Cuenta> cmbCuentaMayor;
     private javax.swing.JComboBox<String> cmbEstadoFin;
