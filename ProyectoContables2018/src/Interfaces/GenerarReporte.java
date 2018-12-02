@@ -254,49 +254,49 @@ public class GenerarReporte extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
       BalanceDeComprobacion balance = new BalanceDeComprobacion(this.b);
       balance.setVisible(true);
-      this.setVisible(false);
+      this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         BalanceGeneral balance =new BalanceGeneral(this.b);
         balance.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-EstadoDecosto estado = new EstadoDecosto(this.b);
-estado.setVisible(true);
-this.setVisible(false);
+        EstadoDecosto estado = new EstadoDecosto(this.b);
+        estado.setVisible(true);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        EstadoDecambioenelPatrimonio patrimonio = new EstadoDecambioenelPatrimonio();
+        EstadoDecambioenelPatrimonio patrimonio = new EstadoDecambioenelPatrimonio(this.b);
         patrimonio.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-     EstadoDeResultado estado = new EstadoDeResultado();
+     EstadoDeResultado estado = new EstadoDeResultado(this.b);
      estado.setVisible(true);
-     this.setVisible(false);
+     this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-     LibroDeCompra compra = new LibroDeCompra();
+     LibroDeCompra compra = new LibroDeCompra(this.b);
      compra.setVisible(true);
-     this.setVisible(false);
+     this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-     LibroDeVenta venta = new LibroDeVenta();
+     LibroDeVenta venta = new LibroDeVenta(this.b);
      venta.setVisible(true);
-     this.setVisible(false);
+     this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 

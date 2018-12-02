@@ -79,13 +79,14 @@ public class MenuConta extends javax.swing.JFrame {
         jLabel2.setText("Contabilidad General");
 
         btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal2.png"))); // NOI18N
+        btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal1.png"))); // NOI18N
         btnMovimientos.setText("Movimientos Contables");
         btnMovimientos.setToolTipText("");
         btnMovimientos.setBorderPainted(false);
         btnMovimientos.setContentAreaFilled(false);
         btnMovimientos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnMovimientos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal1.png"))); // NOI18N
+        btnMovimientos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal2.png"))); // NOI18N
         btnMovimientos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnMovimientos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

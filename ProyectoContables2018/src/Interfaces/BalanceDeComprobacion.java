@@ -152,7 +152,7 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       GenerarReporte  regresar = new GenerarReporte(b);
+       GenerarReporte  regresar = new GenerarReporte(this.b);
        regresar.setVisible(true);
        this.setVisible(false);
         // TODO add your handling code here:
