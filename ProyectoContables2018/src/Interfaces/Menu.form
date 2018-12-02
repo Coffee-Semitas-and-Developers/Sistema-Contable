@@ -99,7 +99,10 @@
         <Property name="contentAreaFilled" type="boolean" value="false"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
         <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Imagenes/cal1.png"/>
+          <Image iconType="3" name="/Imagenes/general1.png"/>
+        </Property>
+        <Property name="selectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/general.png"/>
         </Property>
         <Property name="verticalTextPosition" type="int" value="3"/>
       </Properties>
@@ -120,7 +123,10 @@
         <Property name="contentAreaFilled" type="boolean" value="false"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
         <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Imagenes/signo1.png"/>
+          <Image iconType="3" name="/Imagenes/costos1.png"/>
+        </Property>
+        <Property name="selectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/costos.png"/>
         </Property>
         <Property name="verticalTextPosition" type="int" value="3"/>
       </Properties>

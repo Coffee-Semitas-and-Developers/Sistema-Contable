@@ -86,7 +86,8 @@ public class Menu extends javax.swing.JFrame {
         btnMovimientos.setBorderPainted(false);
         btnMovimientos.setContentAreaFilled(false);
         btnMovimientos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnMovimientos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal1.png"))); // NOI18N
+        btnMovimientos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/general1.png"))); // NOI18N
+        btnMovimientos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/general.png"))); // NOI18N
         btnMovimientos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnMovimientos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +101,8 @@ public class Menu extends javax.swing.JFrame {
         btnCostos.setBorderPainted(false);
         btnCostos.setContentAreaFilled(false);
         btnCostos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCostos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo1.png"))); // NOI18N
+        btnCostos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/costos1.png"))); // NOI18N
+        btnCostos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/costos.png"))); // NOI18N
         btnCostos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnCostos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

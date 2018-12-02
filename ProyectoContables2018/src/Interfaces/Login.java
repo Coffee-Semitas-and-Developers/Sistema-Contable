@@ -151,23 +151,24 @@ public class Login extends javax.swing.JFrame {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         String sql="select * from usuario where nombreusuario=? and contrasena=?";
-        int validate;
+        
         try{
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, txtUsuario.getText());
             stmt.setString(2, new String (txtContraseña.getPassword()));
             ResultSet res = stmt.executeQuery();
-            Usuario u = new Usuario(res.getInt(1),res.getString(2),);
+            
             if(res.next())
             {
-                if(res.getString(4).equals("Administrador")){
+                Usuario u = new Usuario(res.getInt(1),res.getString(2),res.getString(3),res.getString(4));
+                if(u.getRol().equals("Administrador")){
                     
                     MenuAdmin menuU = new MenuAdmin();
                     menuU.setVisible(true);
                     this.dispose();
                 }
                 else{
-                    if(res.getString(4).equals("Usuario")){
+                    if(u.getRol().equals("Usuario")){
                         
                         Menu menuAdmin = new Menu();
                         menuAdmin.setVisible(true);
@@ -181,7 +182,7 @@ public class Login extends javax.swing.JFrame {
             }
          }catch(SQLException | HeadlessException ex)
         {
-        JOptionPane.showMessageDialog(null,ex);
+        JOptionPane.showMessageDialog(null,"Error al conectar a la base de Datos de Usuario");
         }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 

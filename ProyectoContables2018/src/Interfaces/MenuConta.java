@@ -25,7 +25,7 @@ public class MenuConta extends javax.swing.JFrame {
         getIconImage();
         setLocationRelativeTo(null);
         this.setResizable(false);
-        setTitle("Menu Principal");
+        setTitle("Menu Contabilidad General");
         
     }
     public Image getIconImage() {
@@ -76,7 +76,7 @@ public class MenuConta extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGO PEQUEÑO.jpg"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Sitka Text", 0, 36)); // NOI18N
-        jLabel2.setText("Menu Principal");
+        jLabel2.setText("Contabilidad General");
 
         btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal2.png"))); // NOI18N
@@ -128,16 +128,15 @@ public class MenuConta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(133, 133, 133)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
+                        .addGap(191, 191, 191)
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
                         .addContainerGap(312, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addGap(119, 119, 119)
                         .addComponent(jLabel2)
-                        .addContainerGap(266, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMovimientos)
