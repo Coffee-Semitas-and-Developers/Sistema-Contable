@@ -118,7 +118,7 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
 
     private void consultaInicial() {
         try {
-            String sentenciaSql = "SELECT * FROM tarjetadetiempo tar INNER JOIN detalletarjetadetiempo det ON tar.idtarjeta=det.idtarjeta";
+            String sentenciaSql = "SELECT * FROM tarjetadetiempo";
             Statement statement = this.conexion.createStatement();
             ResultSet resultado = statement.executeQuery(sentenciaSql);
             while (resultado.next()) {
@@ -130,9 +130,8 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
                 ta.setFechaTarjeta(resultado.getDate("fechatarjeta"));
                 ta.setSalHora(resultado.getDouble("salariohoranormal"));
                 ta.setSalHoraExtra(resultado.getDouble("salariohoraextra"));
-                //de.get(i);
-                ta.setTotalHorasTrabajadas(ta.calcularHoras());
-                ta.setTotalHorasExtras(ta.calcularHorasExtras());
+                ta.setTotalHorasTrabajadas(resultado.getInt("totalhorastrabajadas"));
+                ta.setTotalHorasExtras(resultado.getInt("totalhorasextras"));
                 this.TarjetaTM.add(ta);
             }
             tarjetaTabla.repaint();
@@ -350,6 +349,31 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        try {
+            String sentenciaSql = "SELECT * FROM detalletarjetadetiempo";
+            Statement statement = this.conexion.createStatement();
+            ResultSet resultado = statement.executeQuery(sentenciaSql);
+            TarjetaDeTiempo ta = new TarjetaDeTiempo();
+            int i = 1;
+            while (resultado.next()) {
+                if (i == resultado.getInt("idtarjeta")) {
+                    DetalleTarjetaDeTiempo de = new DetalleTarjetaDeTiempo();
+                    de.setHorasTrabajadas(resultado.getInt("horastrabajadas"));
+                    de.setHorasExtras(resultado.getInt("horasextras"));
+                    ta.detalle.add(de);
+                    
+                } else {
+                    i++;
+                    resultado.last();
+                }
+            }
+            ta.setTotalHorasTrabajadas(ta.calcularHoras());
+            ta.setTotalHorasExtras(ta.calcularHorasExtras());
+            this.TarjetaTM.add(ta);
+            tarjetaTabla.repaint();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al recuperar los datos de la base de datos.");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

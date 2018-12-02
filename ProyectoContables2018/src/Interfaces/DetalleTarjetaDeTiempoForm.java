@@ -197,8 +197,6 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         lbDate = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel9 = new javax.swing.JLabel();
-        guardarButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -209,7 +207,7 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
-        jLabel1.setText("Tarjeta de tiempo");
+        jLabel1.setText("Detalle tarjeta de tiempo");
 
         detalleTarjetaTabla.setModel(DetTarjetaTM);
         jScrollPane1.setViewportView(detalleTarjetaTabla);
@@ -255,16 +253,6 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
 
         lbDate.setText("---------");
 
-        jLabel9.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
-        jLabel9.setText("Muebles Rivera S.A. de C.V.");
-
-        guardarButton.setText("Guardar tarjeta");
-        guardarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                guardarButtonActionPerformed(evt);
-            }
-        });
-
         jButton1.setText("Volver");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -272,15 +260,6 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 261, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(311, 311, 311))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(254, 254, 254))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jLabel4)
@@ -306,22 +285,22 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbDate)
-                .addContainerGap(746, Short.MAX_VALUE))
+                .addContainerGap(756, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(guardarButton)
-                .addGap(220, 220, 220))
+                .addGap(220, 741, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(251, 251, 251))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbDate)
                     .addComponent(jLabel7))
@@ -339,9 +318,7 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(guardarButton)
-                    .addComponent(jButton1))
+                .addComponent(jButton1)
                 .addGap(21, 21, 21))
         );
 
@@ -440,33 +417,6 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_comboDiaActionPerformed
 
-    private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
-        // TODO add your handling code here:
-        /*try {
-            tar.setIdOrden(Integer.parseInt(ordenTextField.getText()));
-            tar.setDui(getDui());
-            tar.setSalHora(Double.parseDouble(costoHoraTextField.getText()));
-            tar.setSalHoraExtra(Double.parseDouble(costoHoraTextField.getText()));
-            String sentenciaSql = "INSERT INTO tarjetadetiempo(fechatarjeta,idorden,dui,salariohoranormal,salariohoraextra,totalhorastrabajadas,totalhorasextras) VALUES "
-            + "(?,?,?,?,?,?,?)";
-            PreparedStatement preparedStatement = conexion.prepareStatement(sentenciaSql);
-            preparedStatement.setDate(1, sqlDate);
-            preparedStatement.setInt(2, tar.getIdOrden());
-            preparedStatement.setString(3, tar.getDui());
-            preparedStatement.setDouble(4, tar.SalHoras());
-            preparedStatement.setDouble(5, tar.SalHorasExtras());
-            preparedStatement.setInt(6, tar.calcularHoras());
-            preparedStatement.setInt(7, tar.calcularHorasExtras());
-            preparedStatement.execute();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al guardar.");
-        }
-        JOptionPane.showMessageDialog(null, "Tarjeta registrada con éxito", "Registro Completo", JOptionPane.INFORMATION_MESSAGE);
-        totalHorasTrabajadasTextField.setText(null);
-        costoHoraTextField.setText(null);
-        costoHoraExtraTextField.setText(null);*/
-    }//GEN-LAST:event_guardarButtonActionPerformed
-
     //String seleccionado=(String)combo1Dia.getSelectedItem();
     /**
      * @param args the command line arguments
@@ -510,7 +460,6 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
     private javax.swing.JButton agregarButton;
     private javax.swing.JComboBox<String> comboDia;
     private javax.swing.JTable detalleTarjetaTabla;
-    private javax.swing.JButton guardarButton;
     private javax.swing.JTextField horasExtraTextField;
     private javax.swing.JTextField horasTrabajadasTextField;
     private javax.swing.JButton jButton1;
@@ -519,7 +468,6 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbDate;
