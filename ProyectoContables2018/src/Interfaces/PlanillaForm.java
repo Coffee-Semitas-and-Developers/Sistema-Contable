@@ -183,10 +183,42 @@ public class PlanillaForm extends javax.swing.JFrame {
             }
             tColumnModel1.addColumn(col);
         }
-        patronoTable.setColumnModel(tColumnModel1);
-
+        patronoTable.setColumnModel(tColumnModel1);        
+        
     }
 
+    private void inicializarColumnasAguinaldo(){
+        TableColumnModel tColumnModel2 = new DefaultTableColumnModel();
+        for (int i = 0; i < 7; i++) {
+            TableColumn col = new TableColumn(i);
+            switch (i) {
+                case 0:
+                    col.setHeaderValue("");
+                    break;
+                case 1:
+                    col.setHeaderValue("Nombres");
+                    break;
+                case 2:
+                    col.setHeaderValue("Apellidos");
+                    break;
+                case 3:
+                    col.setHeaderValue("Cargo");
+                    break;
+                case 4:
+                    col.setHeaderValue("Aguinaldo");
+                    break;
+                case 5:
+                    col.setHeaderValue("Renta");
+                    break;
+                case 6:
+                    col.setHeaderValue("Aguinaldo Pagado");
+                    break;                
+            }
+            tColumnModel2.addColumn(col);
+        }
+        tablaLinea.setColumnModel(tColumnModel2); 
+    }
+        
     private void inicializarColumnasVacaciones() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
 
@@ -548,6 +580,9 @@ public class PlanillaForm extends javax.swing.JFrame {
         if (jcOcasion.getSelectedIndex() == 0) {
             itemDesc.setEnabled(true);
             itemBoni.setEnabled(true);
+            patronoTable.setVisible(true);
+
+            
             tablaLinea.removeAll();
             tablaLinea.setModel(lineaTM);
             patronoTable.setModel(lineaPatronoTM);
@@ -587,6 +622,7 @@ public class PlanillaForm extends javax.swing.JFrame {
         if (jcOcasion.getSelectedItem() == "Vacaciones") {
             itemDesc.setEnabled(false);
             itemBoni.setEnabled(false);
+            patronoTable.setVisible(true);
 
             tablaLinea.setModel(lineaVTM);
             patronoTable.setModel(lineaPatronoVTM);
@@ -598,7 +634,9 @@ public class PlanillaForm extends javax.swing.JFrame {
         if (jcOcasion.getSelectedItem() == "Aguinaldo") {
             itemDesc.setEnabled(false);
             itemBoni.setEnabled(false);
-
+            tablaLinea.setModel(lineaATM);
+            patronoTable.setVisible(false);
+           inicializarColumnasAguinaldo();
 
     }//GEN-LAST:event_jcOcasionItemStateChanged
     }

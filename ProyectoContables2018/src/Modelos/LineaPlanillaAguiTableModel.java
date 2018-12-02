@@ -41,7 +41,7 @@ public class LineaPlanillaAguiTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-    return 9;
+    return 7;
     }
 
     @Override
@@ -60,14 +60,11 @@ public class LineaPlanillaAguiTableModel extends AbstractTableModel{
             break;
             case 4: valor = l.salarioAguinaldo();
             break;            
-            case 7: valor = l.calcRentaAguinaldo();
+            case 5: valor = l.calcRentaAguinaldo();
             break;
-            case 8: valor =l.salarioAguinaldo()-getRentaAguinaldo();
+            case 6: valor =l.salarioAguinaldo()-l.getRentaAguinaldo();
             break;
-        }
-    
-    
-        
+        }        
     return valor;
     }
     

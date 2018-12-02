@@ -353,11 +353,10 @@ public class LineaPlanilla {
 
     public double salarioAguinaldo() {
         double salAgui = 0.0;
-        int añoC, añoA, dif;
+        int añoC=2017, añoA, dif=0;
         Calendar fecha = new GregorianCalendar();
-        añoC = emp.getFechaContrato().getYear();
+        añoC = Integer.parseInt(emp.getFechaContrato().toString().substring(0, 4));
         añoA = fecha.get(Calendar.YEAR);
-
         dif = añoA - añoC;
         if (dif >= 1 && dif < 3) {
             salAgui = 5 * 15;
@@ -368,6 +367,7 @@ public class LineaPlanilla {
         if (dif >= 10) {
             salAgui = 5 * 21;
         }
+System.out.println(emp.getFechaContrato().toString().substring(0, 4));
 
         return salAgui;
     }
