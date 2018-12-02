@@ -349,7 +349,8 @@ create table MATERIAPRIMA (
    NOMBREMATERIA        VARCHAR(20)          not null,
    DIRECTA              BOOL                 not null,
    DESCRIPCIONMATERIA   VARCHAR(100)         null,
-   UNIDADESMATERIA      INT4                 not null,
+   UNIDADESMATERIA      VARCHAR(100)         not null,
+   CANTIDADMATERIA      DECIMAL(10,2)        not null,
    PRECIOADQUISION      DECIMAL(10,2)        not null,
    constraint PK_MATERIAPRIMA primary key (CODIGOMATERIA)
 );
