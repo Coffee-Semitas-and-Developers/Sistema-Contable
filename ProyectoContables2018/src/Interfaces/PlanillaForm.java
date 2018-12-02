@@ -45,6 +45,10 @@ public class PlanillaForm extends javax.swing.JFrame {
     LineaPlanillaPatronoTableModel lineaPatronoTM = new LineaPlanillaPatronoTableModel();
     LineaPlanillaVacTableModel1 lineaVTM = new LineaPlanillaVacTableModel1();
     LineaPlanillaPatronoVacTableModel1 lineaPatronoVTM = new LineaPlanillaPatronoVacTableModel1();
+    LineaPlanillaAguiTableModel lineaATM = new LineaPlanillaAguiTableModel();
+    LineaPlanillaPatronoAguiTableModel lineaPatronoATM = new LineaPlanillaPatronoAguiTableModel();
+    
+    
 
     List<LineaPlanilla> ln = new ArrayList<LineaPlanilla>();
 
@@ -260,6 +264,7 @@ public class PlanillaForm extends javax.swing.JFrame {
             ResultSet resultado = statement.executeQuery(sentenciaSql);
             while (resultado.next()) {
                 Empleado e = new Empleado();
+                e.setFechaContrato(resultado.getDate("fechacontrato"));
                 e.setDui(resultado.getString("dui"));
                 e.setNombres(resultado.getString("nombre"));
                 e.setApellidos(resultado.getString("apellido"));
@@ -272,10 +277,20 @@ public class PlanillaForm extends javax.swing.JFrame {
                 ta.detalle.add(new DetalleTarjetaDeTiempo(160));
                 e.t.add(ta);
                 ln.add(new LineaPlanilla(e));
+                //Tabla salarios
                 this.lineaTM.ln.add(new LineaPlanilla(e));
                 this.lineaPatronoTM.ln.add(new LineaPlanilla(e));
+                //Table de Vacaciones
                 this.lineaVTM.ln.add(new LineaPlanilla(e));
                 this.lineaPatronoVTM.ln.add(new LineaPlanilla(e));
+                //Table de aguinaldo
+                this.lineaATM.ln.add(new LineaPlanilla(e));
+                this.lineaPatronoATM.ln.add(new LineaPlanilla(e));
+
+                
+                
+                
+                
             }
             tablaLinea.repaint();
         } catch (SQLException ex) {
