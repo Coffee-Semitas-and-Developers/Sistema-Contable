@@ -11,15 +11,16 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  *
- * @author AxlHrndz
+ * @author Elmer
  */
-public class DetalleTarjetaTableModel extends AbstractTableModel {
 
-    public List<DetalleTarjetaDeTiempo> detalle = new ArrayList<DetalleTarjetaDeTiempo>();
+public class ServCuentaTableModel extends AbstractTableModel {
+
+    public List<DetalleTransaccion> detalles = new ArrayList<DetalleTransaccion>();
 
     @Override
     public int getRowCount() {
-        return detalle.size();
+        return detalles.size();
     }
 
     @Override
@@ -29,24 +30,19 @@ public class DetalleTarjetaTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        DetalleTarjetaDeTiempo det = detalle.get(rowIndex);
+        DetalleTransaccion detalle = detalles.get(rowIndex);
         Object valor = null;
-
         switch (columnIndex) {
             case 0:
-                valor = det.getDiaSeleccionado();
+                valor = detalle.cuenta.getNombreCuenta();
                 break;
             case 1:
-                valor = det.getHorasTrabajadas();
+                valor = detalle.debe;
                 break;
             case 2:
-                valor = det.getHorasExtras();
+                valor = detalle.haber;
                 break;
         }
         return valor;
-    }
-
-    public void add(DetalleTarjetaDeTiempo a) {
-        detalle.add(a);
     }
 }
