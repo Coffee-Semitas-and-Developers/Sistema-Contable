@@ -28,6 +28,9 @@ public class Cuenta {
         this.precio = precio;
     }
     
+    
+    
+
     public Double getResultado() {
         return resultado;
     }
