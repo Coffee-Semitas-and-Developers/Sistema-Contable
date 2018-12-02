@@ -18,21 +18,14 @@ public class MenuConta extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
-    public MenuConta(){
-        initComponents();
-    }
-    
-    
-    public MenuConta(int a) {
+        
+    public MenuConta() {
         initComponents();
         background();
         getIconImage();
         setLocationRelativeTo(null);
         this.setResizable(false);
-        setTitle("Menu Principal");
-        if(a==1){
-            btnAdminUs.setEnabled(false);
-        }  
+        setTitle("Menu Contabilidad General");
         
     }
     public Image getIconImage() {
@@ -66,11 +59,8 @@ public class MenuConta extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnMovimientos = new javax.swing.JButton();
-        btnPlanillas = new javax.swing.JButton();
-        btnCostos = new javax.swing.JButton();
-        btnBalances = new javax.swing.JButton();
-        btnAdminUs = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -86,9 +76,9 @@ public class MenuConta extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGO PEQUEÑO.jpg"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Sitka Text", 0, 36)); // NOI18N
-        jLabel2.setText("Menu Principal");
+        jLabel2.setText("Contabilidad General");
 
-        btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal2.png"))); // NOI18N
         btnMovimientos.setText("Movimientos Contables");
         btnMovimientos.setToolTipText("");
@@ -103,48 +93,7 @@ public class MenuConta extends javax.swing.JFrame {
             }
         });
 
-        btnPlanillas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnPlanillas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo2.png"))); // NOI18N
-        btnPlanillas.setText("Planillas");
-        btnPlanillas.setBorderPainted(false);
-        btnPlanillas.setContentAreaFilled(false);
-        btnPlanillas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnPlanillas.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
-        btnPlanillas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-        btnCostos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnCostos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo2.png"))); // NOI18N
-        btnCostos.setText("Costos");
-        btnCostos.setBorderPainted(false);
-        btnCostos.setContentAreaFilled(false);
-        btnCostos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCostos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo1.png"))); // NOI18N
-        btnCostos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-        btnBalances.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnBalances.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finanza2.png"))); // NOI18N
-        btnBalances.setText("Reportes y Balances");
-        btnBalances.setBorderPainted(false);
-        btnBalances.setContentAreaFilled(false);
-        btnBalances.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnBalances.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finanza.png"))); // NOI18N
-        btnBalances.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-        btnAdminUs.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnAdminUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojo2.png"))); // NOI18N
-        btnAdminUs.setText("Administrar Usuarios");
-        btnAdminUs.setBorderPainted(false);
-        btnAdminUs.setContentAreaFilled(false);
-        btnAdminUs.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAdminUs.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojo1.png"))); // NOI18N
-        btnAdminUs.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnAdminUs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdminUsActionPerformed(evt);
-            }
-        });
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal2.png"))); // NOI18N
         jButton1.setText("SALIR");
         jButton1.setBorderPainted(false);
@@ -152,55 +101,65 @@ public class MenuConta extends javax.swing.JFrame {
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal3.png"))); // NOI18N
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnReportes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
+        btnReportes.setText("Generar Reportes");
+        btnReportes.setBorderPainted(false);
+        btnReportes.setContentAreaFilled(false);
+        btnReportes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnReportes.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
+        btnReportes.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo2.png"))); // NOI18N
+        btnReportes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBalances, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnMovimientos))))
+                .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(50, 50, 50)
-                                .addComponent(btnAdminUs, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnPlanillas, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(btnCostos, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(191, 191, 191)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                        .addContainerGap(312, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel2)))
-                .addContainerGap(89, Short.MAX_VALUE))
+                        .addGap(119, 119, 119)
+                        .addComponent(jLabel2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnMovimientos)
+                .addGap(132, 132, 132)
+                .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnMovimientos, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(btnCostos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(btnPlanillas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnBalances, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAdminUs, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btnMovimientos, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
@@ -208,7 +167,9 @@ public class MenuConta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimientosActionPerformed
-        
+        GestionarTransaccion obj = new GestionarTransaccion();
+        obj.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnMovimientosActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -219,11 +180,18 @@ public class MenuConta extends javax.swing.JFrame {
         cerrar();
     }//GEN-LAST:event_formWindowClosing
 
-    private void btnAdminUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminUsActionPerformed
-        AdministrarUsuariosForm obj = new AdministrarUsuariosForm();
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        int a =0;
+        GenerarReporte obj = new GenerarReporte(a);
         obj.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btnAdminUsActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Menu obj = new Menu();
+        obj.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,11 +231,8 @@ public class MenuConta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdminUs;
-    private javax.swing.JButton btnBalances;
-    private javax.swing.JButton btnCostos;
     private javax.swing.JButton btnMovimientos;
-    private javax.swing.JButton btnPlanillas;
+    private javax.swing.JButton btnReportes;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
