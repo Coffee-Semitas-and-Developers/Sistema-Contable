@@ -6,7 +6,7 @@
 package Interfaces;
 
 import Modelos.DetalleTransaccionTableModel;
-import contabilidadgeneral.PeriodoContable;
+import Modelos.PeriodoContable;
 import Modelos.Transaccion;
 import java.sql.Connection;
 import java.sql.DriverManager;
