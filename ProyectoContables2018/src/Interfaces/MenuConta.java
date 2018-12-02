@@ -18,12 +18,8 @@ public class MenuConta extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
-    public MenuConta(){
-        initComponents();
-    }
-    
-    
-    public MenuConta(int a) {
+        
+    public MenuConta() {
         initComponents();
         background();
         getIconImage();
@@ -82,7 +78,7 @@ public class MenuConta extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Sitka Text", 0, 36)); // NOI18N
         jLabel2.setText("Menu Principal");
 
-        btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal2.png"))); // NOI18N
         btnMovimientos.setText("Movimientos Contables");
         btnMovimientos.setToolTipText("");
@@ -97,7 +93,7 @@ public class MenuConta extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal2.png"))); // NOI18N
         jButton1.setText("SALIR");
         jButton1.setBorderPainted(false);
@@ -105,7 +101,13 @@ public class MenuConta extends javax.swing.JFrame {
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal3.png"))); // NOI18N
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
+        btnReportes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
         btnReportes.setText("Generar Reportes");
         btnReportes.setBorderPainted(false);
@@ -166,7 +168,9 @@ public class MenuConta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimientosActionPerformed
-        
+        GestionarTransaccion obj = new GestionarTransaccion();
+        obj.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnMovimientosActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -181,8 +185,14 @@ public class MenuConta extends javax.swing.JFrame {
         int a =0;
         GenerarReporte obj = new GenerarReporte(a);
         obj.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Menu obj = new Menu();
+        obj.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
