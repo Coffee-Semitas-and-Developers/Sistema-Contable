@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -129,7 +130,7 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
                 ta.setId(resultado.getInt("idtarjeta"));
                 ta.setIdOrden(resultado.getInt("idorden"));
                 ta.setDui(resultado.getString("dui"));
-                ta.setFechaTarjeta(resultado.getDate("fechatarjeta"));
+                ta.setFechaTarjeta(resultado.getDate("fechacreacion"));
                 ta.setSalHora(resultado.getDouble("salariohoranormal"));
                 ta.setSalHoraExtra(resultado.getDouble("salariohoraextra"));
                 ta.setTotalHorasTrabajadas(resultado.getInt("totalhorastrabajadas"));
@@ -371,7 +372,7 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
 
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
         // TODO add your handling code here:
-        TarjetaDeTiempoForm a= new TarjetaDeTiempoForm();
+        TarjetaDeTiempoForm a = new TarjetaDeTiempoForm();
         a.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_volverButtonActionPerformed
@@ -460,12 +461,14 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            /* for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
-            }
+            }*/
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(TarjetaDeTiempoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
