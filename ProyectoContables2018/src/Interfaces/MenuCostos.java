@@ -163,7 +163,7 @@ public class MenuCostos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimientosActionPerformed
-            
+           
     }//GEN-LAST:event_btnMovimientosActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

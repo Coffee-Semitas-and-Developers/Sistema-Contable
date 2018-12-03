@@ -182,7 +182,7 @@ public class MenuPlanillas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnPlanillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanillasActionPerformed
-        MenuCostos obj = new MenuCostos();
+        PlanillaForm obj = new PlanillaForm();
         obj.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPlanillasActionPerformed

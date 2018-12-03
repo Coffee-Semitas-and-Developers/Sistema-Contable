@@ -8,7 +8,9 @@ package Interfaces;
 import Modelos.Cuenta;
 import Modelos.DetalleTransaccion;
 import Modelos.ServCuentaTableModel;
+import java.awt.Image;
 import java.awt.List;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -41,9 +43,14 @@ public class InsertarTransaccion extends javax.swing.JFrame {
     public InsertarTransaccion() {
         initComponents();
         conectar();
+        background();
+        getIconImage();
         llenarCombobox();
         inicializarColumnas();
         lbPartidaDoble.setVisible(false);
+        setLocationRelativeTo(null);
+        this.setResizable(false);
+        setTitle("Insertar Transaccion");
     }
 
     private void conectar() {
@@ -54,6 +61,15 @@ public class InsertarTransaccion extends javax.swing.JFrame {
             Logger.getLogger(GestionarTransaccion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO PEQUEÑO.jpg"));
+        return retValue;
+    }
+        public void background() {
+            Fondo ima = new Fondo();
+            ima.setSize(this.getSize());
+            this.add(ima);
+        }
 
     public void llenarCombobox() {
         //Vector<Cuenta> lista = new Vector<Cuenta>();
