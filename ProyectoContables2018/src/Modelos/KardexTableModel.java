@@ -16,11 +16,11 @@ import javax.swing.table.AbstractTableModel;
  */
 public class KardexTableModel extends AbstractTableModel {
     
-    public List<MateriaPrima> mps = new ArrayList();
+    public List<Kardex> kars = new ArrayList();
 
     @Override
     public int getRowCount() {
-        return cuentas.size();
+        return kars.size();
     }
 
     @Override
@@ -30,29 +30,27 @@ public class KardexTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Cuenta cuenta = cuentas.get(rowIndex);
+        Kardex kar = kars.get(rowIndex);
         Object valor = null;
 
         switch (columnIndex) {
             case 0:
-                valor = cuenta.getCodigo();
+                valor = kar.getIdKardex();
                 break;
             case 1:
-                valor = cuenta.getNombreCuenta();
+                valor = kar.getMp().getCodigoMateria();
                 break;
             case 2:
-                valor = cuenta.getNombreMayor();
+                valor = kar.getMp().getNombreMateria();
                 break;
             case 3:
-                valor = cuenta.getGrupoCuenta();
+                valor = kar.getCantidadesTotales();
                 break;
             case 4:
-                valor = Cuenta.tipoBalance(cuenta.getEstadoFinanciero(0)) + " \n " + Cuenta.tipoBalance(cuenta.getEstadoFinanciero(1));
+                valor = kar.getCostoUnitarioTotales();
                 break;
             case 5:
-                if (MantenimientoCuenta.cbSaldoFinal.isSelected()) {
-                    valor = cuenta.getSaldoFinal();
-                }
+                valor= kar.getMontoTotales();
                 break;
         }
         return valor;
