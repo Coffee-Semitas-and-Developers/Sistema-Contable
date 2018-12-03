@@ -525,7 +525,7 @@ public class PlanillaForm extends javax.swing.JFrame {
             calcularAFPSalarioPatrono();
             calcularISSSalarioPatrono();
             totalAporteSalarioPatrono();
-            guardarPlanillaSalario();
+            //guardarPlanillaSalario();
         }
          if (jcOcasion.getSelectedIndex() == 1) {
             calcularTotalSalarioVaca();
