@@ -13,7 +13,7 @@ public class Extra {
    // '0'-Descuento, '1'-Bonificación
    private boolean estado;
    private String descrip;
-   private double porcentaje,monto;
+   private double porcentaje,monto=0;
 
     //Escribir nulll en porcentaje para establecer un monto definido
     public Extra(boolean estado, String descrip, double porcentaje, double monto) {
