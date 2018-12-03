@@ -286,11 +286,6 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
 
         cbSaldoFinal.setText("Saldo Final");
         cbSaldoFinal.setActionCommand("");
-        cbSaldoFinal.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                cbSaldoFinalStateChanged(evt);
-            }
-        });
         cbSaldoFinal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbSaldoFinalActionPerformed(evt);
@@ -608,16 +603,16 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         UpdateJTable();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void cbSaldoFinalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cbSaldoFinalStateChanged
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_cbSaldoFinalStateChanged
-
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         MenuAdmin obj = new MenuAdmin();
         obj.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void cbSaldoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSaldoFinalActionPerformed
+        // TODO add your handling code here:
+        UpdateJTable();
+    }//GEN-LAST:event_cbSaldoFinalActionPerformed
 
     private void cerrar() {
         try {
