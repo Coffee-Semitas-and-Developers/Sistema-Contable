@@ -45,7 +45,7 @@ public class DetalleTransaccionTableModel extends AbstractTableModel {
                 valor = transaccion.descripcion;
                 break;
             case 2:
-                valor = transaccion.fecha;
+                valor = transaccion.fecha.toString();
                 break;
             case 3:
                 valor = transaccion.monto;

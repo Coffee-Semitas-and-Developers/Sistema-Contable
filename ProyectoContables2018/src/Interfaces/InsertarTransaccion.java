@@ -43,7 +43,8 @@ public class InsertarTransaccion extends javax.swing.JFrame {
     private Connection conexion;
     public ServCuentaTableModel detalleTmodel = new ServCuentaTableModel();
     public DetalleTransaccionTableModel detalleTransaccionTModel = new DetalleTransaccionTableModel();
-    double tDebe, tHaber = 0;
+    Transaccion t = new Transaccion();
+    double tDebe, tHaber = 0.00;
 
     /**
      * Creates new form InsertarMovimiento
@@ -75,15 +76,15 @@ public class InsertarTransaccion extends javax.swing.JFrame {
             ResultSet resultado = statement.executeQuery(sentenciaSql);
             while (resultado.next()) {
                 Cuenta cuenta = new Cuenta();
-                cuenta.setCodigo(resultado.getInt("idcuenta"));
+                cuenta.setCodigo(resultado.getInt("codigocuenta"));
                 cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
-                cuenta.setDescripcion(resultado.getString("descricion"));
+                cuenta.setDescripcion(resultado.getString("descripcion"));
                 cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
                 cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));
                 cmbCuenta.addItem(cuenta);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al recuperar las cuentas de la base de datos");
+            JOptionPane.showMessageDialog(this, ex);
         }
     }
 
@@ -387,7 +388,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:   
         try {
-            Transaccion t = new Transaccion();
+            
             DetalleTransaccion d = new DetalleTransaccion();
             d.cuenta = (Cuenta) cmbCuenta.getSelectedItem();
             if (rbDebe.isSelected() || rbHaber.isSelected()) {
@@ -520,15 +521,15 @@ public class InsertarTransaccion extends javax.swing.JFrame {
             Transaccion tra = new Transaccion();
 
             tra.descripcion = txtDescripcion.getText();
-            java.sql.Date f =new java.sql.Date(fechaDC().getTime());
+            java.sql.Date f = new java.sql.Date(fechaDC().getTime());
 
             String sentenciaSql1 = "INSERT INTO transaccion (idperiodocontable,"
                     + "descripciondetalle,fechatransaccion,monto) VALUES" + "(?,?,?,?)";
             PreparedStatement preparedStatement1 = conexion.prepareStatement(sentenciaSql1);
-            preparedStatement1.setObject(1, tra.idPeriodoContable);
+            preparedStatement1.setInt(1, 1);
             preparedStatement1.setString(2, tra.descripcion);
-            preparedStatement1.setDate(3,  f);
-            preparedStatement1.setDouble(4, tra.monto);
+            preparedStatement1.setDate(3, f);
+            preparedStatement1.setDouble(4, t.monto);
             preparedStatement1.execute();
             this.detalleTransaccionTModel.transacciones.add(tra);
 
@@ -538,18 +539,24 @@ public class InsertarTransaccion extends javax.swing.JFrame {
             ResultSet resultado = statement.executeQuery();
             detalleTransaccionTModel.transacciones.add(tra);
 
-            for (int i = 0; i < jTable1.getRowCount(); i++) {
-                det.cuenta = (Cuenta) jTable1.getValueAt(i, 1);
-                det.debe = (double) jTable1.getValueAt(i, 2);
-                det.haber = (double) jTable1.getValueAt(i, 3);
-                String sentenciaSql2 = "INSERT INTO detalletransaccion (idtransaccion,idcuenta,"
+            for (int i = 0; i < detalleTmodel.detalles.size(); i++) {
+                String sentenciaSql2 = "INSERT INTO detalletransaccion (idtransaccion,codigocuenta,"
                         + "debe,haber) VALUES" + "(?,?,?,?)";
-                PreparedStatement preparedStatement2 = conexion.prepareStatement(sentenciaSql2);
-                preparedStatement2.setInt(1, resultado.getInt("idtransaccion"));
-                preparedStatement2.setInt(2, det.cuenta.getCodigo());
-                preparedStatement2.setDouble(3, det.haber);
-                preparedStatement2.setDouble(4, det.debe);
-                preparedStatement2.execute();
+
+                DetalleTransaccion detalle = (DetalleTransaccion) detalleTmodel.detalles.get(i);
+                det.cuenta = detalle.cuenta;
+                det.debe = detalle.debe;
+                det.haber = detalle.haber;
+                if (resultado.next()) {
+                    int r = resultado.getInt("idtransaccion");
+                    PreparedStatement preparedStatement2 = conexion.prepareStatement(sentenciaSql2);
+                    preparedStatement2.setInt(1, r);
+                    preparedStatement2.setInt(2, det.cuenta.getCodigo());
+                    preparedStatement2.setDouble(3, det.haber);
+                    preparedStatement2.setDouble(4, det.debe);
+                    preparedStatement2.execute();
+                    System.out.println("Pelamela");
+                }
             }
 
         } catch (SQLException e) {
