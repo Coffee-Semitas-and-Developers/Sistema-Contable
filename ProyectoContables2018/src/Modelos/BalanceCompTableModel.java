@@ -16,6 +16,7 @@ import javax.swing.table.AbstractTableModel;
 public class BalanceCompTableModel extends AbstractTableModel {
 
     public List<Cuenta> cuentas = new ArrayList<Cuenta>();
+    public List<DetalleTransaccion> transacciones = new ArrayList<DetalleTransaccion>();
 
     @Override
     public int getRowCount() {
@@ -30,6 +31,7 @@ public class BalanceCompTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int columindex, int rowindex) {
         Cuenta cuenta = cuentas.get(rowindex);
+        DetalleTransaccion transaccion = transacciones.get(rowindex);
         Object c = null;
 
         switch (columindex) {
@@ -40,10 +42,10 @@ public class BalanceCompTableModel extends AbstractTableModel {
                 c = cuenta.getNombreCuenta();
                 break;
             case 2:
-                c = cuenta.obtenerDebe();
+                c = transaccion.getDebe();
                 break;
             case 3:
-                c = cuenta.obtenerHaber();
+                c = transaccion.getHaber();
         }
         return c;
     }

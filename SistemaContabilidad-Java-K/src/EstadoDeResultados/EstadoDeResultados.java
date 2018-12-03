@@ -83,7 +83,8 @@ public class EstadoDeResultados extends javax.swing.JFrame implements Printable 
         int mesf = 0;
         
         try { 
-            String sentencia = "select codigo, nombre, debe, haber from cuenta where estadofinanciero = 1 and (operacionenestado = 0 or operacionenestado = 1) and (debe != 0 or haber != 0)";
+            String sentencia = "select codigo, nombre, debe, haber from cuenta where estadofinanciero = 1 and "
+                    + "(operacionenestado = 0 or operacionenestado = 1) and (debe != 0 or haber != 0)";
             Statement statement = Conexion.conect.createStatement();
             ResultSet resultado = statement.executeQuery(sentencia);
             

@@ -7,6 +7,7 @@ package Modelos;
 
 import Conexion.Conexion;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -306,13 +307,12 @@ public class Cuenta {
         return debe;
     }
 
-    public double obtenerhaberconfecha(int idcuenta, Date fechainicio, Date fechafinal) {
+    public double obtenerhaberconfecha(Date fechainicio, Date fechafinal) {
         double haber = 0;
-        int cuenta = idcuenta;
 
         try {
             /*Sentencia SQL para las fecha registradas y las cuentas*/
-            String setencia = "select * from detalletransaccion";
+            String setencia = "select * from detalletransaccion where codigocuenta=" + String.valueOf(codigo);
             String setenciafechainicio = "select * from (SELECT * FROM "
                     + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion asc limit 1";
@@ -336,10 +336,10 @@ public class Cuenta {
                 parametro da un valor menor que cero*/
                 //establece el rango de fechas
                 if (fechainicio.compareTo(fechainibase) > 0 && fechafinal.compareTo(fechafinalbase) < 0) {
-                    if (cuenta == identificador) {
+                   
                         haber += tabla.getDouble("haber");
                     }//if cuenta        
-                } //if fecha
+             
                 else {
                     JOptionPane.showInternalMessageDialog(null, "la fecha  no se encuentra en los registro contables");
                 }
@@ -351,4 +351,39 @@ public class Cuenta {
         }
         return haber;
     }
+
+    public static Cuenta obtenercuenta(Date fechainicio, Date fechafinal, String estado) {
+        Cuenta cuenta = new Cuenta();
+        try {
+            Statement conexion = Conexion.getConexion().createStatement();
+            String sentencia = "SELECT * FROM cuenta where estadofinanciero like '%?%'";
+            String setenciafechainicio = "select * from (SELECT * FROM "
+                    + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
+                    + "order by fechatransaccion asc limit 1";
+//esta sentencia me recoge la fecha utima registrada 
+            String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
+                    + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
+                    + "order by fechatransaccion desc limit 1";
+            ResultSet fechainiciobd = conexion.executeQuery(setenciafechainicio);
+            ResultSet fechafinalbd = conexion.executeQuery(setenciafechafinal);
+            PreparedStatement statenm = Conexion.getConexion().prepareStatement(sentencia);
+            statenm.setString(1, estado);
+            Date fechainibd = fechainiciobd.getDate("fechatransaccion");
+            Date fechafinlbd = fechafinalbd.getDate("fechatransaccion");
+            ResultSet resultado = statenm.executeQuery();
+            if (fechainicio.compareTo(fechainibd) > 0 && fechafinal.compareTo(fechafinlbd) < 0) {
+                cuenta.setCodigo(resultado.getInt("codigo"));
+                cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "las fechas igresadas no estan el periodo contable");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error en la conexion con la base");
+            e.printStackTrace();
+        }
+        return cuenta;
+    }
+
 }

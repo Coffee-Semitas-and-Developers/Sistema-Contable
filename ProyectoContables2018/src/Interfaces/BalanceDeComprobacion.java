@@ -5,15 +5,26 @@
  */
 package Interfaces;
 
+import Conexion.Conexion;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import Modelos.BalanceCompTableModel;
+import Modelos.*;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 public final class BalanceDeComprobacion extends javax.swing.JFrame {
-    
-  public BalanceCompTableModel tabla = new BalanceCompTableModel();
+
+    public BalanceCompTableModel tabla = new BalanceCompTableModel();
+    private final Conexion conexion = new Conexion();
+
     /**
      * Creates new form BalanceDeComprobacion
      */
@@ -23,41 +34,45 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.setResizable(false);
         setTitle("Balance de comprobación");
+        conexion.getConexion();
         getIconImage();
         background();
     }
-    
+
     //rellenado el fondo del frame 
     public void background() {
- Fondo ima = new Fondo();
- ima.setSize(this.getSize());
- this.add(ima);
-}
-    
-    
-    private void inicializarcolumna(){
-    TableColumnModel tColumnModel = new DefaultTableColumnModel();
-        
-        for(int i=0; i<4; i++) {
+        Fondo ima = new Fondo();
+        ima.setSize(this.getSize());
+        this.add(ima);
+    }
+
+    private void inicializarcolumna() {
+        TableColumnModel tColumnModel = new DefaultTableColumnModel();
+
+        for (int i = 0; i < 4; i++) {
             TableColumn col = new TableColumn(i);
-            
-            switch(i) {
-                case 0: col.setHeaderValue("Codigo");
+
+            switch (i) {
+                case 0:
+                    col.setHeaderValue("Codigo");
                     break;
-                case 1: col.setHeaderValue("Nombre");
+                case 1:
+                    col.setHeaderValue("Nombre");
                     break;
-                case 2: col.setHeaderValue("Debe ($)");
+                case 2:
+                    col.setHeaderValue("Debe ($)");
                     break;
-                case 3: col.setHeaderValue("Haber ($)");
+                case 3:
+                    col.setHeaderValue("Haber ($)");
             }
-            
+
             tColumnModel.addColumn(col);
         }
-         tablacom.setColumnModel(tColumnModel);
+        tablacom.setColumnModel(tColumnModel);
     }
-    
+
     //metodo para cambiar el icono en la tabla de erramienta
-     public Image getIconImage() {
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO 2.jpg"));
         return retValue;
     }
@@ -77,6 +92,9 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jdfechainicio = new com.toedter.calendar.JDateChooser();
+        jdfechafinal = new com.toedter.calendar.JDateChooser();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -88,14 +106,7 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
             }
         });
 
-        tablacom.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
+        tablacom.setModel(tabla);
         jScrollPane1.setViewportView(tablacom);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/LOGO 2.jpg"))); // NOI18N
@@ -105,25 +116,51 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
 
         jLabel3.setText("Balance de comprobación");
 
+        jdfechainicio.setMaxSelectableDate(null);
+        jdfechainicio.setMinSelectableDate(new java.util.Date(1541055698000L));
+
+        jdfechafinal.setMinSelectableDate(new java.util.Date(1541055684000L));
+
+        jButton2.setText("Generar Reporte");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jLabel2)
-                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jButton1)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addComponent(jLabel1))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(jButton1))
+                        .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(99, 99, 99)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addComponent(jdfechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(67, 67, 67)
+                                .addComponent(jdfechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(58, 58, 58)
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(33, 33, 33))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,11 +169,16 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(8, 8, 8)
                         .addComponent(jLabel1)
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(15, 15, 15)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jdfechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jdfechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17)
                 .addComponent(jButton1))
@@ -146,11 +188,65 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       GenerarReporte  regresar = new GenerarReporte();
-       regresar.setVisible(true);
-       this.setVisible(false);
+        GenerarReporte regresar = new GenerarReporte();
+        regresar.setVisible(true);
+        this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Cuenta cuenta = new Cuenta();
+        DetalleTransaccion Detalle = new DetalleTransaccion();
+        try {
+            Statement conexion = this.conexion.createStatement();
+            Statement conexion1 = this.conexion.createStatement();
+            Statement conexion3 = this.conexion.createStatement();
+            String sentencia = "select a.estadofinanciero,a.codigocuenta,"
+                    + "a.nombrecuenta,d.debe,d.haber from  detalletransaccion d"
+                    + "  inner join cuenta a on d.codigocuenta = a.codigocuenta "
+                    + "where estadofinanciero like '%G%'";
+            String setenciafechainicio = "select * from (SELECT * FROM "
+                    + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
+                    + "order by fechatransaccion asc limit 1";
+            //esta sentencia me recoge la fecha utima registrada 
+            String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
+                    + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
+                    + "order by fechatransaccion desc limit 1";
+            PreparedStatement statenm = this.conexion.prepareStatement(sentencia);
+            // ResultSet resultado = statenm.executeQuery();
+            ResultSet resultado = conexion3.executeQuery(sentencia);
+            ResultSet fechainibd = conexion.executeQuery(setenciafechainicio);
+            ResultSet fechafinalbd = conexion1.executeQuery(setenciafechafinal);
+            if (resultado.getFetchSize() == 0) {
+                JOptionPane.showMessageDialog(null, "error");
+            }
+            while (fechainibd.next()) {
+                while (fechafinalbd.next()) {
+                    Date fechafinlbd = fechafinalbd.getDate("fechatransaccion");
+                    java.util.Date fechaini = jdfechainicio.getDate();
+                    java.util.Date fechafinal = jdfechafinal.getDate();
+                    while (resultado.next()) {
+                        if (fechafinlbd.compareTo(fechafinal) < 0) {
+                            cuenta.setCodigo(resultado.getInt("codigocuenta"));
+                            cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
+                            Detalle.setDebe(resultado.getDouble("debe"));
+                            Detalle.setHaber(resultado.getDouble("haber"));
+                            tabla.cuentas.add(cuenta);
+                            tabla.transacciones.add(Detalle);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "las fechas igresadas no estan el periodo contable");
+                        }
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error en la conexion con la base" + e);
+            e.printStackTrace();
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,10 +293,13 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private com.toedter.calendar.JDateChooser jdfechafinal;
+    private com.toedter.calendar.JDateChooser jdfechainicio;
     private javax.swing.JTable tablacom;
     // End of variables declaration//GEN-END:variables
 }
