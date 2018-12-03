@@ -79,7 +79,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Sitka Text", 0, 36)); // NOI18N
         jLabel2.setText("Menu Principal");
 
-        btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/general1.png"))); // NOI18N
         btnMovimientos.setText("Contabilidad General");
         btnMovimientos.setToolTipText("");
@@ -95,7 +95,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        btnCostos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnCostos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnCostos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/costos1.png"))); // NOI18N
         btnCostos.setText("Contabilidad de Costos");
         btnCostos.setBorderPainted(false);
@@ -110,7 +110,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal2.png"))); // NOI18N
         jButton1.setText("SALIR");
         jButton1.setBorderPainted(false);
@@ -156,7 +156,7 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(btnCostos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
