@@ -14,9 +14,9 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Dalton
  */
-public class CuentaTableModel extends AbstractTableModel {
-
-    public List<Cuenta> cuentas = new ArrayList();
+public class KardexTableModel extends AbstractTableModel {
+    
+    public List<MateriaPrima> cuentas = new ArrayList();
 
     @Override
     public int getRowCount() {
@@ -60,4 +60,5 @@ public class CuentaTableModel extends AbstractTableModel {
         }
         return valor;
     }
+    
 }

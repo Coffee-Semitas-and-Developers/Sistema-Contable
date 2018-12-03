@@ -39,7 +39,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 6; i++) {
             TableColumn col = new TableColumn(i);
 
             switch (i) {
@@ -49,19 +49,19 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 case 1:
                     col.setHeaderValue("Nombre de Cuenta");
                     break;
-                case 2:
+                /*case 2:
                     col.setHeaderValue("Descripción");
-                    break;
-                case 3:
+                    break;*/
+                case 2:
                     col.setHeaderValue("Cuenta Mayor");
                     break;
-                case 4:
+                case 3:
                     col.setHeaderValue("Grupo de la Cuenta");
                     break;
-                case 5:
+                case 4:
                     col.setHeaderValue("Estado Financiero");
                     break;
-                case 6:
+                case 5:
                     col.setHeaderValue("Saldo Final");
                     break;
             }
@@ -103,13 +103,15 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
             Statement statement = this.conexion.createStatement();
 
             ResultSet resultado = statement.executeQuery(sql);
-
+            
+            cmbCuentaMayor.removeAllItems();
             cmbCuentaMayor.addItem(new Cuenta(0, "N/A"));
             while (resultado.next()) {
                 Cuenta cuenta = new Cuenta();
                 cuenta.setCodigo(resultado.getInt("codigocuenta"));
                 cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
                 cmbCuentaMayor.addItem(cuenta);
+                System.out.println(cuenta.toString());
             }
             //tableCuenta.repaint();
         } catch (SQLException ex) {
@@ -140,6 +142,8 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0), 0);
                 cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(1), 1);
                 this.cuentaTabla.cuentas.add(cuenta);
+                cuentaTabla.fireTableDataChanged();
+                listarCuentaMayores();
             }
             tableCuenta.repaint();
         } catch (SQLException ex) {
@@ -193,7 +197,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         tableCuenta.setModel(cuentaTabla);
         tableCuenta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tableCuenta.setName("tableCuenta"); // NOI18N
-        tableCuenta.setRowHeight(48);
+        tableCuenta.setRowHeight(20);
         tableCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableCuentaMouseClicked(evt);
@@ -230,6 +234,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         txtNombre.setName("txtNombre"); // NOI18N
 
         cmbCuentaMayor.setModel(cmbCuentaMayor.getModel());
+        cmbCuentaMayor.setActionCommand("");
         cmbCuentaMayor.setName("cmbCuentaMayor"); // NOI18N
 
         cmbGrupoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N/A", "Corriente", "No Corriente", "Diferido", "Distribuido", "Ganado", "Inversión", "Desinversión" }));
@@ -279,9 +284,15 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         cmbEstadoFin2.setName("cmbEstadoFinanciero"); // NOI18N
 
         cbSaldoFinal.setText("Saldo Final");
+        cbSaldoFinal.setActionCommand("");
         cbSaldoFinal.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 cbSaldoFinalStateChanged(evt);
+            }
+        });
+        cbSaldoFinal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSaldoFinalActionPerformed(evt);
             }
         });
 
@@ -531,7 +542,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                     }
 
                     statement.execute();
-                    JOptionPane.showMessageDialog(this, "La nuevo cuenta ha sido guardada existosamente");
+                    //JOptionPane.showMessageDialog(this, "La nuevo cuenta ha sido guardada existosamente");
                     btnNuevaCuentaActionPerformed(evt);
                     UpdateJTable();
                 }
@@ -587,8 +598,13 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
 
     private void cbSaldoFinalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cbSaldoFinalStateChanged
         // TODO add your handling code here:
-        UpdateJTable();
+        
     }//GEN-LAST:event_cbSaldoFinalStateChanged
+
+    private void cbSaldoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSaldoFinalActionPerformed
+        // TODO add your handling code here:
+        UpdateJTable();
+    }//GEN-LAST:event_cbSaldoFinalActionPerformed
 
     private void cerrar() {
         try {

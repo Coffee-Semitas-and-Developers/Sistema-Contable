@@ -9,7 +9,7 @@ package Modelos;
  *
  * @author AxlHrndz
  */
-public class materiaPrima {
+public class MateriaPrima {
 
     private int codigoMateria;
     private String nombreMateria;
@@ -19,7 +19,7 @@ public class materiaPrima {
     private String unidadesMateria;
     private double precioAdquisicion;
         
-    public materiaPrima() {
+    public MateriaPrima() {
     }
 
     public int getCantidadmateria() {

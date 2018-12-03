@@ -189,7 +189,7 @@
               <TableColumnModel selectionModel="0"/>
             </Property>
             <Property name="name" type="java.lang.String" value="tableCuenta" noResource="true"/>
-            <Property name="rowHeight" type="int" value="48"/>
+            <Property name="rowHeight" type="int" value="20"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
@@ -255,6 +255,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection component="cmbCuentaMayor" name="model" type="property"/>
         </Property>
+        <Property name="actionCommand" type="java.lang.String" value=""/>
         <Property name="name" type="java.lang.String" value="cmbCuentaMayor" noResource="true"/>
       </Properties>
       <AuxValues>
@@ -374,9 +375,11 @@
     <Component class="javax.swing.JCheckBox" name="cbSaldoFinal">
       <Properties>
         <Property name="text" type="java.lang.String" value="Saldo Final"/>
+        <Property name="actionCommand" type="java.lang.String" value=""/>
       </Properties>
       <Events>
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="cbSaldoFinalStateChanged"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbSaldoFinalActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
