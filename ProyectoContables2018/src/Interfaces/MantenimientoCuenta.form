@@ -12,7 +12,7 @@
     <Property name="defaultCloseOperation" type="int" value="0"/>
     <Property name="title" type="java.lang.String" value="MantenimientoCuenta"/>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-      <Color id="Default Cursor"/>
+      <Color id="Cursor Por defecto"/>
     </Property>
     <Property name="name" type="java.lang.String" value="fCuenta" noResource="true"/>
   </Properties>
@@ -42,16 +42,44 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="panelTableCuenta" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="lblDescripcion" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="322" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lblEstadoFin" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="cmbEstadoFin" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblEstadoFin2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="cmbEstadoFin2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="lblLogo" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnNuevaCuenta" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnSalir" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblGrupoCuenta" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="cmbGrupoCuenta" min="-2" pref="142" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblCodigo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -60,51 +88,26 @@
                               <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="txtNombre" min="-2" pref="218" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="lblListadoCuenta" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblGrupoCuenta" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cmbGrupoCuenta" min="-2" pref="142" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                              <Component id="lblEstadoFin" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="cmbEstadoFin" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="lblDescripcion" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" min="-2" pref="322" max="-2" attributes="0"/>
+                              <Component id="lblCuentaMayor" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="cmbCuentaMayor" pref="151" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="rbSaldoAcreedor" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="rbSaldoDeudor" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="txtSaldoDeudor" max="32767" attributes="0"/>
-                                  <Component id="txtSaldoAcreedor" min="-2" pref="117" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="82" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="lblCuentaMayor" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cmbCuentaMayor" max="32767" attributes="0"/>
+                              <Component id="cbSaldoFinal" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="lblListadoCuenta" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="309" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -114,8 +117,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lblListadoCuenta" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="panelTableCuenta" pref="320" max="32767" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="panelTableCuenta" pref="265" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -124,40 +127,41 @@
                   <Component id="lblCuentaMayor" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmbCuentaMayor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblGrupoCuenta" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbGrupoCuenta" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblEstadoFin" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbEstadoFin" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbSaldoFinal" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblEstadoFin" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cmbEstadoFin" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblEstadoFin2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cmbEstadoFin2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                           <Component id="lblDescripcion" min="-2" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtSaldoDeudor" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="rbSaldoDeudor" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtSaldoAcreedor" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="rbSaldoAcreedor" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnNuevaCuenta" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnSalir" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="lblLogo" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnNuevaCuenta" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -165,7 +169,10 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblListadoCuenta">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Listado de Cuentas"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Arial" size="18" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Cat&#xe1;logo de Cuentas"/>
         <Property name="name" type="java.lang.String" value="lblListadoCuentas" noResource="true"/>
       </Properties>
     </Component>
@@ -186,6 +193,7 @@
               <TableColumnModel selectionModel="0"/>
             </Property>
             <Property name="name" type="java.lang.String" value="tableCuenta" noResource="true"/>
+            <Property name="rowHeight" type="int" value="48"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
@@ -292,48 +300,6 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtSaldoDeudor">
-      <Properties>
-        <Property name="enabled" type="boolean" value="false"/>
-        <Property name="name" type="java.lang.String" value="txtSaldoDeudor" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSaldoDeudorKeyTyped"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtSaldoAcreedor">
-      <Properties>
-        <Property name="enabled" type="boolean" value="false"/>
-        <Property name="name" type="java.lang.String" value="txtSaldoAcreedor" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSaldoAcreedorKeyTyped"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="rbSaldoDeudor">
-      <Properties>
-        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGRadio"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Saldo Deudor"/>
-        <Property name="name" type="java.lang.String" value="rbSaldoDeudor" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbSaldoDeudorActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="rbSaldoAcreedor">
-      <Properties>
-        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnGRadio"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Saldo Acreedor"/>
-        <Property name="name" type="java.lang.String" value="rbSaldoAcreedor" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbSaldoAcreedorActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btnGuardar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar"/>
@@ -379,5 +345,54 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="lblLogo">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/LOGO PEQUE&#xd1;O.jpg"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="lblLogo" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEstadoFin2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Estado Financiero 2"/>
+        <Property name="name" type="java.lang.String" value="lblEstadoFin" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cmbEstadoFin2">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="N/A"/>
+            <StringItem index="1" value="Estado de Resultado"/>
+            <StringItem index="2" value="Estado de Capital"/>
+            <StringItem index="3" value="Balance General"/>
+          </StringArray>
+        </Property>
+        <Property name="name" type="java.lang.String" value="cmbEstadoFinanciero" noResource="true"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbSaldoFinal">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Saldo Final"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="cbSaldoFinalStateChanged"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnSalir">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Salir"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalirActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

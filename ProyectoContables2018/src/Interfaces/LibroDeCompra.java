@@ -17,20 +17,27 @@ public class LibroDeCompra extends javax.swing.JFrame {
     /**
      * Creates new form libroDeCompra
      */
-    public LibroDeCompra() {
+    int b;
+    
+    public LibroDeCompra(){
         initComponents();
-         setLocationRelativeTo(null);
+    }
+    
+    public LibroDeCompra(int a) {
+        initComponents();
+        setLocationRelativeTo(null);
         this.setResizable(false);
         setTitle("Libro de compra");
         getIconImage();
         background();
+        this.b=a;
     }
     
     public void background() {
- Fondo ima = new Fondo();
- ima.setSize(this.getSize());
- this.add(ima);
-}
+        Fondo ima = new Fondo();
+        ima.setSize(this.getSize());
+        this.add(ima);
+    }
 
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO 2.jpg"));
@@ -78,10 +85,10 @@ public class LibroDeCompra extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        GenerarReporte  regresar = new GenerarReporte();
+       GenerarReporte regresar = new GenerarReporte(this.b);
        regresar.setVisible(true);
-       this.setVisible(false);
-        // TODO add your handling code here:
+       this.dispose();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

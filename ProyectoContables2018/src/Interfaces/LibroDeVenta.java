@@ -17,13 +17,20 @@ public class LibroDeVenta extends javax.swing.JFrame {
     /**
      * Creates new form libroDeVenta
      */
-    public LibroDeVenta() {
+    int b;
+    
+    public LibroDeVenta(){
+        initComponents();
+    }
+            
+    public LibroDeVenta(int a) {
         initComponents();
          setLocationRelativeTo(null);
         this.setResizable(false);
         setTitle("Libro de venta");
         getIconImage();
         background();
+        this.b = a;
     }
  
     public void background() {
@@ -79,9 +86,9 @@ public class LibroDeVenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
-        GenerarReporte  regresar = new GenerarReporte();
+       GenerarReporte  regresar = new GenerarReporte(this.b);
        regresar.setVisible(true);
-       this.setVisible(false);
+       this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_RegresarActionPerformed
 

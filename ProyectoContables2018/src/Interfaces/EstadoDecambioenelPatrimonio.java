@@ -17,12 +17,17 @@ public class EstadoDecambioenelPatrimonio extends javax.swing.JFrame {
     /**
      * Creates new form estadiDecambioenelPatrimonio
      */
+    int b;
     public EstadoDecambioenelPatrimonio() {
+        initComponents();
+    }
+    public EstadoDecambioenelPatrimonio(int a) {
         initComponents();
          setLocationRelativeTo(null);
         this.setResizable(false);
         setTitle("Estado de Cambio en el patrimonio");
         background();
+        this.b=a;
     }
     
     public void background() {
@@ -100,7 +105,7 @@ public class EstadoDecambioenelPatrimonio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
-        GenerarReporte  regresar = new GenerarReporte();
+        GenerarReporte  regresar = new GenerarReporte(this.b);
        regresar.setVisible(true);
        this.setVisible(false);
         // TODO add your handling code here:

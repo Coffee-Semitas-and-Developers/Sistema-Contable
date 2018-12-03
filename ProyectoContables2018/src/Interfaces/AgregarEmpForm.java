@@ -81,7 +81,6 @@ public class AgregarEmpForm extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         lbFondo = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -275,7 +274,6 @@ public class AgregarEmpForm extends javax.swing.JFrame {
         jLabel10.setText("FICHA DE CONTRATACION");
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGO PEQUEÑO.jpg"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -306,6 +304,7 @@ public class AgregarEmpForm extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(lbDate)
                                 .addGap(80, 80, 80))))))
+
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -568,7 +567,6 @@ if(txtNit.getText().length()>16){
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

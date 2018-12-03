@@ -5,6 +5,13 @@
  */
 package Modelos;
 
+import Conexion.Conexion;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Dalton
@@ -14,15 +21,13 @@ public class Cuenta {
     private int codigo;
     private String nombreCuenta;
     private String descripcion;
-    private char estadoFinanciero;
+    private char[] estadoFinanciero = new char[2];
     private String grupoCuenta;
-    private double saldoDeudor;
-    private double saldoAcreedor;
     private double saldoFinal;
     private int codigoMayor;
     private String nombreMayor;
 
-    public Cuenta(String nombreCuenta, String descripcion, char estadoFinanciero, String grupoCuenta) {
+    public Cuenta(String nombreCuenta, String descripcion, char[] estadoFinanciero, String grupoCuenta) {
         this.nombreCuenta = nombreCuenta;
         this.descripcion = descripcion;
         this.estadoFinanciero = estadoFinanciero;
@@ -77,12 +82,12 @@ public class Cuenta {
         this.descripcion = descripcion;
     }
 
-    public char getEstadoFinanciero() {
-        return estadoFinanciero;
+    public char getEstadoFinanciero(int i) {
+        return estadoFinanciero[i];
     }
 
-    public void setEstadoFinanciero(char estadoFinanciero) {
-        this.estadoFinanciero = estadoFinanciero;
+    public void setEstadoFinanciero(char estadoFinanciero, int i) {
+        this.estadoFinanciero[i] = estadoFinanciero;
     }
 
     public String getGrupoCuenta() {
@@ -93,23 +98,8 @@ public class Cuenta {
         this.grupoCuenta = grupoCuenta;
     }
 
-    public double getSaldoDeudor() {
-        return saldoDeudor;
-    }
-
-    public void setSaldoDeudor(double saldoDeudor) {
-        this.saldoDeudor = saldoDeudor;
-    }
-
-    public double getSaldoAcreedor() {
-        return saldoAcreedor;
-    }
-
-    public void setSaldoAcreedor(double saldoAcreedor) {
-        this.saldoAcreedor = saldoAcreedor;
-    }
-
     public double getSaldoFinal() {
+        obtenersaldo();
         return saldoFinal;
     }
 
@@ -119,13 +109,246 @@ public class Cuenta {
 
     @Override
     public String toString() {
-        String s=null;
-        if(codigo==0){
-            s= nombreCuenta;
-        }else {
-            s=codigo + " " + nombreCuenta;
+        String s = null;
+        if (codigo == 0) {
+            s = nombreCuenta;
+        } else {
+            s = codigo + " " + nombreCuenta;
         }
         return s;
     }
-    
+
+    //Transforma el char correspondiente al Estado Financiero en String
+    public static String tipoBalance(char estado) {
+        String estadoFinanciero = "";
+
+        switch (estado) {
+            case 'G':
+                estadoFinanciero = "Balance General";
+                break;
+            case 'R':
+                estadoFinanciero = "Estado de Resultado";
+                break;
+            case 'C':
+                estadoFinanciero = "Estado de Capital";
+                break;
+            case ' ':
+                estadoFinanciero = "";
+                break;
+        }
+
+        return estadoFinanciero;
+    }
+
+    //Transforma el String correspondiente al Estado Financiero en char para guardar en la Base
+    public static char tipoBalanceLetra(String estado) {
+        char estadoFin = ' ';
+
+        switch (estado) {
+            case "Balance General":
+                estadoFin = 'G';
+                break;
+            case "Estado de Resultado":
+                estadoFin = 'R';
+                break;
+            case "Estado de Capital":
+                estadoFin = 'C';
+                break;
+            case "N/A":
+                estadoFin = ' ';
+                break;
+        }
+
+        return estadoFin;
+    }
+
+    public double obtenerDebe() {
+        double debe = 0;
+
+        try {
+            String setencia = "select * from detalletransaccion where codigocuenta=" + String.valueOf(codigo);
+            Statement conexion = Conexion.getConexion().createStatement();
+            ResultSet tabla = conexion.executeQuery(setencia);
+            while (tabla.next()) {
+                debe += tabla.getDouble("debe");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en la conexion");
+        }
+
+        return debe;
+    }
+
+    public double obtenerHaber() {
+        double haber = 0;
+        try {
+            String setencia = "select * from detalletransaccion where codigocuenta=" + String.valueOf(codigo);
+            Statement conexion = Conexion.getConexion().createStatement();
+            ResultSet tabla = conexion.executeQuery(setencia);
+            while (tabla.next()) {
+                haber += tabla.getDouble("haber");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en la conexion");
+        }
+        return haber;
+    }
+
+    public void obtenersaldo() {
+        double debe = 0;
+        double haber = 0;
+        try {
+            String setencia = "select * from detalletransaccion where codigocuenta=" + String.valueOf(codigo);
+            Statement conexion = Conexion.getConexion().createStatement();
+            ResultSet tabla = conexion.executeQuery(setencia);
+            while (tabla.next()) {
+                debe += tabla.getDouble("debe");
+                haber += tabla.getDouble("haber");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en la conexion");
+        }
+        saldoFinal = debe - haber;
+    }
+
+    public double obtenersaldoconfecha(int idcuenta, Date fechainicio, Date fechafinal) {
+        double debe = 0;
+        double haber = 0;
+        double saldo = 0;
+        int cuenta = idcuenta;
+
+        try {
+            /*Sentencia SQL para las fecha registradas y las cuentas*/
+            String setencia = "select * from detalletransaccion where codigocuenta=" + String.valueOf(codigo);
+            String setenciafechainicio = "select * from (SELECT * FROM "
+                    + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
+                    + "order by fechatransaccion asc limit 1";
+            //esta sentencia me recoge la fecha utima registrada 
+            String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
+                    + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
+                    + "order by fechatransaccion desc limit 1";
+
+            Statement conexion = Conexion.getConexion().createStatement();
+            ResultSet tabla = conexion.executeQuery(setencia);
+            ResultSet fecinicio = conexion.executeQuery(setenciafechainicio);
+            ResultSet fecfinal = conexion.executeQuery(setenciafechafinal);
+            Date fechainibase = fecinicio.getDate("fechatransaccion");/*incluyo la fecha a un atribuyo de tipo Date esta sera la primera del los registro */
+            Date fechafinalbase = fecfinal.getDate("fechatransaccion");//esta fecha sera la final de los registros 
+
+            while (tabla.next()) {
+                int identificador = tabla.getInt("idcuenta");
+                /*if compara las fecha de tipo date si las fechas son iguales
+                da como resultado 0 si las fecha 1 es mayor que la que esta en el parametro 
+                el resultado es un valor mayor a cero si es la fecha 1 es menor que lafecha en el 
+                parametro da un valor menor que cero*/
+                //establece el rango de fechas
+                if (fechainicio.compareTo(fechainibase) > 0 && fechafinal.compareTo(fechafinalbase) < 0) {
+                    if (cuenta == identificador) {
+                        debe += tabla.getDouble("debe");
+                        haber += tabla.getDouble("haber");
+                    }//if cuenta        
+                } //if fecha
+                else {
+                    JOptionPane.showInternalMessageDialog(null, "la fecha no se encuentra en los registro contables");
+                }
+            }//while
+        }//try
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en la conexion");
+        }
+        saldo = debe + haber;
+        return saldo;
+    }
+
+    public double obtenerdebeconfecha(int idcuenta, Date fechainicio, Date fechafinal) {
+        double debe = 0;
+        int cuenta = idcuenta;
+
+        try {
+            /*Sentencia SQL para las fecha registradas y las cuentas*/
+            String setencia = "select * from detalletransaccion";
+            String setenciafechainicio = "select * from (SELECT * FROM "
+                    + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
+                    + "order by fechatransaccion asc limit 1";
+            //esta sentencia me recoge la fecha utima registrada 
+            String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
+                    + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
+                    + "order by fechatransaccion desc limit 1";
+
+            Statement conexion = Conexion.getConexion().createStatement();
+            ResultSet tabla = conexion.executeQuery(setencia);
+            ResultSet fecinicio = conexion.executeQuery(setenciafechainicio);
+            ResultSet fecfinal = conexion.executeQuery(setenciafechafinal);
+            Date fechainibase = fecinicio.getDate("fechatransaccion");/*incluyo la fecha a un atribuyo de tipo Date esta sera la primera del los registro */
+            Date fechafinalbase = fecfinal.getDate("fechatransaccion");//esta fecha sera la final de los registros 
+
+            while (tabla.next()) {
+                int identificador = tabla.getInt("idcuenta");
+                /*if compara las fecha de tipo date si las fechas son iguales
+                da como resultado 0 si las fecha 1 es mayor que la que esta en el parametro 
+                el resultado es un valor mayor a cero si es la fecha 1 es menor que lafecha en el 
+                parametro da un valor menor que cero*/
+                //establece el rango de fechas
+                if (fechainicio.compareTo(fechainibase) > 0 && fechafinal.compareTo(fechafinalbase) < 0) {
+                    if (cuenta == identificador) {
+                        debe += tabla.getDouble("debe");
+                    }//if cuenta        
+                } //if fecha
+                else {
+                    JOptionPane.showInternalMessageDialog(null, "la fecha  no se encuentra en los registro contables");
+                }
+            }//while
+        }//try
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en la conexion");
+            e.printStackTrace();
+        }
+        return debe;
+    }
+
+    public double obtenerhaberconfecha(int idcuenta, Date fechainicio, Date fechafinal) {
+        double haber = 0;
+        int cuenta = idcuenta;
+
+        try {
+            /*Sentencia SQL para las fecha registradas y las cuentas*/
+            String setencia = "select * from detalletransaccion";
+            String setenciafechainicio = "select * from (SELECT * FROM "
+                    + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
+                    + "order by fechatransaccion asc limit 1";
+            //esta sentencia me recoge la fecha utima registrada 
+            String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
+                    + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
+                    + "order by fechatransaccion desc limit 1";
+
+            Statement conexion = Conexion.getConexion().createStatement();
+            ResultSet tabla = conexion.executeQuery(setencia);
+            ResultSet fecinicio = conexion.executeQuery(setenciafechainicio);
+            ResultSet fecfinal = conexion.executeQuery(setenciafechafinal);
+            Date fechainibase = fecinicio.getDate("fechatransaccion");/*incluyo la fecha a un atribuyo de tipo Date esta sera la primera del los registro */
+            Date fechafinalbase = fecfinal.getDate("fechatransaccion");//esta fecha sera la final de los registros 
+
+            while (tabla.next()) {
+                int identificador = tabla.getInt("idcuenta");
+                /*if compara las fecha de tipo date si las fechas son iguales
+                da como resultado 0 si las fecha 1 es mayor que la que esta en el parametro 
+                el resultado es un valor mayor a cero si es la fecha 1 es menor que lafecha en el 
+                parametro da un valor menor que cero*/
+                //establece el rango de fechas
+                if (fechainicio.compareTo(fechainibase) > 0 && fechafinal.compareTo(fechafinalbase) < 0) {
+                    if (cuenta == identificador) {
+                        haber += tabla.getDouble("haber");
+                    }//if cuenta        
+                } //if fecha
+                else {
+                    JOptionPane.showInternalMessageDialog(null, "la fecha  no se encuentra en los registro contables");
+                }
+            }//while
+        }//try
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en la conexion");
+            e.printStackTrace();
+        }
+        return haber;
+    }
 }

@@ -13,17 +13,21 @@ import java.awt.Toolkit;
  * @author Gonzalo
  */
 public class GenerarReporte extends javax.swing.JFrame {
-
+    int b;
     /**
      * Creates new form generarReporte
      */
-    public GenerarReporte() {
+    public GenerarReporte(){
+        initComponents();
+    }
+    public GenerarReporte(int a) {
         initComponents();
          setLocationRelativeTo(null);
         this.setResizable(false);
         setTitle("Reporte");
         getIconImage();
         background();
+        this.b=a;
     }
     
     public void background() {
@@ -33,7 +37,7 @@ public class GenerarReporte extends javax.swing.JFrame {
 }
 
     public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO 2.jpg"));
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Imagenes/LOGO PEQUEÑO.jpg"));
         return retValue;
     }
     /**
@@ -55,6 +59,7 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JButton();
 
         jFormattedTextField1.setText("jFormattedTextField1");
 
@@ -63,7 +68,9 @@ public class GenerarReporte extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/finanza.png"))); // NOI18N
-        jButton1.setText("Balamce General");
+        jButton1.setText("Balance General");
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/finanza2.png"))); // NOI18N
         jButton1.setSelected(true);
@@ -77,6 +84,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fi1.png"))); // NOI18N
         jButton2.setText("Cambio en el Patrimonio");
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fi2.png"))); // NOI18N
         jButton2.setSelected(true);
@@ -90,6 +99,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton3.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/reflejo1.png"))); // NOI18N
         jButton3.setText("Estado de Resultado");
+        jButton3.setBorderPainted(false);
+        jButton3.setContentAreaFilled(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/reflejo2.png"))); // NOI18N
         jButton3.setSelected(true);
@@ -103,6 +114,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/in1.png"))); // NOI18N
         jButton4.setText("Estado de Costo");
+        jButton4.setBorderPainted(false);
+        jButton4.setContentAreaFilled(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/in2.png"))); // NOI18N
         jButton4.setSelected(true);
@@ -116,6 +129,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/repo1.png"))); // NOI18N
         jButton5.setText("Balance de Comprobacion");
+        jButton5.setBorderPainted(false);
+        jButton5.setContentAreaFilled(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/repo2.png"))); // NOI18N
         jButton5.setSelected(true);
@@ -129,6 +144,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton6.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cal1.png"))); // NOI18N
         jButton6.setText("Libro de Venta");
+        jButton6.setBorderPainted(false);
+        jButton6.setContentAreaFilled(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cal2.png"))); // NOI18N
         jButton6.setSelected(true);
@@ -142,6 +159,8 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton7.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/dine1.png"))); // NOI18N
         jButton7.setText("Libro de Compra");
+        jButton7.setBorderPainted(false);
+        jButton7.setContentAreaFilled(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton7.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/dine2.png"))); // NOI18N
         jButton7.setSelected(true);
@@ -155,7 +174,22 @@ public class GenerarReporte extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
         jLabel1.setText("GENERAR REPORTE");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/LOGO 2.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGO 2.jpg"))); // NOI18N
+
+        btnSalir.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal3.png"))); // NOI18N
+        btnSalir.setText("SALIR");
+        btnSalir.setBorderPainted(false);
+        btnSalir.setContentAreaFilled(false);
+        btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSalir.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal3.png"))); // NOI18N
+        btnSalir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal2.png"))); // NOI18N
+        btnSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -177,10 +211,14 @@ public class GenerarReporte extends javax.swing.JFrame {
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)))
                 .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
@@ -193,7 +231,7 @@ public class GenerarReporte extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(48, 48, 48)
                         .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -203,8 +241,10 @@ public class GenerarReporte extends javax.swing.JFrame {
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27))
         );
 
@@ -212,53 +252,65 @@ public class GenerarReporte extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-      BalanceDeComprobacion balance = new BalanceDeComprobacion();
+      BalanceDeComprobacion balance = new BalanceDeComprobacion(this.b);
       balance.setVisible(true);
-      this.setVisible(false);
+      this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        BalanceGeneral balance =new BalanceGeneral();
+        BalanceGeneral balance =new BalanceGeneral(this.b);
         balance.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-EstadoDecosto estado = new EstadoDecosto();
-estado.setVisible(true);
-this.setVisible(false);
+        EstadoDecosto estado = new EstadoDecosto(this.b);
+        estado.setVisible(true);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        EstadoDecambioenelPatrimonio patrimonio = new EstadoDecambioenelPatrimonio();
+        EstadoDecambioenelPatrimonio patrimonio = new EstadoDecambioenelPatrimonio(this.b);
         patrimonio.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-     EstadoDeResultado estado = new EstadoDeResultado();
+     EstadoDeResultado estado = new EstadoDeResultado(this.b);
      estado.setVisible(true);
-     this.setVisible(false);
+     this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-     LibroDeCompra compra = new LibroDeCompra();
+     LibroDeCompra compra = new LibroDeCompra(this.b);
      compra.setVisible(true);
-     this.setVisible(false);
+     this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-     LibroDeVenta venta = new LibroDeVenta();
+     LibroDeVenta venta = new LibroDeVenta(this.b);
      venta.setVisible(true);
-     this.setVisible(false);
+     this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        if(b==1){
+        MenuAdmin obj = new MenuAdmin();
+        obj.setVisible(true);
+        this.dispose();
+        }else{
+            MenuConta obj = new MenuConta();
+            obj.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,6 +351,7 @@ this.setVisible(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

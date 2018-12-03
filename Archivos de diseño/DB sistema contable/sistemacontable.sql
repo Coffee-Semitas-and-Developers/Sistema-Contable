@@ -1,14 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     24/11/2018 1:33:40 AM                        */
+/* Created on:     02/12/2018 1:24:56 PM                        */
 /*==============================================================*/
 
-
-drop index INCURRE_FK;
-
-drop index COSTOINDIRECTOFABRICACION_PK;
-
-drop table COSTOINDIRECTOFABRICACION;
 
 drop index POSEESUBCUENTAS_FK;
 
@@ -47,8 +41,6 @@ drop index AGREGA_A_FK;
 drop index EXTRA_PK;
 
 drop table EXTRA;
-
-drop index REGISTRA_FK;
 
 drop index CONTROLA_FK;
 
@@ -113,44 +105,15 @@ COMMENT ON SCHEMA public
   IS 'standard public schema';
 
 /*==============================================================*/
-/* Table: COSTOINDIRECTOFABRICACION                             */
-/*==============================================================*/
-create table COSTOINDIRECTOFABRICACION (
-   IDCOSTO              INT4                 not null,
-   IDORDEN              INT4                 not null,
-   NOMBRECOSTO          VARCHAR(20)          not null,
-   TASAESTIMADA         DECIMAL(5,2)         not null,
-   MONTOCIF             DECIMAL(10,2)        not null,
-   constraint PK_COSTOINDIRECTOFABRICACION primary key (IDCOSTO, IDORDEN)
-);
-
-/*==============================================================*/
-/* Index: COSTOINDIRECTOFABRICACION_PK                          */
-/*==============================================================*/
-create unique index COSTOINDIRECTOFABRICACION_PK on COSTOINDIRECTOFABRICACION (
-IDCOSTO,
-IDORDEN
-);
-
-/*==============================================================*/
-/* Index: INCURRE_FK                                            */
-/*==============================================================*/
-create  index INCURRE_FK on COSTOINDIRECTOFABRICACION (
-IDORDEN
-);
-
-/*==============================================================*/
 /* Table: CUENTA                                                */
 /*==============================================================*/
 create table CUENTA (
    CODIGOCUENTA         INT4                 not null,
    CUE_CODIGOCUENTA     INT4                 null,
    NOMBRECUENTA         VARCHAR(30)          not null,
-   DESCRICION           VARCHAR(100)         null,
+   DESCRIPCION          VARCHAR(100)         null,
    GRUPOCUENTA          VARCHAR(20)          not null,
-   ESTADOFINANCIERO     VARCHAR(1)           not null,
-   SALDODEUDOR          DECIMAL(10,2)        null,
-   SALDOACREEDOR        DECIMAL(10,2)        null,
+   ESTADOFINANCIERO     VARCHAR(2)           not null,
    SALDOFINAL           DECIMAL(10,2)        null,
    constraint PK_CUENTA primary key (CODIGOCUENTA)
 );
@@ -212,11 +175,11 @@ IDORDEN
 /*==============================================================*/
 create table DETALLETARJETADETIEMPO (
    DIADETRABAJO         INT4                 not null,
+   FECHADETALLE         DATE                 not null,
    IDTARJETA            INT4                 not null,
-   FECHATARJETA         DATE                 not null,
    HORASTRABAJADAS      INT4                 not null,
    HORASEXTRAS          INT4                 null,
-   constraint PK_DETALLETARJETADETIEMPO primary key (DIADETRABAJO, IDTARJETA, FECHATARJETA)
+   constraint PK_DETALLETARJETADETIEMPO primary key (DIADETRABAJO, FECHADETALLE)
 );
 
 /*==============================================================*/
@@ -224,16 +187,14 @@ create table DETALLETARJETADETIEMPO (
 /*==============================================================*/
 create unique index DETALLETARJETADETIEMPO_PK on DETALLETARJETADETIEMPO (
 DIADETRABAJO,
-IDTARJETA,
-FECHATARJETA
+FECHADETALLE
 );
 
 /*==============================================================*/
 /* Index: DETALLA_FK                                            */
 /*==============================================================*/
 create  index DETALLA_FK on DETALLETARJETADETIEMPO (
-IDTARJETA,
-FECHATARJETA
+IDTARJETA
 );
 
 /*==============================================================*/
@@ -242,7 +203,7 @@ FECHATARJETA
 create table DETALLETRANSACCION (
    IDDETALLE            INT4                 not null,
    IDTRANSACCION        INT4                 not null,
-   IDCUENTA             INT4                 not null,
+   CODIGOCUENTA         INT4                 not null,
    DEBE                 DECIMAL(10,2)        not null,
    HABER                DECIMAL(10,2)        not null,
    constraint PK_DETALLETRANSACCION primary key (IDDETALLE)
@@ -266,7 +227,7 @@ IDTRANSACCION
 /* Index: UTILIZA_FK                                            */
 /*==============================================================*/
 create  index UTILIZA_FK on DETALLETRANSACCION (
-IDCUENTA
+CODIGOCUENTA
 );
 
 /*==============================================================*/
@@ -327,8 +288,6 @@ IDLINEA
 create table KARDEX (
    IDKARDEX             INT4                 not null,
    CODIGOMATERIA        INT4                 null,
-   IDPRODUCTO           INT4                 null,
-   PRODUCTOTERMINADO    BOOL                 not null,
    METODO               VARCHAR(15)          not null,
    FECHAAPERTURA        DATE                 not null,
    CANTIDADTOTAL        INT4                 null,
@@ -349,13 +308,6 @@ IDKARDEX
 /*==============================================================*/
 create  index CONTROLA_FK on KARDEX (
 CODIGOMATERIA
-);
-
-/*==============================================================*/
-/* Index: REGISTRA_FK                                           */
-/*==============================================================*/
-create  index REGISTRA_FK on KARDEX (
-IDPRODUCTO
 );
 
 /*==============================================================*/
@@ -397,7 +349,8 @@ create table MATERIAPRIMA (
    NOMBREMATERIA        VARCHAR(20)          not null,
    DIRECTA              BOOL                 not null,
    DESCRIPCIONMATERIA   VARCHAR(100)         null,
-   UNIDADESMATERIA      INT4                 not null,
+   UNIDADESMATERIA      VARCHAR(100)         not null,
+   CANTIDADMATERIA      DECIMAL(10,2)        not null,
    PRECIOADQUISION      DECIMAL(10,2)        not null,
    constraint PK_MATERIAPRIMA primary key (CODIGOMATERIA)
 );
@@ -414,15 +367,17 @@ CODIGOMATERIA
 /*==============================================================*/
 create table ORDENFABRICACION (
    IDORDEN              INT4                 not null,
-   IDPRODUCTO           INT4                 not null,
    ESPECIFICACION       VARCHAR(150)         null,
    FECHAEXPEDICION      DATE                 not null,
    FECHAREQUERIDA       DATE                 not null,
    INICIADA             DATE                 null,
    FINALIZADA           DATE                 null,
    TERMINADA            BOOL                 not null,
-   COSTOTOTAL           DECIMAL(5,2)         null,
+   TASAESTIMADACIF      DECIMAL(5,2)         not null,
+   MONTOESTIMADO        DECIMAL(10,2)        null,
+   MONTOREAL            DECIMAL(10,2)        null,
    UNIDADESPRODUCIDAS   INT4                 null,
+   COSTOTOTAL           DECIMAL(5,2)         null,
    constraint PK_ORDENFABRICACION primary key (IDORDEN)
 );
 
@@ -437,7 +392,7 @@ IDORDEN
 /* Index: PRODUCE_FK                                            */
 /*==============================================================*/
 create  index PRODUCE_FK on ORDENFABRICACION (
-IDPRODUCTO
+IDORDEN
 );
 
 /*==============================================================*/
@@ -481,6 +436,7 @@ IDPLANILLA
 /*==============================================================*/
 create table PRODUCTO (
    IDPRODUCTO           INT4                 not null,
+   IDORDEN              INT4                 null,
    NOMBREPRODUCTO       VARCHAR(20)          not null,
    CANTIDAD             INT4                 not null,
    COSTOUNITARIO        DECIMAL(5,2)         not null,
@@ -500,20 +456,21 @@ IDPRODUCTO
 /*==============================================================*/
 create table TARJETADETIEMPO (
    IDTARJETA            INT4                 not null,
-   FECHATARJETA         DATE                 not null,
+   FECHACREACION        DATE                 not null,
    IDORDEN              INT4                 not null,
    DUI                  VARCHAR(10)          not null,
+   SALARIOHORANORMAL    DECIMAL(10,2)        not null,
+   SALARIOHORAEXTRA     DECIMAL(10,2)        not null,
    TOTALHORASTRABAJADAS INT4                 null,
    TOTALHORASEXTRAS     INT4                 null,
-   constraint PK_TARJETADETIEMPO primary key (IDTARJETA, FECHATARJETA)
+   constraint PK_TARJETADETIEMPO primary key (IDTARJETA)
 );
 
 /*==============================================================*/
 /* Index: TARJETADETIEMPO_PK                                    */
 /*==============================================================*/
 create unique index TARJETADETIEMPO_PK on TARJETADETIEMPO (
-IDTARJETA,
-FECHATARJETA
+IDTARJETA
 );
 
 /*==============================================================*/
@@ -573,11 +530,6 @@ create unique index USUARIO_PK on USUARIO (
 IDUSUARIO
 );
 
-alter table COSTOINDIRECTOFABRICACION
-   add constraint FK_COSTOIND_INCURRE_ORDENFAB foreign key (IDORDEN)
-      references ORDENFABRICACION (IDORDEN)
-      on delete restrict on update cascade;
-
 alter table CUENTA
    add constraint FK_CUENTA_POSEESUBC_CUENTA foreign key (CUE_CODIGOCUENTA)
       references CUENTA (CODIGOCUENTA)
@@ -594,8 +546,8 @@ alter table DETALLEKARDEX
       on delete restrict on update cascade;
 
 alter table DETALLETARJETADETIEMPO
-   add constraint FK_DETALLET_DETALLA_TARJETAD foreign key (IDTARJETA, FECHATARJETA)
-      references TARJETADETIEMPO (IDTARJETA, FECHATARJETA)
+   add constraint FK_DETALLET_DETALLA_TARJETAD foreign key (IDTARJETA)
+      references TARJETADETIEMPO (IDTARJETA)
       on delete restrict on update cascade;
 
 alter table DETALLETRANSACCION
@@ -604,7 +556,7 @@ alter table DETALLETRANSACCION
       on delete restrict on update cascade;
 
 alter table DETALLETRANSACCION
-   add constraint FK_DETALLET_UTILIZA_CUENTA foreign key (IDCUENTA)
+   add constraint FK_DETALLET_UTILIZA_CUENTA foreign key (CODIGOCUENTA)
       references CUENTA (CODIGOCUENTA)
       on delete restrict on update cascade;
 
@@ -618,11 +570,6 @@ alter table KARDEX
       references MATERIAPRIMA (CODIGOMATERIA)
       on delete restrict on update cascade;
 
-alter table KARDEX
-   add constraint FK_KARDEX_REGISTRA_PRODUCTO foreign key (IDPRODUCTO)
-      references PRODUCTO (IDPRODUCTO)
-      on delete restrict on update cascade;
-
 alter table LINEAPLANILLA
    add constraint FK_LINEAPLA_EN_LISTAD_EMPLEADO foreign key (DUI)
       references EMPLEADO (DUI)
@@ -633,9 +580,9 @@ alter table LINEAPLANILLA
       references PLANILLA (IDPLANILLA)
       on delete restrict on update cascade;
 
-alter table ORDENFABRICACION
-   add constraint FK_ORDENFAB_PRODUCE_PRODUCTO foreign key (IDPRODUCTO)
-      references PRODUCTO (IDPRODUCTO)
+alter table PRODUCTO
+   add constraint FK_PRODUCTO_PRODUCE_ORDENFAB foreign key (IDORDEN)
+      references ORDENFABRICACION (IDORDEN)
       on delete restrict on update cascade;
 
 alter table TARJETADETIEMPO

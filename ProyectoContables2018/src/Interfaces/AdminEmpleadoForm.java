@@ -72,7 +72,6 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         tablaEmpleados = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jbVolver = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
 
         editarMenuItem.setText("Editar datos");
         editarMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -115,15 +114,19 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
         });
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGO PEQUEÑO.jpg"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                .addGap(196, 196, 196)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 14, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jbVolver)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -180,7 +183,9 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
-        // TODO add your handling code here:
+            MenuPlanillas ima = new MenuPlanillas();
+            ima.setVisible(true);
+            this.dispose();
     }//GEN-LAST:event_jbVolverActionPerformed
 
     private void editarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarMenuItemActionPerformed
@@ -258,38 +263,7 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+ 
     /**
      * @param args the command line arguments
      */
@@ -334,7 +308,6 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem editarMenuItem;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbVolver;
     private javax.swing.JPopupMenu popupMenu;

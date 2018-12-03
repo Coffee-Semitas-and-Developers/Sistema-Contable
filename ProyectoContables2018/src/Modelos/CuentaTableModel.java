@@ -31,15 +31,6 @@ public class CuentaTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Cuenta cuenta = cuentas.get(rowIndex);
-        double r1, r2 = 0;
-        if (cuenta.getSaldoDeudor() >= cuenta.getSaldoAcreedor()) {
-            r1 = cuenta.getSaldoDeudor();
-            r2 = cuenta.getSaldoAcreedor();
-        } else {
-            r1 = cuenta.getSaldoAcreedor();
-            r2 = cuenta.getSaldoDeudor();
-        }
-        cuenta.setSaldoFinal(r1 - r2);
         Object valor = null;
 
         switch (columnIndex) {
@@ -59,10 +50,12 @@ public class CuentaTableModel extends AbstractTableModel {
                 valor = cuenta.getGrupoCuenta();
                 break;
             case 5:
-                valor = MantenimientoCuenta.tipoBalance(cuenta.getEstadoFinanciero());
+                valor = Cuenta.tipoBalance(cuenta.getEstadoFinanciero(0)) + " \n " + Cuenta.tipoBalance(cuenta.getEstadoFinanciero(1));
                 break;
             case 6:
-                valor = cuenta.getSaldoFinal();
+                if (MantenimientoCuenta.cbSaldoFinal.isSelected()) {
+                    valor = cuenta.getSaldoFinal();
+                }
                 break;
         }
         return valor;
