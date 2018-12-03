@@ -5,36 +5,18 @@
  */
 package Interfaces;
 
-import java.awt.Image;
-import java.awt.Toolkit;
-
 /**
  *
- * @author Gonzalo
+ * @author Dalton
  */
-public class EstadoDecosto extends javax.swing.JFrame {
+public class MantenimientoKardex extends javax.swing.JFrame {
 
     /**
-     * Creates new form estadoDecosto
+     * Creates new form MantenimientoKardex
      */
-    public EstadoDecosto() {
+    public MantenimientoKardex() {
         initComponents();
-        getIconImage();
-        setLocationRelativeTo(null);
-        this.setResizable(false);
-        background();
     }
-    
-    public void background() {
- Fondo ima = new Fondo();
- ima.setSize(this.getSize());
- this.add(ima);
-}
-     public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO 2.jpg"));
-        return retValue;
-    }
-    /**
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,44 +27,53 @@ public class EstadoDecosto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        regresar = new javax.swing.JButton();
+        lblKardex = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableKardex = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setIconImage(getIconImage());
 
-        regresar.setText("Regresar");
-        regresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                regresarActionPerformed(evt);
+        lblKardex.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblKardex.setText("Kardex");
+
+        tableKardex.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(tableKardex);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(105, 105, 105)
-                .addComponent(regresar)
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addGap(270, 270, 270)
+                .addComponent(lblKardex)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(356, Short.MAX_VALUE)
-                .addComponent(regresar)
-                .addGap(43, 43, 43))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblKardex)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
-        GenerarReporte  regresar = new GenerarReporte();
-       regresar.setVisible(true);
-       this.setVisible(false);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -101,28 +92,27 @@ public class EstadoDecosto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EstadoDecosto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MantenimientoKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EstadoDecosto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MantenimientoKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EstadoDecosto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MantenimientoKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EstadoDecosto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MantenimientoKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EstadoDecosto().setVisible(true);
+                new MantenimientoKardex().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton regresar;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblKardex;
+    private javax.swing.JTable tableKardex;
     // End of variables declaration//GEN-END:variables
 }

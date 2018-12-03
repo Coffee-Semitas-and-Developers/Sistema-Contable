@@ -28,7 +28,12 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
     /**
      * Creates new form BalanceDeComprobacion
      */
-    public BalanceDeComprobacion() {
+  int b;
+
+  public BalanceDeComprobacion(){
+      initComponents();
+  }
+    public BalanceDeComprobacion(int a) {
         initComponents();
         inicializarcolumna();
         setLocationRelativeTo(null);
@@ -37,9 +42,10 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
         conexion.getConexion();
         getIconImage();
         background();
+        this.b=a;
     }
 
-    //rellenado el fondo del frame 
+    //rellenado el fondo del frame
     public void background() {
         Fondo ima = new Fondo();
         ima.setSize(this.getSize());
@@ -208,7 +214,7 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
             String setenciafechainicio = "select * from (SELECT * FROM "
                     + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion asc limit 1";
-            //esta sentencia me recoge la fecha utima registrada 
+            //esta sentencia me recoge la fecha utima registrada
             String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
                     + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion desc limit 1";
@@ -255,7 +261,7 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

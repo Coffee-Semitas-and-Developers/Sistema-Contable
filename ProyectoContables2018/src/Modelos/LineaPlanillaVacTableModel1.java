@@ -18,7 +18,7 @@ import static java.time.Clock.system;
  *
  * @author jorge
  */
-public class LineaPlanillaTableModel extends AbstractTableModel{
+public class LineaPlanillaVacTableModel1 extends AbstractTableModel{
     
     private int tipo=0;
 
@@ -41,14 +41,13 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-    return 13;
+    return 9;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
  LineaPlanilla l = ln.get(rowIndex);
-    Object valor = null;
-    
+    Object valor = null;   
       
             switch(columnIndex){
             case 0: valor= l.isSelected();
@@ -59,23 +58,15 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
             break;
             case 3: valor = l.getEmp().getCargo();
             break;
-            case 4: valor = l.getEmp().calcularHoras();
-            break;
-            case 5: valor = l.getEmp().calcularHorasExtras();
-            break;
-            case 6: valor = l.getEmp().calcularSalario();
+            case 4: valor = l.salarioVacaciones();
             break;            
-             case 7: valor = l.calcISSS(0);
+            case 5: valor = l.calcISSSVacaciones(0);
             break;
-            case 8: valor = l.calcAFP(0);
+            case 6: valor = l.calcAFPVacaciones(0);
             break;
-            case 9: valor = l.calcRenta();
+            case 7: valor = l.calcRentaVacaciones();//System.out.println(l.calcRentaVacaciones());
             break;
-            case 10: valor = l.totalBonificacion();
-            break;
-            case 11: valor = l.totalDescuento();
-            break;
-            case 12: valor =l.calcSalarioReal()- l.getAFP(0)- l.getISSS(0)-l.getRenta();
+            case 8: valor =l.salarioVacaciones()- l.getAFPVacaciones(0)- l.getISSSVacaciones(0)-l.getRentaVacaciones();//System.out.println( l.calcSalarioReal()- l.calcAFP(0)- l.calcISSS(0)-l.calcRenta());
             break;
         }
     

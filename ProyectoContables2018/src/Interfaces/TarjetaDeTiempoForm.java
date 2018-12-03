@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -128,7 +129,8 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
                 List<DetalleTarjetaDeTiempo> de = new ArrayList<DetalleTarjetaDeTiempo>();
                 ta.setId(resultado.getInt("idtarjeta"));
                 ta.setIdOrden(resultado.getInt("idorden"));
-                ta.setFechaTarjeta(resultado.getDate("fechatarjeta"));
+                ta.setDui(resultado.getString("dui"));
+                ta.setFechaTarjeta(resultado.getDate("fechacreacion"));
                 ta.setSalHora(resultado.getDouble("salariohoranormal"));
                 ta.setSalHoraExtra(resultado.getDouble("salariohoraextra"));
                 ta.setTotalHorasTrabajadas(resultado.getInt("totalhorastrabajadas"));
@@ -206,10 +208,10 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tarjetaTabla = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        volverButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         lbDate = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        agregarDetallesButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         idTextField = new javax.swing.JTextField();
         calcularHorasButton = new javax.swing.JButton();
@@ -250,10 +252,10 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
         tarjetaTabla.setModel(TarjetaTM);
         jScrollPane1.setViewportView(tarjetaTabla);
 
-        jButton2.setText("Volver");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        volverButton.setText("Volver");
+        volverButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                volverButtonActionPerformed(evt);
             }
         });
 
@@ -261,7 +263,12 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
 
         lbDate.setText("---------");
 
-        jButton3.setText("Agregar detalles");
+        agregarDetallesButton.setText("Agregar detalles");
+        agregarDetallesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarDetallesButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Ingrese el ID de la tarjeta de la cual quiere calcular el total de horas:");
 
@@ -306,7 +313,7 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
                                 .addGap(45, 45, 45)
                                 .addComponent(jButton1)
                                 .addGap(28, 28, 28)
-                                .addComponent(jButton3)))
+                                .addComponent(agregarDetallesButton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -321,7 +328,7 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(calcularHorasButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(volverButton)
                 .addGap(181, 181, 181))
         );
         layout.setVerticalGroup(
@@ -344,12 +351,12 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(costoHoraExtraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(agregarDetallesButton))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
+                    .addComponent(volverButton)
                     .addComponent(jLabel1)
                     .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(calcularHorasButton))
@@ -363,9 +370,12 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_costoHoraExtraTextFieldActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        TarjetaDeTiempoForm a = new TarjetaDeTiempoForm();
+        a.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_volverButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
@@ -384,11 +394,11 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
             Statement statement = this.conexion.createStatement();
             ResultSet resultado = statement.executeQuery(sentenciaSql);
             TarjetaDeTiempo ta = new TarjetaDeTiempo();
-
+            String Dui = getDui();
             ta.setIdOrden(Integer.parseInt(ordenTextField.getText()));
             ta.setSalHora(Double.parseDouble(costoHoraTextField.getText()));
             ta.setSalHoraExtra(Double.parseDouble(costoHoraExtraTextField.getText()));
-            ta.setDui(getDui());
+            ta.setDui(Dui);
             String sentenciaSql1 = "INSERT INTO tarjetadetiempo(fechatarjeta,idorden,dui,salariohoranormal,salariohoraextra)"
                     + " VALUES(?,?,?,?,?)";
             PreparedStatement preparedStatement = conexion.prepareStatement(sentenciaSql1);
@@ -407,7 +417,7 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
     private void calcularHorasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularHorasButtonActionPerformed
         // TODO add your handling code here:
         try {
-            String sentenciaSql = "SELECT SUM(horastrabajadas) FROM detalletarjetadetiempo WHERE idtarjeta = "+idTextField.getText();
+            String sentenciaSql = "SELECT SUM(horastrabajadas) FROM detalletarjetadetiempo WHERE idtarjeta = " + idTextField.getText();
             Statement statement = this.conexion.createStatement();
             ResultSet resultado = statement.executeQuery(sentenciaSql);
             TarjetaDeTiempo ta = new TarjetaDeTiempo();
@@ -434,6 +444,13 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_calcularHorasButtonActionPerformed
 
+    private void agregarDetallesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarDetallesButtonActionPerformed
+        DetalleTarjetaDeTiempoForm detalle = new DetalleTarjetaDeTiempoForm();
+        detalle.setVisible(true);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_agregarDetallesButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -444,12 +461,14 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            /* for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
-            }
+            }*/
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(TarjetaDeTiempoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -470,14 +489,13 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton agregarDetallesButton;
     private javax.swing.JButton calcularHorasButton;
     private javax.swing.JComboBox<String> comboEmpleado;
     private javax.swing.JTextField costoHoraExtraTextField;
     private javax.swing.JTextField costoHoraTextField;
     private javax.swing.JTextField idTextField;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -489,6 +507,7 @@ public class TarjetaDeTiempoForm extends javax.swing.JFrame {
     private javax.swing.JLabel lbDate;
     private javax.swing.JTextField ordenTextField;
     private javax.swing.JTable tarjetaTabla;
+    private javax.swing.JButton volverButton;
     // End of variables declaration//GEN-END:variables
 
 }

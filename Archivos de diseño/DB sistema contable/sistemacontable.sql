@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     02/12/2018 11:07:02 AM                       */
+/* Created on:     02/12/2018 1:24:56 PM                        */
 /*==============================================================*/
 
 
@@ -175,11 +175,11 @@ IDORDEN
 /*==============================================================*/
 create table DETALLETARJETADETIEMPO (
    DIADETRABAJO         INT4                 not null,
+   FECHADETALLE         DATE                 not null,
    IDTARJETA            INT4                 not null,
-   FECHATARJETA         DATE                 not null,
    HORASTRABAJADAS      INT4                 not null,
    HORASEXTRAS          INT4                 null,
-   constraint PK_DETALLETARJETADETIEMPO primary key (DIADETRABAJO, IDTARJETA, FECHATARJETA)
+   constraint PK_DETALLETARJETADETIEMPO primary key (DIADETRABAJO, FECHADETALLE)
 );
 
 /*==============================================================*/
@@ -187,16 +187,14 @@ create table DETALLETARJETADETIEMPO (
 /*==============================================================*/
 create unique index DETALLETARJETADETIEMPO_PK on DETALLETARJETADETIEMPO (
 DIADETRABAJO,
-IDTARJETA,
-FECHATARJETA
+FECHADETALLE
 );
 
 /*==============================================================*/
 /* Index: DETALLA_FK                                            */
 /*==============================================================*/
 create  index DETALLA_FK on DETALLETARJETADETIEMPO (
-IDTARJETA,
-FECHATARJETA
+IDTARJETA
 );
 
 /*==============================================================*/
@@ -351,7 +349,8 @@ create table MATERIAPRIMA (
    NOMBREMATERIA        VARCHAR(20)          not null,
    DIRECTA              BOOL                 not null,
    DESCRIPCIONMATERIA   VARCHAR(100)         null,
-   UNIDADESMATERIA      INT4                 not null,
+   UNIDADESMATERIA      VARCHAR(100)         not null,
+   CANTIDADMATERIA      DECIMAL(10,2)        not null,
    PRECIOADQUISION      DECIMAL(10,2)        not null,
    constraint PK_MATERIAPRIMA primary key (CODIGOMATERIA)
 );
@@ -457,22 +456,21 @@ IDPRODUCTO
 /*==============================================================*/
 create table TARJETADETIEMPO (
    IDTARJETA            INT4                 not null,
-   FECHATARJETA         DATE                 not null,
+   FECHACREACION        DATE                 not null,
    IDORDEN              INT4                 not null,
    DUI                  VARCHAR(10)          not null,
    SALARIOHORANORMAL    DECIMAL(10,2)        not null,
    SALARIOHORAEXTRA     DECIMAL(10,2)        not null,
    TOTALHORASTRABAJADAS INT4                 null,
    TOTALHORASEXTRAS     INT4                 null,
-   constraint PK_TARJETADETIEMPO primary key (IDTARJETA, FECHATARJETA)
+   constraint PK_TARJETADETIEMPO primary key (IDTARJETA)
 );
 
 /*==============================================================*/
 /* Index: TARJETADETIEMPO_PK                                    */
 /*==============================================================*/
 create unique index TARJETADETIEMPO_PK on TARJETADETIEMPO (
-IDTARJETA,
-FECHATARJETA
+IDTARJETA
 );
 
 /*==============================================================*/
@@ -548,8 +546,8 @@ alter table DETALLEKARDEX
       on delete restrict on update cascade;
 
 alter table DETALLETARJETADETIEMPO
-   add constraint FK_DETALLET_DETALLA_TARJETAD foreign key (IDTARJETA, FECHATARJETA)
-      references TARJETADETIEMPO (IDTARJETA, FECHATARJETA)
+   add constraint FK_DETALLET_DETALLA_TARJETAD foreign key (IDTARJETA)
+      references TARJETADETIEMPO (IDTARJETA)
       on delete restrict on update cascade;
 
 alter table DETALLETRANSACCION

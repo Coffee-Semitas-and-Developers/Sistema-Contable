@@ -32,6 +32,7 @@ import java.sql.PreparedStatement;
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.UIManager;
 
 /**
  *
@@ -74,22 +75,19 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
 
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             TableColumn col = new TableColumn(i);
             switch (i) {
                 case 0:
                     col.setHeaderValue("Días");
                     break;
                 case 1:
-                    col.setHeaderValue("Nombres");
+                    col.setHeaderValue("Fecha detalle");
                     break;
                 case 2:
-                    col.setHeaderValue("Apellidos");
-                    break;
-                case 3:
                     col.setHeaderValue("Horas trabajadas");
                     break;
-                case 4:
+                case 3:
                     col.setHeaderValue("Horas extra trabajadas");
                     break;
             }
@@ -113,37 +111,39 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
             String sentenciaSql = "SELECT * FROM detalletarjetadetiempo";
             Statement statement = this.conexion.createStatement();
             ResultSet resultado = statement.executeQuery(sentenciaSql);
+
             while (resultado.next()) {
                 int dia = resultado.getInt("diadetrabajo");
+                String dias = null;
                 DetalleTarjetaDeTiempo de = new DetalleTarjetaDeTiempo();
                 switch (dia) {
                     case 1:
-                        de.setDiaSeleccionado("Lunes");
+                        dias = "Lunes";
                         break;
                     case 2:
-                        de.setDiaSeleccionado("Martes");
+                        dias = "Martes";
                         break;
                     case 3:
-                        de.setDiaSeleccionado("Miércoles");
+                        dias = "Miércoles";
                         break;
                     case 4:
-                        de.setDiaSeleccionado("Jueves");
+                        dias = "Jueves";
                         break;
                     case 5:
-                        de.setDiaSeleccionado("Viernes");
+                        dias = "Viernes";
                         break;
                     case 6:
-                        de.setDiaSeleccionado("Sábado");
+                        dias = "Sábado";
                         break;
                     case 7:
-                        de.setDiaSeleccionado("Domingo");
+                        dias = "Domingo";
                         break;
                 }
-                de.getEmpleado().setNombres(resultado.getString("nombre"));
-                de.getEmpleado().setApellidos(resultado.getString("apellido"));
+                de.setDiaSeleccionado(dias);
+                de.setFechaTarjeta(resultado.getDate("fechadetalle"));
                 de.setHorasTrabajadas(resultado.getInt("horastrabajadas"));
                 de.setHorasExtras(resultado.getInt("horasextras"));
-                this.DetTarjetaTM.add(de);
+                this.DetTarjetaTM.detalle.add(de);
             }
             detalleTarjetaTabla.repaint();
         } catch (SQLException ex) {
@@ -175,6 +175,53 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
         }
     }
 
+    private void actualizarTabla() {
+        DetTarjetaTM.detalle.clear();
+
+        try {
+            String sentenciaSql = "SELECT * FROM detalletarjetadetiempo";
+            Statement statement = this.conexion.createStatement();
+            ResultSet resultado = statement.executeQuery(sentenciaSql);
+
+            while (resultado.next()) {
+                int dia = resultado.getInt("diadetrabajo");
+                String dias = null;
+                DetalleTarjetaDeTiempo de = new DetalleTarjetaDeTiempo();
+                switch (dia) {
+                    case 1:
+                        dias = "Lunes";
+                        break;
+                    case 2:
+                        dias = "Martes";
+                        break;
+                    case 3:
+                        dias = "Miércoles";
+                        break;
+                    case 4:
+                        dias = "Jueves";
+                        break;
+                    case 5:
+                        dias = "Viernes";
+                        break;
+                    case 6:
+                        dias = "Sábado";
+                        break;
+                    case 7:
+                        dias = "Domingo";
+                        break;
+                }
+                de.setDiaSeleccionado(dias);
+                de.setFechaTarjeta(resultado.getDate("fechadetalle"));
+                de.setHorasTrabajadas(resultado.getInt("horastrabajadas"));
+                de.setHorasExtras(resultado.getInt("horasextras"));
+                this.DetTarjetaTM.detalle.add(de);
+            }
+            detalleTarjetaTabla.repaint();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al recuperar los datos de la base de datos.");
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -198,6 +245,8 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
         lbDate = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        dateChooserDetalle = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -218,11 +267,6 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
         comboDia.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 comboDiaItemStateChanged(evt);
-            }
-        });
-        comboDia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboDiaActionPerformed(evt);
             }
         });
 
@@ -255,6 +299,8 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
 
         jButton1.setText("Volver");
 
+        jLabel2.setText("Fecha detalle:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -265,17 +311,21 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dateChooserDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(horasTrabajadasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(horasExtraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92)
+                .addGap(40, 40, 40)
                 .addComponent(agregarButton)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addGap(61, 61, 61))
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 794, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,16 +355,22 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
                     .addComponent(lbDate)
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(horasTrabajadasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(horasExtraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(agregarButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(horasTrabajadasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(horasExtraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(agregarButton)
+                            .addComponent(jLabel2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(dateChooserDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
@@ -353,28 +409,49 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
                     diaSeleccionado = 7;
                     break;
             }
+            String d1 = null;
+            Date da = new Date();
+            DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat Date_Format = new SimpleDateFormat("yyyy-MM-dd");
+            d1 = Date_Format.format(dateChooserDetalle.getDate());
+            java.sql.Date sqlDate1 = null;
+            try {
+                da = dateFormat1.parse(d1);
+                sqlDate1 = new java.sql.Date(da.getTime());
+            } catch (ParseException ex) {
+                Logger.getLogger(DetalleTarjetaDeTiempoForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            String sentence = "SELECT idtarjeta from tarjetadetiempo";
+            Statement statement = this.conexion.createStatement();
+            ResultSet resultado = statement.executeQuery(sentence);
+            while (resultado.next()) {
+                det.setIdTarjeta(resultado.getInt("idtarjeta"));
+            }
             det.setDiaDeTrabajo(diaSeleccionado);
             det.setHorasTrabajadas(Integer.parseInt(horasTrabajadasTextField.getText()));
             det.setHorasExtras(Integer.parseInt(horasExtraTextField.getText()));
-            tar.detalle.add(det);
             String sentenciaSql;
-            sentenciaSql = "INSERT INTO detalletarjetadetiempo(diadetrabajo,fechatarjeta,horastrabajadas,horasextras) VALUES"
-                    + "(?,?,?,?)";
+            sentenciaSql = "INSERT INTO detalletarjetadetiempo(idtarjeta,diadetrabajo,fechadetalle,horastrabajadas,horasextras) VALUES"
+                    + "(?,?,?,?,?)";
             PreparedStatement preparedStatement = conexion.prepareStatement(sentenciaSql);
-            preparedStatement.setInt(1, det.getDiaDeTrabajo());
-            preparedStatement.setDate(2, sqlDate);
-            preparedStatement.setInt(3, det.getHorasTrabajadas());
-            preparedStatement.setInt(4, det.getHorasExtras());
+            preparedStatement.setInt(1, det.getIdTarjeta());
+            preparedStatement.setInt(2, det.getDiaDeTrabajo());
+            preparedStatement.setDate(3, sqlDate1);
+            preparedStatement.setInt(4, det.getHorasTrabajadas());
+            preparedStatement.setInt(5, det.getHorasExtras());
             preparedStatement.execute();
-            this.DetTarjetaTM.add(det);
-            detalleTarjetaTabla.repaint();
+            actualizarTabla();
+            //this.DetTarjetaTM.fireTableDataChanged();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al guardar.");
+            ex.printStackTrace();
         }
-
         JOptionPane.showMessageDialog(null, "Detalle registrado con éxito", "Registro Completo", JOptionPane.INFORMATION_MESSAGE);
         horasTrabajadasTextField.setText(null);
         horasExtraTextField.setText(null);
+        actualizarTabla();
+        //this.DetTarjetaTM.fireTableDataChanged();
     }//GEN-LAST:event_agregarButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -412,11 +489,6 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comboDiaItemStateChanged
 
-    private void comboDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDiaActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_comboDiaActionPerformed
-
     //String seleccionado=(String)combo1Dia.getSelectedItem();
     /**
      * @param args the command line arguments
@@ -428,12 +500,14 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            /*for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
-            }
+            }*/
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(DetalleTarjetaDeTiempoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -459,11 +533,13 @@ public class DetalleTarjetaDeTiempoForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarButton;
     private javax.swing.JComboBox<String> comboDia;
+    private com.toedter.calendar.JDateChooser dateChooserDetalle;
     private javax.swing.JTable detalleTarjetaTabla;
     private javax.swing.JTextField horasExtraTextField;
     private javax.swing.JTextField horasTrabajadasTextField;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

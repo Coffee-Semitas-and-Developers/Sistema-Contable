@@ -18,22 +18,9 @@ import static java.time.Clock.system;
  *
  * @author jorge
  */
-public class LineaPlanillaTableModel extends AbstractTableModel{
-    
-    private int tipo=0;
-
-    public int getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
-    }
-    
+public class LineaPlanillaPatronoVacTableModel1 extends AbstractTableModel{
     public List<LineaPlanilla> ln= new ArrayList<LineaPlanilla>();
-
-    
-    
+  
     @Override
     public int getRowCount() {
     return ln.size();
@@ -41,45 +28,31 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-    return 13;
+    return 7;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
- LineaPlanilla l = ln.get(rowIndex);
+    LineaPlanilla l = ln.get(rowIndex);
     Object valor = null;
     
-      
-            switch(columnIndex){
-            case 0: valor= l.isSelected();
+         
+        switch(columnIndex){
+            case 0: valor = l.getEmp().getNombres();
             break;
-            case 1: valor = l.getEmp().getNombres();
+            case 1: valor = l.getEmp().getApellidos();
             break;
-            case 2: valor = l.getEmp().getApellidos();
+            case 2: valor = l.getEmp().getCargo();
+            break;         
+            case 3: valor = l.salarioVacaciones();
             break;
-            case 3: valor = l.getEmp().getCargo();
+            case 4: valor = l.calcISSSVacaciones(1);
             break;
-            case 4: valor = l.getEmp().calcularHoras();
-            break;
-            case 5: valor = l.getEmp().calcularHorasExtras();
-            break;
-            case 6: valor = l.getEmp().calcularSalario();
-            break;            
-             case 7: valor = l.calcISSS(0);
-            break;
-            case 8: valor = l.calcAFP(0);
-            break;
-            case 9: valor = l.calcRenta();
-            break;
-            case 10: valor = l.totalBonificacion();
-            break;
-            case 11: valor = l.totalDescuento();
-            break;
-            case 12: valor =l.calcSalarioReal()- l.getAFP(0)- l.getISSS(0)-l.getRenta();
-            break;
-        }
-    
-    
+            case 5: valor = l.calcAFPVacaciones(1);
+            break;     
+            case 6: valor = l.aportePatronalVacaciones();
+            break;                
+       }     
         
     return valor;
     }
@@ -88,6 +61,7 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
     public Class getColumnClass(int c) {
             return getValueAt(0, c).getClass();
         }
+    /*
     @Override
     public boolean isCellEditable(int row, int col) {
             //Note that the data/cell address is constant,
@@ -101,10 +75,9 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         switch(columnIndex){
-            case 0: ln.get(rowIndex).setSelected((Boolean) value);;
+            case 0: ln.get(rowIndex).setSelected((Boolean) value);
             }
             //break;
             fireTableCellUpdated(rowIndex, columnIndex);          
-        }   
-    
+        }*/    
 }

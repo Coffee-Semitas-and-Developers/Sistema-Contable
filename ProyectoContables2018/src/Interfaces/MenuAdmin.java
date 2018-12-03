@@ -64,6 +64,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         btnAdminUs = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
+        btnMovimientos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -81,7 +82,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Sitka Text", 0, 36)); // NOI18N
         jLabel2.setText("Menu Administrador");
 
-        btnAdminUs.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAdminUs.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAdminUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojo1.png"))); // NOI18N
         btnAdminUs.setText("Administrar Usuarios");
         btnAdminUs.setBorderPainted(false);
@@ -96,7 +97,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal3.png"))); // NOI18N
         jButton1.setText("SALIR");
         jButton1.setBorderPainted(false);
@@ -111,6 +112,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btnReportes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/repo1.png"))); // NOI18N
         btnReportes.setText("Generar Reportes");
         btnReportes.setBorderPainted(false);
@@ -125,6 +127,22 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reflejo1.png"))); // NOI18N
+        btnMovimientos.setText("Administrar Cuentas");
+        btnMovimientos.setToolTipText("");
+        btnMovimientos.setBorderPainted(false);
+        btnMovimientos.setContentAreaFilled(false);
+        btnMovimientos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnMovimientos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reflejo1.png"))); // NOI18N
+        btnMovimientos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reflejo2.png"))); // NOI18N
+        btnMovimientos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnMovimientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMovimientosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,14 +154,14 @@ public class MenuAdmin extends javax.swing.JFrame {
                 .addGap(0, 204, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(80, 80, 80)
-                .addComponent(btnAdminUs, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAdminUs, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                    .addComponent(btnMovimientos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(130, 130, 130)
-                .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(281, 281, 281))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,9 +173,12 @@ public class MenuAdmin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAdminUs, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnMovimientos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();
@@ -189,6 +210,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         obj.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void btnMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimientosActionPerformed
+        MantenimientoCuenta obj = new MantenimientoCuenta();
+        obj.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnMovimientosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,6 +256,7 @@ public class MenuAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdminUs;
+    private javax.swing.JButton btnMovimientos;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

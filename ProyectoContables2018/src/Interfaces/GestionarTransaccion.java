@@ -8,6 +8,8 @@ package Interfaces;
 import Modelos.DetalleTransaccionTableModel;
 import Modelos.PeriodoContable;
 import Modelos.Transaccion;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -37,6 +39,8 @@ public class GestionarTransaccion extends javax.swing.JFrame {
      */
     public GestionarTransaccion() {
         initComponents();
+        background();
+        getIconImage();
         inicializarColumnas();
         conectar();
         consultaInicial();
@@ -50,6 +54,15 @@ public class GestionarTransaccion extends javax.swing.JFrame {
             Logger.getLogger(GestionarTransaccion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO PEQUEÑO.jpg"));
+        return retValue;
+    }
+        public void background() {
+            Fondo ima = new Fondo();
+            ima.setSize(this.getSize());
+            this.add(ima);
+        }
 
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
@@ -72,7 +85,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
             }
             tColumnModel.addColumn(col);
         }
-        jTable1.setColumnModel(tColumnModel);
+        tablatransacciones.setColumnModel(tColumnModel);
     }
 
     private void consultaInicial() {
@@ -88,7 +101,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
                 transaccion.monto = resultado.getDouble("monto");
                 this.detalleTransaccionTModel.transacciones.add(transaccion);
             }
-            jTable1.repaint();
+            tablatransacciones.repaint();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al recuperar las transacciones de la base de datos");
         }
@@ -106,7 +119,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablatransacciones = new javax.swing.JTable();
         btnConsultarTransaccion = new javax.swing.JButton();
         txtConsultarTransaccion = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -120,8 +133,8 @@ public class GestionarTransaccion extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         jLabel1.setText("LISTADO DE TRANSACCIONES");
 
-        jTable1.setModel(detalleTransaccionTModel);
-        jScrollPane1.setViewportView(jTable1);
+        tablatransacciones.setModel(detalleTransaccionTModel);
+        jScrollPane1.setViewportView(tablatransacciones);
 
         btnConsultarTransaccion.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
         btnConsultarTransaccion.setText("Consultar Transaccion");
@@ -268,7 +281,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
                 transaccion.monto = resultado.getDouble("monto");
                 detalleTransaccionTModel.transacciones.add(transaccion);
             }
-            jTable1.repaint();
+            tablatransacciones.repaint();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al recuperar las transacciones de la base de datos");
             ex.printStackTrace();
@@ -282,7 +295,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
     private void btnEliminarTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTransaccionActionPerformed
         // TODO add your handling code here:
         //indice de las filas seleccionadas
-        int[] indices = jTable1.getSelectedRows();
+        int[] indices = tablatransacciones.getSelectedRows();
         List<Transaccion> aEliminar = new ArrayList<Transaccion>();
         for (int i : indices) {
             Transaccion transaccion = detalleTransaccionTModel.transacciones.get(i);
@@ -298,7 +311,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Error al eliminar las transacciones de la base de datos");
             }
         }
-        jTable1.repaint();
+        tablatransacciones.repaint();
     }//GEN-LAST:event_btnEliminarTransaccionActionPerformed
     private void UpdateJTable(){
         detalleTransaccionTModel.transacciones.clear();
@@ -315,7 +328,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
                 transaccion.monto = resultado.getDouble("monto");
                 detalleTransaccionTModel.transacciones.add(transaccion);
             }
-            jTable1.repaint();
+            tablatransacciones.repaint();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al recuperar las transacciones de la base de datos");
         }
@@ -370,7 +383,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
             fila[2] = transacciones.get(i).getFecha();
             fila[3] = transacciones.get(i).getMonto();
         }
-        jTable1.updateUI();//actualiza la tabla
+        tablatransacciones.updateUI();//actualiza la tabla
     }
 
 
@@ -384,7 +397,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablatransacciones;
     private javax.swing.JTextField txtConsultarTransaccion;
     // End of variables declaration//GEN-END:variables
 }

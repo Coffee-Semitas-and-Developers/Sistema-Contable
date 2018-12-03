@@ -24,10 +24,13 @@ public class EstadoDeResultado extends javax.swing.JFrame {
     /**
      * Creates new form estadoDeResultado
      */
+    int b;
+            
+    public EstadoDeResultado(){
+        initComponents();
+    }
     
-    public EstadoDeResultado() {
-        
-        
+    public EstadoDeResultado(int a) {
         initComponents();
         setLocationRelativeTo(null);
         this.setResizable(false);
@@ -35,8 +38,7 @@ public class EstadoDeResultado extends javax.swing.JFrame {
         inicializarcolumna();
         getIconImage();
         background();
-       
-                
+        this.b=a;
     }
     
     public void background() {
@@ -202,7 +204,7 @@ public class EstadoDeResultado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        GenerarReporte  regresar = new GenerarReporte();
+       GenerarReporte  regresar = new GenerarReporte(this.b);
        regresar.setVisible(true);
        this.setVisible(false);
         // TODO add your handling code here:
