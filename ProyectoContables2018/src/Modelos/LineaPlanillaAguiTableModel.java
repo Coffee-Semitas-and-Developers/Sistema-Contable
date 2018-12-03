@@ -18,7 +18,7 @@ import static java.time.Clock.system;
  *
  * @author jorge
  */
-public class LineaPlanillaTableModel extends AbstractTableModel{
+public class LineaPlanillaAguiTableModel extends AbstractTableModel{
     
     private int tipo=0;
 
@@ -41,14 +41,13 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-    return 13;
+    return 7;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
  LineaPlanilla l = ln.get(rowIndex);
-    Object valor = null;
-    
+    Object valor = null;   
       
             switch(columnIndex){
             case 0: valor= l.isSelected();
@@ -59,28 +58,13 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
             break;
             case 3: valor = l.getEmp().getCargo();
             break;
-            case 4: valor = l.getEmp().calcularHoras();
-            break;
-            case 5: valor = l.getEmp().calcularHorasExtras();
-            break;
-            case 6: valor = l.getEmp().calcularSalario();
+            case 4: valor = l.salarioAguinaldo();
             break;            
-             case 7: valor = l.calcISSS(0);
+            case 5: valor = l.calcRentaAguinaldo();
             break;
-            case 8: valor = l.calcAFP(0);
+            case 6: valor =l.salarioAguinaldo()-l.getRentaAguinaldo();
             break;
-            case 9: valor = l.calcRenta();
-            break;
-            case 10: valor = l.totalBonificacion();
-            break;
-            case 11: valor = l.totalDescuento();
-            break;
-            case 12: valor =l.calcSalarioReal()- l.getAFP(0)- l.getISSS(0)-l.getRenta();
-            break;
-        }
-    
-    
-        
+        }        
     return valor;
     }
     
