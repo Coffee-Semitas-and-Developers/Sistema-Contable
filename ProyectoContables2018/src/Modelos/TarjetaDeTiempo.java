@@ -20,7 +20,7 @@ public class TarjetaDeTiempo {
     private Date fechaTarjeta;
     private int idOrden, totalHorasTrabajadas, totalHorasExtras, id;
     private String dui;
-    private Double salHora, salHoraExtra;
+    private Double salHora, salHoraExtra=0.00;
     public List<DetalleTarjetaDeTiempo> detalle = new ArrayList<DetalleTarjetaDeTiempo>();
     private Empleado emp;
 
@@ -34,6 +34,9 @@ public class TarjetaDeTiempo {
     }
 
     public TarjetaDeTiempo() {
+    }
+     public TarjetaDeTiempo(Double salHora) {
+        this.salHora = salHora;
     }
 
     public Double getSalHoraExtra() {

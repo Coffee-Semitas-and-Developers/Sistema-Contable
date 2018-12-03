@@ -9,15 +9,25 @@ package Modelos;
  *
  * @author AxlHrndz
  */
-public class materiaPrima {
+public class MateriaPrima {
+
     private int codigoMateria;
     private String nombreMateria;
     private boolean directa;
     private String descripcionMateria;
-    private int unidadesMateria;
+    private int cantidadmateria;
+    private String unidadesMateria;
     private double precioAdquisicion;
+        
+    public MateriaPrima() {
+    }
 
-    public materiaPrima() {
+    public int getCantidadmateria() {
+        return cantidadmateria;
+    }
+
+    public void setCantidadmateria(int cantidadmateria) {
+        this.cantidadmateria = cantidadmateria;
     }
 
     public int getCodigoMateria() {
@@ -52,11 +62,11 @@ public class materiaPrima {
         this.descripcionMateria = descripcionMateria;
     }
 
-    public int getUnidadesMateria() {
+    public String getUnidadesMateria() {
         return unidadesMateria;
     }
 
-    public void setUnidadesMateria(int unidadesMateria) {
+    public void setUnidadesMateria(String unidadesMateria) {
         this.unidadesMateria = unidadesMateria;
     }
 
@@ -67,6 +77,5 @@ public class materiaPrima {
     public void setPrecioAdquisicion(double precioAdquisicion) {
         this.precioAdquisicion = precioAdquisicion;
     }
-    
-    
+
 }
