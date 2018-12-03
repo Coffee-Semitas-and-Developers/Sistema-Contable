@@ -9,15 +9,15 @@ package Modelos;
  *
  * @author AxlHrndz
  */
-public class detalleKardex {
+public class DetalleKardex {
     private int idDetalle;
     private boolean entrada;
     private int cantidad;
     private double costoUnitario;
     private double montoDetalleKardex;
-    private ordenDeFabricacion orden;
+    private OrdenDeFabricacion orden;
 
-    public detalleKardex(int idDetalle, boolean entrada, int cantidad, double costoUnitario, double montoDetalleKardex) {
+    public DetalleKardex(int idDetalle, boolean entrada, int cantidad, double costoUnitario, double montoDetalleKardex) {
         this.idDetalle = idDetalle;
         this.entrada = entrada;
         this.cantidad = cantidad;
