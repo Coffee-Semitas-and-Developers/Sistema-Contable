@@ -1674,7 +1674,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 </o:RelationshipSymbol>
 <o:RelationshipSymbol Id="o11">
 <a:ModificationDate>1542522078</a:ModificationDate>
-<a:Rect>((57180,10244), (78607,36652))</a:Rect>
+<a:Rect>((57180,10808), (76132,36652))</a:Rect>
 <a:ListOfPoints>((57180,11308),(75720,11308),(75720,36652))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>5906</a:ArrowStyle>
@@ -1696,7 +1696,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 <o:RelationshipSymbol Id="o14">
 <a:ModificationDate>1542569715</a:ModificationDate>
 <a:CenterTextOffset>(-3282, -461)</a:CenterTextOffset>
-<a:Rect>((52502,10530), (59807,28007))</a:Rect>
+<a:Rect>((55981,10530), (59807,28007))</a:Rect>
 <a:ListOfPoints>((59317,28007),(59300,15587),(56393,15587),(56393,10530))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>6162</a:ArrowStyle>
@@ -1718,7 +1718,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 </o:RelationshipSymbol>
 <o:RelationshipSymbol Id="o17">
 <a:ModificationDate>1542495915</a:ModificationDate>
-<a:Rect>((87894,8795), (93218,23912))</a:Rect>
+<a:Rect>((89669,8795), (91269,23912))</a:Rect>
 <a:ListOfPoints>((90643,23912),(90643,15020),(90469,15020),(90469,8795))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>4628</a:ArrowStyle>
@@ -1739,7 +1739,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 </o:RelationshipSymbol>
 <o:RelationshipSymbol Id="o21">
 <a:ModificationDate>1542495915</a:ModificationDate>
-<a:Rect>((90066,-12296), (104097,4963))</a:Rect>
+<a:Rect>((91754,-12296), (104097,4963))</a:Rect>
 <a:ListOfPoints>((92166,4963),(92166,-11496),(104097,-11496))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>4628</a:ArrowStyle>
@@ -1761,7 +1761,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 </o:RelationshipSymbol>
 <o:RelationshipSymbol Id="o24">
 <a:ModificationDate>1542495915</a:ModificationDate>
-<a:Rect>((109096,-10972), (113660,23425))</a:Rect>
+<a:Rect>((109096,-10972), (112235,23425))</a:Rect>
 <a:ListOfPoints>((111823,23425),(111823,5252),(109358,5252),(109358,-10972))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>4625</a:ArrowStyle>
@@ -1782,7 +1782,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 </o:RelationshipSymbol>
 <o:RelationshipSymbol Id="o27">
 <a:ModificationDate>1542495915</a:ModificationDate>
-<a:Rect>((103241,26770), (117013,32254))</a:Rect>
+<a:Rect>((107053,26770), (117013,31785))</a:Rect>
 <a:ListOfPoints>((116751,27340),(116751,31785),(107853,31785),(107853,27106))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>4371</a:ArrowStyle>
@@ -1804,7 +1804,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 </o:RelationshipSymbol>
 <o:RelationshipSymbol Id="o29">
 <a:ModificationDate>1542523165</a:ModificationDate>
-<a:Rect>((-16346,14723), (-12672,27024))</a:Rect>
+<a:Rect>((-16347,14723), (-12648,27024))</a:Rect>
 <a:ListOfPoints>((-14509,27024),(-14509,14723))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>4626</a:ArrowStyle>
@@ -1890,7 +1890,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 </o:RelationshipSymbol>
 <o:RelationshipSymbol Id="o43">
 <a:ModificationDate>1542522049</a:ModificationDate>
-<a:Rect>((16787,14995), (30469,29976))</a:Rect>
+<a:Rect>((16787,15000), (30469,29976))</a:Rect>
 <a:ListOfPoints>((16787,16050),(28332,16050),(28332,29976))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>4626</a:ArrowStyle>
@@ -5027,12 +5027,12 @@ ATT NAME</a:History>
 <a:Code>MODELOLOGICO</a:Code>
 <a:CreationDate>1542570630</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
-<a:ModificationDate>1543789279</a:ModificationDate>
+<a:ModificationDate>1543534709</a:ModificationDate>
 <a:Modifier>Dalton</a:Modifier>
 <a:TargetModelURL>file:///E|/Dalton/Documents/NetBeansProjects/Sistema-Contable/Archivos de diseño/DB sistema contable/ModeloLogico.ldm</a:TargetModelURL>
 <a:TargetModelID>06A13666-6B94-4315-A128-33131121EBAC</a:TargetModelID>
 <a:TargetModelClassID>5F45F978-C4F3-4E35-A3FC-AF3318663A0F</a:TargetModelClassID>
-<a:TargetModelLastModificationDate>1543789279</a:TargetModelLastModificationDate>
+<a:TargetModelLastModificationDate>1543778530</a:TargetModelLastModificationDate>
 <c:SessionShortcuts>
 <o:Shortcut Ref="o4"/>
 </c:SessionShortcuts>

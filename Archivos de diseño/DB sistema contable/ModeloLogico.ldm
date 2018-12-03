@@ -1651,7 +1651,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 </c:Object>
 </o:RelationshipSymbol>
 <o:RelationshipSymbol Id="o10">
-<a:Rect>((57180,10367), (75711,36652))</a:Rect>
+<a:Rect>((57180,10121), (78598,36652))</a:Rect>
 <a:ListOfPoints>((57180,11167),(75711,11167),(75711,36652))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>14080</a:ArrowStyle>
@@ -1673,7 +1673,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 <o:RelationshipSymbol Id="o13">
 <a:ModificationDate>1542570672</a:ModificationDate>
 <a:CenterTextOffset>(2550, 2024)</a:CenterTextOffset>
-<a:Rect>((55830,10581), (57430,29693))</a:Rect>
+<a:Rect>((55830,10581), (61208,29693))</a:Rect>
 <a:ListOfPoints>((56630,29693),(56630,15587),(56562,15587),(56562,10581))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>14080</a:ArrowStyle>
@@ -1774,7 +1774,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 </o:RelationshipSymbol>
 <o:RelationshipSymbol Id="o28">
 <a:ModificationDate>1543534672</a:ModificationDate>
-<a:Rect>((-16472,13826), (-12759,27603))</a:Rect>
+<a:Rect>((-16472,13826), (-12798,27603))</a:Rect>
 <a:ListOfPoints>((-14635,27603),(-14635,13826))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>0</a:ArrowStyle>
@@ -1859,7 +1859,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 </o:RelationshipSymbol>
 <o:RelationshipSymbol Id="o42">
 <a:ModificationDate>1542646061</a:ModificationDate>
-<a:Rect>((14691,14896), (31316,30336))</a:Rect>
+<a:Rect>((14691,14902), (31316,30336))</a:Rect>
 <a:ListOfPoints>((14691,15948),(29179,15948),(29179,30336))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>14080</a:ArrowStyle>
@@ -4787,12 +4787,12 @@ DAT 1542570630</a:History>
 <a:Code>MODELOFISICO</a:Code>
 <a:CreationDate>1542573930</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
-<a:ModificationDate>1543778395</a:ModificationDate>
+<a:ModificationDate>1543819471</a:ModificationDate>
 <a:Modifier>Dalton</a:Modifier>
 <a:TargetModelURL>file:///E|/Dalton/Documents/NetBeansProjects/Sistema-Contable/Archivos de diseño/DB sistema contable/ModeloFisico.pdm</a:TargetModelURL>
 <a:TargetModelID>93E2703F-D7B1-4E9C-9115-06B758DE4055</a:TargetModelID>
 <a:TargetModelClassID>CDE44E21-9669-11D1-9914-006097355D9B</a:TargetModelClassID>
-<a:TargetModelLastModificationDate>1543789329</a:TargetModelLastModificationDate>
+<a:TargetModelLastModificationDate>1543819471</a:TargetModelLastModificationDate>
 <c:SessionShortcuts>
 <o:Shortcut Ref="o3"/>
 </c:SessionShortcuts>
