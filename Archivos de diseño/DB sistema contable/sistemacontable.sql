@@ -288,7 +288,6 @@ IDLINEA
 create table KARDEX (
    IDKARDEX             INT4                 not null,
    CODIGOMATERIA        INT4                 null,
-   METODO               VARCHAR(15)          not null,
    FECHAAPERTURA        DATE                 not null,
    CANTIDADTOTAL        INT4                 null,
    COSTOUNITARIOTOTAL   DECIMAL(5,2)         null,

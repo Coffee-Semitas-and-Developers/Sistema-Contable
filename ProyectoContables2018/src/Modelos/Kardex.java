@@ -20,7 +20,7 @@ public class Kardex {
     private int cantidadesTotales;
     private double costoUnitarioTotales;
     private double montoTotales;
-    private List<detalleKardex> detalle = new ArrayList<detalleKardex>();
+    private List<DetalleKardex> detalle = new ArrayList<DetalleKardex>();
     private MateriaPrima mp = new MateriaPrima();
 
     public Kardex() {

@@ -14,9 +14,9 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Dalton
  */
-/*public class KardexTableModel extends AbstractTableModel {
+public class KardexTableModel extends AbstractTableModel {
     
-    public List<MateriaPrima> cuentas = new ArrayList();
+    public List<MateriaPrima> mps = new ArrayList();
 
     @Override
     public int getRowCount() {
@@ -29,7 +29,7 @@ import javax.swing.table.AbstractTableModel;
     }
 
     @Override
-    /*public Object getValueAt(int rowIndex, int columnIndex) {
+    public Object getValueAt(int rowIndex, int columnIndex) {
         Cuenta cuenta = cuentas.get(rowIndex);
         Object valor = null;
 
@@ -39,9 +39,6 @@ import javax.swing.table.AbstractTableModel;
                 break;
             case 1:
                 valor = cuenta.getNombreCuenta();
-                break;
-            /*case 2:
-                valor = cuenta.getDescripcion();
                 break;
             case 2:
                 valor = cuenta.getNombreMayor();
@@ -61,4 +58,4 @@ import javax.swing.table.AbstractTableModel;
         return valor;
     }
     
-}*/
+}

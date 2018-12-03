@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author AxlHrndz
  */
-public class ordenDeFabricacion {
+public class OrdenDeFabricacion {
     private int idOrden;
     private String especificaciones;
     private Date fechaExpedicion;
@@ -26,7 +26,7 @@ public class ordenDeFabricacion {
     private TarjetaDeTiempo tarjeta = new TarjetaDeTiempo();
     private Kardex kardex = new Kardex();
 
-    public ordenDeFabricacion() {
+    public OrdenDeFabricacion() {
     }
 
     public int getIdOrden() {
