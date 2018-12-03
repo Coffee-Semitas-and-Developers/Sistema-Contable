@@ -165,7 +165,9 @@ public class AdminEmpleadoForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
-        // TODO add your handling code here:
+            MenuPlanillas ima = new MenuPlanillas();
+            ima.setVisible(true);
+            this.dispose();
     }//GEN-LAST:event_jbVolverActionPerformed
 
     private void editarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarMenuItemActionPerformed

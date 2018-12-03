@@ -17,7 +17,12 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
     /**
      * Creates new form BalanceDeComprobacion
      */
-    public BalanceDeComprobacion() {
+  int b;
+  
+  public BalanceDeComprobacion(){
+      initComponents();
+  }
+    public BalanceDeComprobacion(int a) {
         initComponents();
         inicializarcolumna();
         setLocationRelativeTo(null);
@@ -25,6 +30,7 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
         setTitle("Balance de comprobación");
         getIconImage();
         background();
+        this.b=a;
     }
     
     //rellenado el fondo del frame 
@@ -146,7 +152,7 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       GenerarReporte  regresar = new GenerarReporte();
+       GenerarReporte  regresar = new GenerarReporte(this.b);
        regresar.setVisible(true);
        this.setVisible(false);
         // TODO add your handling code here:
