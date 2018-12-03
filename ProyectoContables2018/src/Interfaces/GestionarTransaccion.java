@@ -8,6 +8,8 @@ package Interfaces;
 import Modelos.DetalleTransaccionTableModel;
 import Modelos.PeriodoContable;
 import Modelos.Transaccion;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -37,6 +39,8 @@ public class GestionarTransaccion extends javax.swing.JFrame {
      */
     public GestionarTransaccion() {
         initComponents();
+        background();
+        getIconImage();
         inicializarColumnas();
         conectar();
         consultaInicial();
@@ -50,6 +54,15 @@ public class GestionarTransaccion extends javax.swing.JFrame {
             Logger.getLogger(GestionarTransaccion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO PEQUEÑO.jpg"));
+        return retValue;
+    }
+        public void background() {
+            Fondo ima = new Fondo();
+            ima.setSize(this.getSize());
+            this.add(ima);
+        }
 
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();

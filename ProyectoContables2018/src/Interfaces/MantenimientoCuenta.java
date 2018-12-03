@@ -103,7 +103,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
             Statement statement = this.conexion.createStatement();
 
             ResultSet resultado = statement.executeQuery(sql);
-            
+
             cmbCuentaMayor.removeAllItems();
             cmbCuentaMayor.addItem(new Cuenta(0, "N/A"));
             while (resultado.next()) {
@@ -179,6 +179,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         lblEstadoFin2 = new javax.swing.JLabel();
         cmbEstadoFin2 = new javax.swing.JComboBox<>();
         cbSaldoFinal = new javax.swing.JCheckBox();
+        btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("MantenimientoCuenta");
@@ -296,6 +297,13 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
             }
         });
 
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -326,7 +334,10 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnNuevaCuenta))
+                        .addComponent(btnNuevaCuenta)
+                        .addGap(33, 33, 33)
+                        .addComponent(btnSalir)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -393,7 +404,8 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGuardar)
                             .addComponent(btnEliminar)
-                            .addComponent(btnNuevaCuenta)))
+                            .addComponent(btnNuevaCuenta)
+                            .addComponent(btnSalir)))
                     .addComponent(lblLogo))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -510,7 +522,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                     c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 0);
                     c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin2.getSelectedItem().toString()), 1);
 
-                    //Conversion de chars (Estado Financiero) a string 
+                    //Conversion de chars (Estado Financiero) a string
                     StringBuilder str = new StringBuilder(2);
                     str.append(c.getEstadoFinanciero(0));
                     str.append(c.getEstadoFinanciero(1));
@@ -558,7 +570,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 0);
                 c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin2.getSelectedItem().toString()), 1);
 
-                //Conversion de chars (Estado Financiero) a string 
+                //Conversion de chars (Estado Financiero) a string
                 StringBuilder str = new StringBuilder(2);
                 str.append(c.getEstadoFinanciero(0));
                 str.append(c.getEstadoFinanciero(1));
@@ -598,13 +610,14 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
 
     private void cbSaldoFinalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cbSaldoFinalStateChanged
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_cbSaldoFinalStateChanged
 
-    private void cbSaldoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSaldoFinalActionPerformed
-        // TODO add your handling code here:
-        UpdateJTable();
-    }//GEN-LAST:event_cbSaldoFinalActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        MenuAdmin obj = new MenuAdmin();
+        obj.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cerrar() {
         try {
@@ -702,7 +715,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -741,6 +754,7 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGRadio;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevaCuenta;
+    private javax.swing.JButton btnSalir;
     public static javax.swing.JCheckBox cbSaldoFinal;
     private javax.swing.JComboBox<Cuenta> cmbCuentaMayor;
     private javax.swing.JComboBox<String> cmbEstadoFin;

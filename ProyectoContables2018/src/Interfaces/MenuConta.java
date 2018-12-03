@@ -79,13 +79,14 @@ public class MenuConta extends javax.swing.JFrame {
         jLabel2.setText("Contabilidad General");
 
         btnMovimientos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal2.png"))); // NOI18N
+        btnMovimientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal1.png"))); // NOI18N
         btnMovimientos.setText("Movimientos Contables");
         btnMovimientos.setToolTipText("");
         btnMovimientos.setBorderPainted(false);
         btnMovimientos.setContentAreaFilled(false);
         btnMovimientos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnMovimientos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal1.png"))); // NOI18N
+        btnMovimientos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cal2.png"))); // NOI18N
         btnMovimientos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnMovimientos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,12 +95,13 @@ public class MenuConta extends javax.swing.JFrame {
         });
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal2.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal3.png"))); // NOI18N
         jButton1.setText("SALIR");
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal3.png"))); // NOI18N
+        jButton1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal3.png"))); // NOI18N
+        jButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sal1.png"))); // NOI18N
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
