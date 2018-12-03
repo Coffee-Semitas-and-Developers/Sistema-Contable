@@ -47,8 +47,6 @@ public class PlanillaForm extends javax.swing.JFrame {
     LineaPlanillaPatronoVacTableModel1 lineaPatronoVTM = new LineaPlanillaPatronoVacTableModel1();
     LineaPlanillaAguiTableModel lineaATM = new LineaPlanillaAguiTableModel();
     LineaPlanillaPatronoAguiTableModel lineaPatronoATM = new LineaPlanillaPatronoAguiTableModel();
-    
-    
 
     List<LineaPlanilla> ln = new ArrayList<LineaPlanilla>();
 
@@ -183,11 +181,11 @@ public class PlanillaForm extends javax.swing.JFrame {
             }
             tColumnModel1.addColumn(col);
         }
-        patronoTable.setColumnModel(tColumnModel1);        
-        
+        patronoTable.setColumnModel(tColumnModel1);
+
     }
 
-    private void inicializarColumnasAguinaldo(){
+    private void inicializarColumnasAguinaldo() {
         TableColumnModel tColumnModel2 = new DefaultTableColumnModel();
         for (int i = 0; i < 7; i++) {
             TableColumn col = new TableColumn(i);
@@ -212,13 +210,13 @@ public class PlanillaForm extends javax.swing.JFrame {
                     break;
                 case 6:
                     col.setHeaderValue("Aguinaldo Pagado");
-                    break;                
+                    break;
             }
             tColumnModel2.addColumn(col);
         }
-        tablaLinea.setColumnModel(tColumnModel2); 
+        tablaLinea.setColumnModel(tColumnModel2);
     }
-        
+
     private void inicializarColumnasVacaciones() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
 
@@ -319,10 +317,6 @@ public class PlanillaForm extends javax.swing.JFrame {
                 this.lineaATM.ln.add(new LineaPlanilla(e));
                 this.lineaPatronoATM.ln.add(new LineaPlanilla(e));
 
-                
-                
-                
-                
             }
             tablaLinea.repaint();
         } catch (SQLException ex) {
@@ -523,7 +517,49 @@ public class PlanillaForm extends javax.swing.JFrame {
 
     private void jbProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbProcesarActionPerformed
         // TODO add your handling code here:
+        if (jcOcasion.getSelectedIndex() == 0) {
+            calcularTotalSalario();
+            calcularAFPSalario();
+            calcularISSSalario();
+            calcularRentaSalario();
+            calcularAFPSalarioPatrono();
+            calcularISSSalarioPatrono();
+            totalAporteSalarioPatrono();
+            guardarPlanillaSalario();
+        }
+         if (jcOcasion.getSelectedIndex() == 1) {
+            calcularTotalSalarioVaca();
+            calcularAFPSalarioVaca();
+            calcularISSSalarioVaca();
+            calcularRentaSalarioVaca();
+            calcularAFPSalarioPatronoVaca();
+            calcularISSSalarioPatronoVaca();
+            totalAporteSalarioPatronoVaca();
+        }
+         if (jcOcasion.getSelectedIndex() == 2) {
+            calcularTotalSalarioAgui();
+            calcularRentaSalarioAgui();
+
+         }
+
     }//GEN-LAST:event_jbProcesarActionPerformed
+
+    private void guardarPlanillaSalario() {
+        try {
+            String sentenciaSql = "INSERT INTO Planilla(fechapago, tipo,ocasion,totalplanilla)  VALUES "
+                    + "(?,?,?,?)";
+            PreparedStatement preparedStatement = conexion.prepareStatement(sentenciaSql);
+            preparedStatement.setDate(1, sqlDate);
+            preparedStatement.setBoolean(2, false);
+            preparedStatement.setString(3, "Salario");
+            preparedStatement.setDouble(4, calcularTotalSalario());
+            preparedStatement.execute();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al recuperar los Empleados de la base de datos");
+            ex.printStackTrace();
+        }
+    }
 
     private void jcTipoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jcTipoPropertyChange
         // TODO add your handling code here:
@@ -582,7 +618,6 @@ public class PlanillaForm extends javax.swing.JFrame {
             itemBoni.setEnabled(true);
             patronoTable.setVisible(true);
 
-            
             tablaLinea.removeAll();
             tablaLinea.setModel(lineaTM);
             patronoTable.setModel(lineaPatronoTM);
@@ -636,10 +671,235 @@ public class PlanillaForm extends javax.swing.JFrame {
             itemBoni.setEnabled(false);
             tablaLinea.setModel(lineaATM);
             patronoTable.setVisible(false);
-           inicializarColumnasAguinaldo();
+            inicializarColumnasAguinaldo();
 
     }//GEN-LAST:event_jcOcasionItemStateChanged
     }
+//Datos a ingresar en la BD para salarios 
+
+    private double calcularTotalSalario() {
+        double tsalario = 0;
+        System.out.print("Toral registros " + lineaTM.ln.size());
+
+        int i = 0;
+        for (int j = 0; j < lineaTM.ln.size(); j++) {
+            ;
+            if (lineaTM.ln.get(j).isSelected()) {
+                tsalario += (lineaTM.ln.get(j).calcSalarioReal() - lineaTM.ln.get(j).getISSS(0) - lineaTM.ln.get(j).getAFP(0) - lineaTM.ln.get(j).getRenta());
+                System.out.println("u");
+            }
+        }
+        System.out.println("Salario total " + tsalario);
+        System.out.print("Toral registros " + lineaTM.ln.size());
+
+        return tsalario;
+    }
+
+    private double calcularAFPSalario() {
+        double tafp = 0;
+        for (int j = 0; j < lineaTM.ln.size(); j++) {
+            ;
+            if (lineaTM.ln.get(j).isSelected()) {
+                tafp += lineaTM.ln.get(j).getAFP(0);
+            }
+        }
+        System.out.println("afp total " + tafp);
+        return tafp;
+    }
+
+    private double calcularISSSalario() {
+        double tisss = 0;
+        for (int j = 0; j < lineaTM.ln.size(); j++) {
+            ;
+            if (lineaTM.ln.get(j).isSelected()) {
+                tisss += lineaTM.ln.get(j).getISSS(0);
+            }
+        }
+        System.out.println("isss total " + tisss);
+        return tisss;
+    }
+
+    private double calcularRentaSalario() {
+        double trenta = 0;
+        for (int j = 0; j < lineaTM.ln.size(); j++) {
+            ;
+            if (lineaTM.ln.get(j).isSelected()) {
+                trenta += lineaTM.ln.get(j).getRenta();
+            }
+        }
+        System.out.println("renta total " + trenta);
+        return trenta;
+    }
+
+    //Patrono
+    private double calcularAFPSalarioPatrono() {
+        double tafp = 0;
+        for (int j = 0; j < lineaPatronoTM.ln.size(); j++) {
+
+            if (lineaTM.ln.get(j).isSelected()) {
+                tafp += lineaPatronoTM.ln.get(j).getAFP(1);
+            }
+        }
+        System.out.println("afp patrono total " + tafp);
+        return tafp;
+    }
+
+    private double calcularISSSalarioPatrono() {
+        double tisss = 0;
+        for (int j = 0; j < lineaPatronoTM.ln.size(); j++) {
+            ;
+            if (lineaTM.ln.get(j).isSelected()) {
+                tisss += lineaPatronoTM.ln.get(j).getISSS(1);
+            }
+        }
+        System.out.println("isss patrono total " + tisss);
+        return tisss;
+    }
+
+    private double totalAporteSalarioPatrono() {
+        double apt = 0;
+        for (int j = 0; j < lineaPatronoTM.ln.size(); j++) {
+            ;
+            if (lineaTM.ln.get(j).isSelected()) {
+                apt += lineaPatronoTM.ln.get(j).aportePatronal();
+            }
+        }
+        System.out.println("Aporte Patronal Total " + apt);
+        return apt;
+    }
+    
+    //VACACIONES
+    //Empleado
+    private double calcularTotalSalarioVaca() {
+        double tsalario = 0;
+        System.out.print("Toral registros " + lineaVTM.ln.size());
+
+        int i = 0;
+        for (int j = 0; j < lineaVTM.ln.size(); j++) {
+            ;
+            if (lineaVTM.ln.get(j).isSelected()) {
+                tsalario += (lineaVTM.ln.get(j).salarioVacaciones()- lineaVTM.ln.get(j).getISSSVacaciones(0) - lineaVTM.ln.get(j).getAFPVacaciones(0) - lineaVTM.ln.get(j).getRentaVacaciones());
+//                System.out.println("u");
+            }
+        }
+        System.out.println("Salario vacaciones " + tsalario);
+//        System.out.print("Toral registros " + lineaTM.ln.size());
+
+        return tsalario;
+    }
+
+    private double calcularAFPSalarioVaca() {
+        double tafp = 0;
+        for (int j = 0; j < lineaVTM.ln.size(); j++) {
+            ;
+            if (lineaVTM.ln.get(j).isSelected()) {
+                tafp += lineaVTM.ln.get(j).getAFPVacaciones(0);
+            }
+        }
+        System.out.println("afp total " + tafp);
+        return tafp;
+    }
+
+    private double calcularISSSalarioVaca() {
+        double tisss = 0;
+        for (int j = 0; j < lineaVTM.ln.size(); j++) {
+            ;
+            if (lineaVTM.ln.get(j).isSelected()) {
+                tisss += lineaVTM.ln.get(j).getISSSVacaciones(0);
+            }
+        }
+        System.out.println("isss total " + tisss);
+        return tisss;
+    }
+
+    private double calcularRentaSalarioVaca() {
+        double trenta = 0;
+        for (int j = 0; j < lineaVTM.ln.size(); j++) {
+            ;
+            if (lineaVTM.ln.get(j).isSelected()) {
+                trenta += lineaVTM.ln.get(j).getRentaVacaciones();
+            }
+        }
+        System.out.println("renta total " + trenta);
+        return trenta;
+    }
+
+    //Patrono
+    private double calcularAFPSalarioPatronoVaca() {
+        double tafp = 0;
+        for (int j = 0; j < lineaPatronoVTM.ln.size(); j++) {
+
+            if (lineaVTM.ln.get(j).isSelected()) {
+                tafp += lineaPatronoVTM.ln.get(j).getAFPVacaciones(1);
+            }
+        }
+        System.out.println("afp patrono total " + tafp);
+        return tafp;
+    }
+
+    private double calcularISSSalarioPatronoVaca() {
+        double tisss = 0;
+        for (int j = 0; j < lineaPatronoVTM.ln.size(); j++) {
+            ;
+            if (lineaVTM.ln.get(j).isSelected()) {
+                tisss += lineaPatronoVTM.ln.get(j).getISSSVacaciones(1);
+            }
+        }
+        System.out.println("isss patrono total " + tisss);
+        return tisss;
+    }
+
+    private double totalAporteSalarioPatronoVaca() {
+        double apt = 0;
+        for (int j = 0; j < lineaPatronoVTM.ln.size(); j++) {
+            ;
+            if (lineaVTM.ln.get(j).isSelected()) {
+                apt += lineaPatronoVTM.ln.get(j).aportePatronalVacaciones();
+            }
+        }
+        System.out.println("Aporte Patronal Total " + apt);
+        return apt;
+    }
+    
+      //AGUINALDO
+    //Empleado
+    private double calcularTotalSalarioAgui() {
+        double tsalario = 0;
+        System.out.print("Toral registros " + lineaATM.ln.size());
+
+        int i = 0;
+        for (int j = 0; j < lineaATM.ln.size(); j++) {
+            ;
+            if (lineaATM.ln.get(j).isSelected()) {
+                tsalario += (lineaATM.ln.get(j).salarioAguinaldo() - lineaATM.ln.get(j).getRentaAguinaldo());
+//                System.out.println("u");
+            }
+        }
+        System.out.println("Salario Aguinaldo " + tsalario);
+//        System.out.print("Toral registros " + lineaTM.ln.size());
+
+        return tsalario;
+    }
+
+    private double calcularRentaSalarioAgui() {
+        double trenta = 0;
+        for (int j = 0; j < lineaATM.ln.size(); j++) {
+            ;
+            if (lineaATM.ln.get(j).isSelected()) {
+                trenta += lineaATM.ln.get(j).getRentaAguinaldo();
+            }
+        }
+        System.out.println("renta total " + trenta);
+        return trenta;
+    }
+
+    
+    
+    
+    
+    
+    
+    
 
     private void llenarCombos() {
         //TIPO DE PLANILLA

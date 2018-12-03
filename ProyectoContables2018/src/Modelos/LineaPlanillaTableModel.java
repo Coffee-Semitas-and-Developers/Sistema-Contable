@@ -75,7 +75,7 @@ public class LineaPlanillaTableModel extends AbstractTableModel{
             break;
             case 11: valor = l.totalDescuento();
             break;
-            case 12: valor =l.calcSalarioReal()- l.getAFP(0)- l.getISSS(0)-l.getRenta();System.out.println( l.calcSalarioReal()- l.calcAFP(0)- l.calcISSS(0)-l.calcRenta());
+            case 12: valor =l.calcSalarioReal()- l.getAFP(0)- l.getISSS(0)-l.getRenta();
             break;
         }
     

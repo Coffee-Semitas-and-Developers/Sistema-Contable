@@ -76,7 +76,6 @@ public class LineaPlanilla {
             Extra e = i.next();
             if (e.isEstado() == false && e.getDescrip() != "AFP" && e.getDescrip() != "ISSS" && e.getDescrip() != "Renta") {
                 desc += e.getMonto();
-                System.out.println(e.getMonto());
 
             }
         }
@@ -294,7 +293,7 @@ public class LineaPlanilla {
         if (base > tramoIV) {
             renta = (base - tramoIV) * pTramoIV + cuotaTramoIV;
         }
-        Extra e = new Extra(false, "Renta Vacaciones", 0.0, renta);
+        Extra e = new Extra(false, "Renta Vacaciones", renta);
         extras.add(e);
 
         return renta;
@@ -367,7 +366,6 @@ public class LineaPlanilla {
         if (dif >= 10) {
             salAgui = 5 * 21;
         }
-System.out.println(emp.getFechaContrato().toString().substring(0, 4));
 
         return salAgui;
     }

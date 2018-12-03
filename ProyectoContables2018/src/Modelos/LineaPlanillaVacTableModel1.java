@@ -64,9 +64,9 @@ public class LineaPlanillaVacTableModel1 extends AbstractTableModel{
             break;
             case 6: valor = l.calcAFPVacaciones(0);
             break;
-            case 7: valor = l.calcRentaVacaciones();
+            case 7: valor = l.calcRentaVacaciones();//System.out.println(l.calcRentaVacaciones());
             break;
-            case 8: valor =l.salarioVacaciones()- l.getAFPVacaciones(0)- l.getISSSVacaciones(0)-l.getRentaVacaciones();System.out.println( l.calcSalarioReal()- l.calcAFP(0)- l.calcISSS(0)-l.calcRenta());
+            case 8: valor =l.salarioVacaciones()- l.getAFPVacaciones(0)- l.getISSSVacaciones(0)-l.getRentaVacaciones();//System.out.println( l.calcSalarioReal()- l.calcAFP(0)- l.calcISSS(0)-l.calcRenta());
             break;
         }
     
