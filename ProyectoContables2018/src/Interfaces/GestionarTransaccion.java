@@ -45,8 +45,6 @@ public class GestionarTransaccion extends javax.swing.JFrame {
         conectar();
         consultaInicial();
     }
-    
-          
 
     private void conectar() {
         try {
@@ -56,17 +54,15 @@ public class GestionarTransaccion extends javax.swing.JFrame {
             Logger.getLogger(GestionarTransaccion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO PEQUEÑO.jpg"));
         return retValue;
     }
-
-    public void background() {
-        Fondo ima = new Fondo();
-        ima.setSize(this.getSize());
-        this.add(ima);
-    }
+        public void background() {
+            Fondo ima = new Fondo();
+            ima.setSize(this.getSize());
+            this.add(ima);
+        }
 
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
@@ -138,11 +134,6 @@ public class GestionarTransaccion extends javax.swing.JFrame {
         jLabel1.setText("LISTADO DE TRANSACCIONES");
 
         tablatransacciones.setModel(detalleTransaccionTModel);
-        tablatransacciones.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablatransaccionesMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tablatransacciones);
 
         btnConsultarTransaccion.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
@@ -237,20 +228,22 @@ public class GestionarTransaccion extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 12, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(127, 127, 127)
+                        .addComponent(jLabel2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
@@ -297,8 +290,6 @@ public class GestionarTransaccion extends javax.swing.JFrame {
 
     private void btnEditarTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarTransaccionActionPerformed
         // TODO add your handling code here:
-
-
     }//GEN-LAST:event_btnEditarTransaccionActionPerformed
 
     private void btnEliminarTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTransaccionActionPerformed
@@ -322,12 +313,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
         }
         tablatransacciones.repaint();
     }//GEN-LAST:event_btnEliminarTransaccionActionPerformed
-
-    private void tablatransaccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablatransaccionesMouseClicked
-   
-
-    }//GEN-LAST:event_tablatransaccionesMouseClicked
-    private void UpdateJTable() {
+    private void UpdateJTable(){
         detalleTransaccionTModel.transacciones.clear();
         try {
             PreparedStatement statement = null;
@@ -347,7 +333,6 @@ public class GestionarTransaccion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al recuperar las transacciones de la base de datos");
         }
     }
-
     /**
      * @param args the command line arguments
      */
