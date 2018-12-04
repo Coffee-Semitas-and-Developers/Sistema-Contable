@@ -525,6 +525,11 @@ public class PlanillaForm extends javax.swing.JFrame {
             calcularAFPSalarioPatrono();
             calcularISSSalarioPatrono();
             totalAporteSalarioPatrono();
+             
+            
+            InsertarTransaccion i = new InsertarTransaccion(0,calcularISSSalario(),calcularAFPSalario(),calcularRentaSalario(),calcularTotalDesc(),calcularTotalBoni(),calcularTotalSalario(),calcularISSSalarioPatrono(),calcularAFPSalarioPatrono(),totalAporteSalarioPatrono());
+            i.setVisible(true);
+            this.setVisible(false);
             //guardarPlanillaSalario();
         }
          if (jcOcasion.getSelectedIndex() == 1) {
@@ -535,11 +540,17 @@ public class PlanillaForm extends javax.swing.JFrame {
             calcularAFPSalarioPatronoVaca();
             calcularISSSalarioPatronoVaca();
             totalAporteSalarioPatronoVaca();
+            InsertarTransaccion i = new InsertarTransaccion(1,calcularISSSalarioVaca(),calcularAFPSalarioVaca(),calcularRentaSalarioVaca(),0,0,calcularTotalSalarioVaca(),calcularISSSalarioPatronoVaca(),calcularAFPSalarioPatronoVaca(),totalAporteSalarioPatronoVaca());
+            i.setVisible(true);
+            this.setVisible(false);
+            
         }
          if (jcOcasion.getSelectedIndex() == 2) {
             calcularTotalSalarioAgui();
             calcularRentaSalarioAgui();
-
+            InsertarTransaccion i = new InsertarTransaccion(2,0,0,calcularRentaSalarioAgui(),0,0,calcularTotalSalarioAgui(),0,0,0);
+            i.setVisible(true);
+            this.setVisible(false);
          }
 
     }//GEN-LAST:event_jbProcesarActionPerformed
@@ -730,6 +741,30 @@ public class PlanillaForm extends javax.swing.JFrame {
         System.out.println("renta total " + trenta);
         return trenta;
     }
+    
+    private double calcularTotalDesc(){
+        double desc = 0;
+        for (int j = 0; j < lineaTM.ln.size(); j++) {
+            ;
+            if (lineaTM.ln.get(j).isSelected()) {
+                desc += lineaTM.ln.get(j).totalDescuento();
+            }
+        }
+        System.out.println("desc total " + desc);
+        return desc;
+    }
+     private double calcularTotalBoni(){
+        double boni = 0;
+        for (int j = 0; j < lineaTM.ln.size(); j++) {
+            ;
+            if (lineaTM.ln.get(j).isSelected()) {
+                boni += lineaTM.ln.get(j).totalBonificacion();
+            }
+        }
+        System.out.println("Bonificación total " + boni);
+        return boni;
+    }
+    
 
     //Patrono
     private double calcularAFPSalarioPatrono() {

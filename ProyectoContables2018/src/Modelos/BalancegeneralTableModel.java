@@ -13,23 +13,23 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Gonzalo
  */
-public class BalanceCompTableModel extends AbstractTableModel {
-
-    public List<Cuenta> cuentas = new ArrayList<Cuenta>();
+public class BalancegeneralTableModel extends AbstractTableModel{
+    
+public List<Cuenta> cuentas = new ArrayList<>();
 
     @Override
     public int getRowCount() {
-        return cuentas.size();
+       return cuentas.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 3;
+         return 4;
     }
 
     @Override
-    public Object getValueAt(int rowindex, int columindex) {
-        Cuenta cuenta = cuentas.get(rowindex);
+    public Object getValueAt(int rowindex , int columindex) {
+      Cuenta cuenta = cuentas.get(rowindex);
         Object c = null;
 
         switch (columindex) {
@@ -40,9 +40,14 @@ public class BalanceCompTableModel extends AbstractTableModel {
                 c = cuenta.getNombreCuenta();
                 break;
             case 2:
-                c = cuenta.getDebe()- cuenta.getHaber();
+                c = cuenta.getDebe();
+                break;
+            case 3:
+                cuenta.setSaldoFinal(cuenta.obtenerDebe() - cuenta.getHaber());
+                c =cuenta.getSaldoFinal();
                 break;
         }
         return c;
     }
+ 
 }
