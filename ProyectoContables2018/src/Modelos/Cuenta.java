@@ -57,9 +57,7 @@ public class Cuenta {
     public double getHaber() {
         return haber;
     }
-    
-
-    
+      
 
     public Cuenta() {
     }
