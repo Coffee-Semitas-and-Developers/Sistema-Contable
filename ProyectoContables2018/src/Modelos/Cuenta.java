@@ -27,6 +27,7 @@ public class Cuenta {
     private double saldoFinal;
     private int codigoMayor;
     private String nombreMayor;
+    private static Conexion conexion = new Conexion();
 
     public Cuenta(String nombreCuenta, String descripcion, char[] estadoFinanciero, String grupoCuenta) {
         this.nombreCuenta = nombreCuenta;
@@ -321,7 +322,7 @@ public class Cuenta {
                     + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion desc limit 1";
 
-            Statement conexion = Conexion.getConexion().createStatement();
+            Statement conexion = this.conexion.createStatement();
             ResultSet tabla = conexion.executeQuery(setencia);
             ResultSet fecinicio = conexion.executeQuery(setenciafechainicio);
             ResultSet fecfinal = conexion.executeQuery(setenciafechafinal);
@@ -346,8 +347,7 @@ public class Cuenta {
             }//while
         }//try
         catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error en la conexion");
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error en la conexion" + e);
         }
         return haber;
     }
@@ -356,7 +356,7 @@ public class Cuenta {
         Cuenta cuenta = new Cuenta();
         try {
             String sentencia = "SELECT * FROM cuenta where codigocuenta=?";
-            PreparedStatement statement = Conexion.getConexion().prepareStatement(sentencia);
+            PreparedStatement statement = conexion.prepareStatement(sentencia);
             statement.setInt(1, codigo);
             ResultSet resultado = statement.executeQuery();
             

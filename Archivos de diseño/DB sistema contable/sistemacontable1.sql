@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     03/12/2018 12:44:44 AM                       */
+/* Created on:     03/12/2018 10:07:15 PM                       */
 /*==============================================================*/
 
 
@@ -110,7 +110,7 @@ COMMENT ON SCHEMA public
 create table CUENTA (
    CODIGOCUENTA         INT4                 not null,
    CUE_CODIGOCUENTA     INT4                 null,
-   NOMBRECUENTA         VARCHAR(30)          not null,
+   NOMBRECUENTA         VARCHAR(75)          not null,
    DESCRIPCION          VARCHAR(100)         null,
    GRUPOCUENTA          VARCHAR(20)          not null,
    ESTADOFINANCIERO     VARCHAR(2)           not null,
@@ -138,22 +138,20 @@ CUE_CODIGOCUENTA
 create table DETALLEKARDEX (
    IDDETALLEKARDEX      SERIAL not null,
    IDKARDEX             INT4                 not null,
-   IDORDEN              INT4                 not null,
+   IDORDEN              INT4                 null,
    FECHAMOVIMIENTO      DATE                 not null,
    ENTRADA              BOOL                 not null,
    CANTIDAD             INT4                 not null,
    COSTOUNITARIO        DECIMAL(5,2)         not null,
    MONTODETALLEKARDEX   DECIMAL(10,2)        not null,
-   constraint PK_DETALLEKARDEX primary key (IDDETALLEKARDEX, IDKARDEX, IDORDEN)
+   constraint PK_DETALLEKARDEX primary key (IDDETALLEKARDEX)
 );
 
 /*==============================================================*/
 /* Index: DETALLEKARDEX_PK                                      */
 /*==============================================================*/
 create unique index DETALLEKARDEX_PK on DETALLEKARDEX (
-IDDETALLEKARDEX,
-IDKARDEX,
-IDORDEN
+IDDETALLEKARDEX
 );
 
 /*==============================================================*/
@@ -288,7 +286,6 @@ IDLINEA
 create table KARDEX (
    IDKARDEX             SERIAL not null,
    CODIGOMATERIA        INT4                 null,
-   METODO               VARCHAR(15)          not null,
    FECHAAPERTURA        DATE                 not null,
    CANTIDADTOTAL        INT4                 null,
    COSTOUNITARIOTOTAL   DECIMAL(5,2)         null,
@@ -350,8 +347,6 @@ create table MATERIAPRIMA (
    DIRECTA              BOOL                 not null,
    DESCRIPCIONMATERIA   VARCHAR(100)         null,
    UNIDADESMATERIA      VARCHAR(100)         not null,
-   CANTIDADMATERIA      DECIMAL(10,2)        not null,
-   PRECIOADQUISION      DECIMAL(10,2)        not null,
    constraint PK_MATERIAPRIMA primary key (CODIGOMATERIA)
 );
 

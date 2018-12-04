@@ -5,9 +5,7 @@
  */
 package Modelos;
 
-import java.text.DateFormat;
 import java.util.Date;
-import java.util.ListIterator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -22,7 +20,7 @@ public class Kardex {
     private double cantidadesTotales;
     private double costoUnitarioTotales;
     private double montoTotales;
-    private List<DetalleKardex> detalle = new ArrayList<DetalleKardex>();
+    private final List<DetalleKardex> detalle = new ArrayList();
     private MateriaPrima mp = new MateriaPrima();
 
     public Kardex() {
@@ -31,9 +29,13 @@ public class Kardex {
     public List<DetalleKardex> getDetalle() {
         return detalle;
     }
+    
+    public DetalleKardex getDetalle(int i) {
+        return detalle.get(i);
+    }
 
-    public void setDetalle(List<DetalleKardex> detalle) {
-        this.detalle = detalle;
+    public void setDetalle(DetalleKardex detalle) {
+        this.detalle.add(detalle);
     }
 
     public MateriaPrima getMp() {
@@ -74,4 +76,16 @@ public class Kardex {
         return montoTotales;
     }
 
+    public void setCantidadesTotales(double cantidadesTotales) {
+        this.cantidadesTotales = cantidadesTotales;
+    }
+
+    public void setCostoUnitarioTotales(double costoUnitarioTotales) {
+        this.costoUnitarioTotales = costoUnitarioTotales;
+    }
+
+    public void setMontoTotales(double montoTotales) {
+        this.montoTotales = montoTotales;
+    }
+    
 }

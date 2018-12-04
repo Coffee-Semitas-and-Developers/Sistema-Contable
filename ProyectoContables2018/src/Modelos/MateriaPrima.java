@@ -15,21 +15,19 @@ public class MateriaPrima {
     private String nombreMateria;
     private boolean directa;
     private String descripcionMateria;
-    private int cantidadmateria;
     private String unidadesMateria;
-    private double precioAdquisicion;
         
     public MateriaPrima() {
     }
 
-    public int getCantidadmateria() {
-        return cantidadmateria;
+    public MateriaPrima(int codigoMateria, String nombreMateria, boolean directa, String descripcionMateria, String unidadesMateria) {
+        this.codigoMateria = codigoMateria;
+        this.nombreMateria = nombreMateria;
+        this.directa = directa;
+        this.descripcionMateria = descripcionMateria;
+        this.unidadesMateria = unidadesMateria;
     }
-
-    public void setCantidadmateria(int cantidadmateria) {
-        this.cantidadmateria = cantidadmateria;
-    }
-
+    
     public int getCodigoMateria() {
         return codigoMateria;
     }
@@ -68,14 +66,6 @@ public class MateriaPrima {
 
     public void setUnidadesMateria(String unidadesMateria) {
         this.unidadesMateria = unidadesMateria;
-    }
-
-    public double getPrecioAdquisicion() {
-        return precioAdquisicion;
-    }
-
-    public void setPrecioAdquisicion(double precioAdquisicion) {
-        this.precioAdquisicion = precioAdquisicion;
     }
 
 }

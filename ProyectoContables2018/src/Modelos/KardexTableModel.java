@@ -25,7 +25,7 @@ public class KardexTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 7;
     }
 
     @Override
@@ -35,21 +35,24 @@ public class KardexTableModel extends AbstractTableModel {
 
         switch (columnIndex) {
             case 0:
-                valor = kar.getIdKardex();
+                valor = kar.getFechaApertura();
                 break;
             case 1:
-                valor = kar.getMp().getCodigoMateria();
+                valor = kar.getIdKardex();
                 break;
             case 2:
-                valor = kar.getMp().getNombreMateria();
+                valor = kar.getMp().getCodigoMateria();
                 break;
             case 3:
-                valor = kar.getCantidadesTotales();
+                valor = kar.getMp().getNombreMateria();
                 break;
             case 4:
-                valor = kar.getCostoUnitarioTotales();
+                valor = kar.getCantidadesTotales();
                 break;
             case 5:
+                valor = kar.getCostoUnitarioTotales();
+                break;
+            case 6:
                 valor = kar.getMontoTotales();
                 break;
         }
