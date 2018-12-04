@@ -56,20 +56,28 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         inicializarColumnas();
         lbPartidaDoble.setVisible(false);
         btnGuardar.setEnabled(false);
-        background();
+                background();
+
 
     }
-
+    
     public void background() {
         Fondo ima = new Fondo();
         ima.setSize(this.getSize());
         this.add(ima);
     }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of 6f848cb... madera
     //Metodo para insertar planillas// tiPlanilla es 0 es planilla de salrio, si es 1 planilla de vacaiones, si es 2 es planilla de aguinaldos
-    public InsertarTransaccion(int tiPlanilla, double totalIsss, double totalAFP, double totalRenta, double totalDesc, double totalBoni, double totalSalarioNeto, double totalIsssPatrono, double totalAFPPatrono, double totalAportePatrono) {
-
+    public InsertarTransaccion(int tiPlanilla,double totalIsss,double totalAFP,double totalRenta,double totalDesc,double totalBoni,double totalSalarioNeto, double totalIsssPatrono,double totalAFPPatrono, double totalAportePatrono) {
+         
+             
+        
+        
+        
         initComponents();
         conectar();
         llenarCombobox();
@@ -88,6 +96,8 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         }
 
     }
+    
+    
 
     private void conectar() {
         try {
@@ -609,7 +619,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
 
     private void btnGestionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarActionPerformed
         // TODO add your handling code here:
-        GestionarTransaccion gt = new GestionarTransaccion();
+        GestionarTransaccion gt=new GestionarTransaccion();
         gt.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnGestionarActionPerformed
@@ -969,4 +979,5 @@ public class InsertarTransaccion extends javax.swing.JFrame {
     private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
 
+    
 }
