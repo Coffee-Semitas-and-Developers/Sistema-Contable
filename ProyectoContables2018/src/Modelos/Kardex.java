@@ -67,12 +67,10 @@ public class Kardex {
     }
 
     public double getCostoUnitarioTotales() {
-        this.costoUnitarioTotales = this.costoUnitarioTotales/this.cantidadesTotales;
         return costoUnitarioTotales;
     }
 
     public double getMontoTotales() {
-        this.montoTotales = this.cantidadesTotales * this.costoUnitarioTotales;
         return montoTotales;
     }
 
