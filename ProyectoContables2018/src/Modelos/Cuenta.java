@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @author Dalton
  */
 public class Cuenta {
-
+    private static Conexion conexion= new Conexion();
     private int codigo;
     private String nombreCuenta;
     private String descripcion;
@@ -27,14 +27,39 @@ public class Cuenta {
     private double saldoFinal;
     private int codigoMayor;
     private String nombreMayor;
-    private static Conexion conexion = new Conexion();
+    private double debe;
+    private double haber;
 
-    public Cuenta(String nombreCuenta, String descripcion, char[] estadoFinanciero, String grupoCuenta) {
+    public Cuenta(String nombreCuenta, String descripcion, String grupoCuenta, double saldoFinal, int codigoMayor, String nombreMayor, double debe, double haber) {
         this.nombreCuenta = nombreCuenta;
         this.descripcion = descripcion;
-        this.estadoFinanciero = estadoFinanciero;
         this.grupoCuenta = grupoCuenta;
+        this.saldoFinal = saldoFinal;
+        this.codigoMayor = codigoMayor;
+        this.nombreMayor = nombreMayor;
+        this.debe = debe;
+        this.haber = haber;
     }
+
+
+    public void setDebe(double debe) {
+        this.debe = debe;
+    }
+
+    public void setHaber(double haber) {
+        this.haber = haber;
+    }
+
+    public double getDebe() {
+        return debe;
+    }
+
+    public double getHaber() {
+        return haber;
+    }
+
+
+
 
     public Cuenta() {
     }
@@ -225,7 +250,7 @@ public class Cuenta {
             String setenciafechainicio = "select * from (SELECT * FROM "
                     + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion asc limit 1";
-            //esta sentencia me recoge la fecha utima registrada 
+            //esta sentencia me recoge la fecha utima registrada
             String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
                     + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion desc limit 1";
@@ -235,20 +260,20 @@ public class Cuenta {
             ResultSet fecinicio = conexion.executeQuery(setenciafechainicio);
             ResultSet fecfinal = conexion.executeQuery(setenciafechafinal);
             Date fechainibase = fecinicio.getDate("fechatransaccion");/*incluyo la fecha a un atribuyo de tipo Date esta sera la primera del los registro */
-            Date fechafinalbase = fecfinal.getDate("fechatransaccion");//esta fecha sera la final de los registros 
+            Date fechafinalbase = fecfinal.getDate("fechatransaccion");//esta fecha sera la final de los registros
 
             while (tabla.next()) {
                 int identificador = tabla.getInt("idcuenta");
                 /*if compara las fecha de tipo date si las fechas son iguales
-                da como resultado 0 si las fecha 1 es mayor que la que esta en el parametro 
-                el resultado es un valor mayor a cero si es la fecha 1 es menor que lafecha en el 
+                da como resultado 0 si las fecha 1 es mayor que la que esta en el parametro
+                el resultado es un valor mayor a cero si es la fecha 1 es menor que lafecha en el
                 parametro da un valor menor que cero*/
                 //establece el rango de fechas
                 if (fechainicio.compareTo(fechainibase) > 0 && fechafinal.compareTo(fechafinalbase) < 0) {
                     if (cuenta == identificador) {
                         debe += tabla.getDouble("debe");
                         haber += tabla.getDouble("haber");
-                    }//if cuenta        
+                    }//if cuenta
                 } //if fecha
                 else {
                     JOptionPane.showInternalMessageDialog(null, "la fecha no se encuentra en los registro contables");
@@ -272,7 +297,7 @@ public class Cuenta {
             String setenciafechainicio = "select * from (SELECT * FROM "
                     + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion asc limit 1";
-            //esta sentencia me recoge la fecha utima registrada 
+            //esta sentencia me recoge la fecha utima registrada
             String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
                     + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion desc limit 1";
@@ -282,19 +307,19 @@ public class Cuenta {
             ResultSet fecinicio = conexion.executeQuery(setenciafechainicio);
             ResultSet fecfinal = conexion.executeQuery(setenciafechafinal);
             Date fechainibase = fecinicio.getDate("fechatransaccion");/*incluyo la fecha a un atribuyo de tipo Date esta sera la primera del los registro */
-            Date fechafinalbase = fecfinal.getDate("fechatransaccion");//esta fecha sera la final de los registros 
+            Date fechafinalbase = fecfinal.getDate("fechatransaccion");//esta fecha sera la final de los registros
 
             while (tabla.next()) {
                 int identificador = tabla.getInt("idcuenta");
                 /*if compara las fecha de tipo date si las fechas son iguales
-                da como resultado 0 si las fecha 1 es mayor que la que esta en el parametro 
-                el resultado es un valor mayor a cero si es la fecha 1 es menor que lafecha en el 
+                da como resultado 0 si las fecha 1 es mayor que la que esta en el parametro
+                el resultado es un valor mayor a cero si es la fecha 1 es menor que lafecha en el
                 parametro da un valor menor que cero*/
                 //establece el rango de fechas
                 if (fechainicio.compareTo(fechainibase) > 0 && fechafinal.compareTo(fechafinalbase) < 0) {
                     if (cuenta == identificador) {
                         debe += tabla.getDouble("debe");
-                    }//if cuenta        
+                    }//if cuenta
                 } //if fecha
                 else {
                     JOptionPane.showInternalMessageDialog(null, "la fecha  no se encuentra en los registro contables");
@@ -317,7 +342,7 @@ public class Cuenta {
             String setenciafechainicio = "select * from (SELECT * FROM "
                     + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion asc limit 1";
-            //esta sentencia me recoge la fecha utima registrada 
+            //esta sentencia me recoge la fecha utima registrada
             String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
                     + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion desc limit 1";
@@ -327,20 +352,20 @@ public class Cuenta {
             ResultSet fecinicio = conexion.executeQuery(setenciafechainicio);
             ResultSet fecfinal = conexion.executeQuery(setenciafechafinal);
             Date fechainibase = fecinicio.getDate("fechatransaccion");/*incluyo la fecha a un atribuyo de tipo Date esta sera la primera del los registro */
-            Date fechafinalbase = fecfinal.getDate("fechatransaccion");//esta fecha sera la final de los registros 
+            Date fechafinalbase = fecfinal.getDate("fechatransaccion");//esta fecha sera la final de los registros
 
             while (tabla.next()) {
                 int identificador = tabla.getInt("idcuenta");
                 /*if compara las fecha de tipo date si las fechas son iguales
-                da como resultado 0 si las fecha 1 es mayor que la que esta en el parametro 
-                el resultado es un valor mayor a cero si es la fecha 1 es menor que lafecha en el 
+                da como resultado 0 si las fecha 1 es mayor que la que esta en el parametro
+                el resultado es un valor mayor a cero si es la fecha 1 es menor que lafecha en el
                 parametro da un valor menor que cero*/
                 //establece el rango de fechas
                 if (fechainicio.compareTo(fechainibase) > 0 && fechafinal.compareTo(fechafinalbase) < 0) {
-                   
+
                         haber += tabla.getDouble("haber");
-                    }//if cuenta        
-             
+                    }//if cuenta
+
                 else {
                     JOptionPane.showInternalMessageDialog(null, "la fecha  no se encuentra en los registro contables");
                 }
@@ -359,8 +384,8 @@ public class Cuenta {
             PreparedStatement statement = conexion.prepareStatement(sentencia);
             statement.setInt(1, codigo);
             ResultSet resultado = statement.executeQuery();
-            
-            if(resultado.next()){
+
+            while(resultado.next()){
                 cuenta.setCodigo(resultado.getInt("codigocuenta"));
                 cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
                 cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
@@ -369,9 +394,8 @@ public class Cuenta {
                 cuenta.setCodigoMayor(resultado.getInt("cue_codigocuenta"));
                 cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0), 0);
                 cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(1), 1);
+
             }
-            
-                        
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error en la conexion con la base" + e);
         }
