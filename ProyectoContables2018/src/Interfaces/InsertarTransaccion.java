@@ -67,8 +67,11 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         this.add(ima);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of 6f848cb... madera
 =======
 >>>>>>> parent of 6f848cb... madera
     //Metodo para insertar planillas// tiPlanilla es 0 es planilla de salrio, si es 1 planilla de vacaiones, si es 2 es planilla de aguinaldos
