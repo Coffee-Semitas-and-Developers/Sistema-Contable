@@ -28,11 +28,12 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
     /**
      * Creates new form BalanceDeComprobacion
      */
-  int b;
+    int b;
 
-  public BalanceDeComprobacion(){
-      initComponents();
-  }
+    public BalanceDeComprobacion() {
+        initComponents();
+    }
+
     public BalanceDeComprobacion(int a) {
         initComponents();
         inicializarcolumna();
@@ -42,7 +43,7 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
         conexion.getConexion();
         getIconImage();
         background();
-        this.b=a;
+        this.b = a;
     }
 
     //rellenado el fondo del frame
@@ -228,11 +229,12 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
             }
             while (fechainibd.next()) {
                 while (fechafinalbd.next()) {
+                    Date fechainicialbd = fechainibd.getDate("fechatransaccion");
                     Date fechafinlbd = fechafinalbd.getDate("fechatransaccion");
                     java.util.Date fechaini = jdfechainicio.getDate();
                     java.util.Date fechafinal = jdfechafinal.getDate();
                     while (resultado.next()) {
-                        if (fechafinlbd.compareTo(fechafinal) < 0) {
+                        if (fechafinlbd.compareTo(fechafinal) < 0 && fechainicialbd.compareTo(fechaini)>0) {
                             cuenta.setCodigo(resultado.getInt("codigocuenta"));
                             cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
                             Detalle.setDebe(resultado.getDouble("debe"));
