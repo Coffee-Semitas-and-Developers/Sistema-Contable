@@ -58,23 +58,27 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         lbPartidaDoble.setVisible(false);
         btnGuardar.setEnabled(false);
     }
+
     //Metodo para insertar planillas// tiPlanilla es 0 es planilla de salrio, si es 1 planilla de vacaiones, si es 2 es planilla de aguinaldos
-    public InsertarTransaccion(int tiPlanilla,double totalIsss,double totalAFP,double totalRenta,double totalDesc,double totalBoni,double totalSalarioNeto, double totalIsssPatrono,double totalAFPPatrono, double totalAportePatrono) {
-         
-        
-        
-        
-        
-        
+    public InsertarTransaccion(int tiPlanilla, double totalIsss, double totalAFP, double totalRenta, double totalDesc, double totalBoni, double totalSalarioNeto, double totalIsssPatrono, double totalAFPPatrono, double totalAportePatrono) {
+
         initComponents();
         conectar();
         llenarCombobox();
         inicializarColumnas();
         lbPartidaDoble.setVisible(false);
-        btnGuardar.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        switch (tiPlanilla) {
+            case 0:
+                insertarPlanilla(totalIsss, totalAFP, totalRenta, totalDesc, totalBoni, totalSalarioNeto, totalIsssPatrono, totalAFPPatrono, totalAportePatrono);
+                break;
+            case 1:
+                insertarPlanillaVac(totalIsss, totalAFP, totalRenta, totalDesc, totalBoni, totalSalarioNeto, totalIsssPatrono, totalAFPPatrono, totalAportePatrono);
+                break;
+            case 2:
+                insertarPlanillaAgui(totalIsss, totalAFP, totalRenta, totalDesc, totalBoni, totalSalarioNeto, totalIsssPatrono, totalAFPPatrono, totalAportePatrono);
+        }
     }
-    
-    
 
     private void conectar() {
         try {
@@ -93,9 +97,11 @@ public class InsertarTransaccion extends javax.swing.JFrame {
             ResultSet resultado = statement.executeQuery(sentenciaSql);
             while (resultado.next()) {
                 Cuenta cuenta = new Cuenta();
-                cuenta.setCodigo(resultado.getInt("codigocuenta"));
+//              cuenta.setCodigo(resultado.getInt("codigocuenta"));
+                cuenta.setCodigo(resultado.getInt("idcuenta"));
                 cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
-                cuenta.setDescripcion(resultado.getString("descripcion"));
+//              cuenta.setDescripcion(resultado.getString("descripcion"));
+                cuenta.setDescripcion(resultado.getString("descricion"));
                 cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
                 cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));
                 cmbCuenta.addItem(cuenta);
@@ -405,7 +411,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:   
         try {
-            
+
             DetalleTransaccion d = new DetalleTransaccion();
             d.cuenta = (Cuenta) cmbCuenta.getSelectedItem();
             if (rbDebe.isSelected() || rbHaber.isSelected()) {
@@ -583,6 +589,237 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void insertarPlanilla(double totalIsss, double totalAFP, double totalRenta, double totalDesc, double totalBoni, double totalSalarioNeto, double totalIsssPatrono, double totalAFPPatrono, double totalAportePatrono) {
+        Cuenta c = new Cuenta();
+        DetalleTransaccion d = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("Gastos por Salario")) {
+                c = cmbCuenta.getItemAt(i);
+            }
+        }
+        d.cuenta = c;
+        d.debe = totalSalarioNeto - totalBoni;
+        detalleTmodel.detalles.add(d);
+        detalleTmodel.fireTableDataChanged();
+
+        Cuenta c0 = new Cuenta();
+        DetalleTransaccion d0 = new DetalleTransaccion();
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("ISSS")) {
+                c0 = cmbCuenta.getItemAt(i);
+            }
+        }
+
+        d0.cuenta = c0;
+        d0.debe = totalIsss;
+        detalleTmodel.detalles.add(d0);
+        detalleTmodel.fireTableDataChanged();
+
+        Cuenta c1 = new Cuenta();
+        DetalleTransaccion d1 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("Pension")) {
+                c1 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d1.cuenta = c1;
+        d1.debe = totalAFP;
+        detalleTmodel.detalles.add(d1);
+        detalleTmodel.fireTableDataChanged();
+
+        Cuenta c2 = new Cuenta();
+        DetalleTransaccion d2 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("Retenciones Laborales")) {
+                c2 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d2.cuenta = c2;
+        d2.debe = totalDesc;
+        detalleTmodel.detalles.add(d2);
+        detalleTmodel.fireTableDataChanged();
+
+        Cuenta c3 = new Cuenta();
+        DetalleTransaccion d3 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("Bonificaciones y aguinaldo")) {
+                c3 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d3.cuenta = c3;
+        d3.debe = totalBoni;
+        detalleTmodel.detalles.add(d3);
+        detalleTmodel.fireTableDataChanged();
+        Cuenta c4 = new Cuenta();
+        DetalleTransaccion d4 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("Impuesto sobre renta")) {
+                c4 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d4.cuenta = c4;
+        d4.debe = totalRenta;
+        detalleTmodel.detalles.add(d4);
+        detalleTmodel.fireTableDataChanged();
+
+        Cuenta c5 = new Cuenta();
+        DetalleTransaccion d5 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("ISSS Salud")) {
+                c5 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d5.cuenta = c5;
+        d5.debe = totalIsssPatrono;
+        detalleTmodel.detalles.add(d5);
+        detalleTmodel.fireTableDataChanged();
+        Cuenta c6 = new Cuenta();
+        DetalleTransaccion d6 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("AFP CONFIA")) {
+                c6 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d6.cuenta = c6;
+        d6.debe = totalAFPPatrono;
+        detalleTmodel.detalles.add(d6);
+        detalleTmodel.fireTableDataChanged();
+
+        tDebe = totalIsss + totalAFP + totalRenta + totalDesc + totalAFPPatrono + totalIsssPatrono + totalSalarioNeto;
+        txtDebe.setText(String.valueOf(tDebe));
+    }
+
+    private void insertarPlanillaVac(double totalIsss, double totalAFP, double totalRenta, double totalDesc, double totalBoni, double totalSalarioNeto, double totalIsssPatrono, double totalAFPPatrono, double totalAportePatrono) {
+        Cuenta c = new Cuenta();
+        DetalleTransaccion d = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("Vacaciones empleado")) {
+                c = cmbCuenta.getItemAt(i);
+            }
+        }
+        d.cuenta = c;
+        d.debe = totalSalarioNeto;
+        detalleTmodel.detalles.add(d);
+        detalleTmodel.fireTableDataChanged();
+
+        Cuenta c0 = new Cuenta();
+        DetalleTransaccion d0 = new DetalleTransaccion();
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("ISSS")) {
+                c0 = cmbCuenta.getItemAt(i);
+            }
+        }
+
+        d0.cuenta = c0;
+        d0.debe = totalIsss;
+        detalleTmodel.detalles.add(d0);
+        detalleTmodel.fireTableDataChanged();
+
+        Cuenta c1 = new Cuenta();
+        DetalleTransaccion d1 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("Pension")) {
+                c1 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d1.cuenta = c1;
+        d1.debe = totalAFP;
+        detalleTmodel.detalles.add(d1);
+        detalleTmodel.fireTableDataChanged();
+
+        Cuenta c2 = new Cuenta();
+        DetalleTransaccion d2 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("Vacaciones patrono")) {
+                c2 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d2.cuenta = c2;
+        d2.debe = totalAportePatrono;
+        detalleTmodel.detalles.add(d2);
+        detalleTmodel.fireTableDataChanged();
+
+        Cuenta c4 = new Cuenta();
+        DetalleTransaccion d4 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("Impuesto sobre renta")) {
+                c4 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d4.cuenta = c4;
+        d4.debe = totalRenta;
+        detalleTmodel.detalles.add(d4);
+        detalleTmodel.fireTableDataChanged();
+
+        Cuenta c5 = new Cuenta();
+        DetalleTransaccion d5 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("ISSS Salud")) {
+                c5 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d5.cuenta = c5;
+        d5.debe = totalIsssPatrono;
+        detalleTmodel.detalles.add(d5);
+        detalleTmodel.fireTableDataChanged();
+        Cuenta c6 = new Cuenta();
+        DetalleTransaccion d6 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("AFP CONFIA")) {
+                c6 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d6.cuenta = c6;
+        d6.debe = totalAFPPatrono;
+        detalleTmodel.detalles.add(d6);
+        detalleTmodel.fireTableDataChanged();
+
+        tDebe = totalIsss + totalAFP + totalRenta + totalAFPPatrono + totalIsssPatrono + totalSalarioNeto + totalAportePatrono;
+        txtDebe.setText(String.valueOf(tDebe));
+    }
+
+    private void insertarPlanillaAgui(double totalIsss, double totalAFP, double totalRenta, double totalDesc, double totalBoni, double totalSalarioNeto, double totalIsssPatrono, double totalAFPPatrono, double totalAportePatrono) {
+        Cuenta c = new Cuenta();
+        DetalleTransaccion d = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("Aguinaldo")) {
+                c = cmbCuenta.getItemAt(i);
+            }
+        }
+        d.cuenta = c;
+        d.debe = totalSalarioNeto;
+        detalleTmodel.detalles.add(d);
+        detalleTmodel.fireTableDataChanged();
+
+        Cuenta c4 = new Cuenta();
+        DetalleTransaccion d4 = new DetalleTransaccion();
+
+        for (int i = 0; i < cmbCuenta.getItemCount(); i++) {
+            if (cmbCuenta.getItemAt(i).getNombreCuenta().equals("Impuesto sobre renta")) {
+                c4 = cmbCuenta.getItemAt(i);
+            }
+        }
+        d4.cuenta = c4;
+        d4.debe = totalRenta;
+        detalleTmodel.detalles.add(d4);
+        detalleTmodel.fireTableDataChanged();
+
+    }
 
     /**
      * @param args the command line arguments
