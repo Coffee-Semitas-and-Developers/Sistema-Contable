@@ -10,12 +10,16 @@ package Modelos;
  * @author AxlHrndz
  */
 public class DetalleKardex {
+
     private int idDetalle;
     private boolean entrada;
     private int cantidad;
     private double costoUnitario;
     private double montoDetalleKardex;
     private OrdenDeFabricacion orden;
+
+    public DetalleKardex() {
+    }
 
     public DetalleKardex(int idDetalle, boolean entrada, int cantidad, double costoUnitario, double montoDetalleKardex) {
         this.idDetalle = idDetalle;
@@ -60,9 +64,9 @@ public class DetalleKardex {
     public double getMontoDetalleKardex() {
         return montoDetalleKardex;
     }
-    
-    public double calcularMontoDetalleKardex(){
-        montoDetalleKardex = this.costoUnitario*this.cantidad;
+
+    public double calcularMontoDetalleKardex() {
+        montoDetalleKardex = this.costoUnitario * this.cantidad;
         return montoDetalleKardex;
     }
 }

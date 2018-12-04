@@ -20,19 +20,7 @@ import static java.time.Clock.system;
  */
 public class LineaPlanillaAguiTableModel extends AbstractTableModel{
     
-    private int tipo=0;
-
-    public int getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
-    }
-    
     public List<LineaPlanilla> ln= new ArrayList<LineaPlanilla>();
-
-    
     
     @Override
     public int getRowCount() {
