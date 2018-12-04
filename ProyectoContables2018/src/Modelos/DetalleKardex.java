@@ -16,18 +16,7 @@ public class DetalleKardex {
     private int cantidad;
     private double costoUnitario;
     private double montoDetalleKardex;
-    private OrdenDeFabricacion orden;
-
-    public DetalleKardex() {
-    }
-
-    public DetalleKardex(int idDetalle, boolean entrada, int cantidad, double costoUnitario, double montoDetalleKardex) {
-        this.idDetalle = idDetalle;
-        this.entrada = entrada;
-        this.cantidad = cantidad;
-        this.costoUnitario = costoUnitario;
-        this.montoDetalleKardex = montoDetalleKardex;
-    }
+    public boolean setEntrada;
 
     public int getIdDetalle() {
         return idDetalle;
@@ -65,6 +54,23 @@ public class DetalleKardex {
         return montoDetalleKardex;
     }
 
+    public void setMontoDetalleKardex(double montoDetalleKardex) {
+        this.montoDetalleKardex = montoDetalleKardex;
+    }
+    private OrdenDeFabricacion orden;
+
+    public DetalleKardex() {
+    }
+
+    public DetalleKardex(int idDetalle, boolean entrada, int cantidad, double costoUnitario, double montoDetalleKardex) {
+        this.idDetalle = idDetalle;
+        this.entrada = entrada;
+        this.cantidad = cantidad;
+        this.costoUnitario = costoUnitario;
+        this.montoDetalleKardex = montoDetalleKardex;
+    }
+
+   
     public double calcularMontoDetalleKardex() {
         montoDetalleKardex = this.costoUnitario * this.cantidad;
         return montoDetalleKardex;

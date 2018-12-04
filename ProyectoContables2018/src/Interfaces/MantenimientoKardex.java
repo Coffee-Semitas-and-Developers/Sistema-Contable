@@ -483,10 +483,10 @@ public class MantenimientoKardex extends javax.swing.JFrame {
             int currentKardex = tableKardex.getSelectedRow();
             Kardex k = kardexTableModel.kars.get(currentKardex);
             if (idOrden != 0) {
-                DetalleKardex dK = new DetalleKardex(k.getIdKardex(), idOrden);
+                DetalleKardexForm dK = new DetalleKardexForm(k.getIdKardex(), idOrden);
                 dK.setVisible(true);
             } else {
-                DetalleKardex dK = new DetalleKardex(k.getIdKardex());
+                DetalleKardexForm dK = new DetalleKardexForm(k.getIdKardex());
                 dK.setVisible(true);
             }
             this.setVisible(false);

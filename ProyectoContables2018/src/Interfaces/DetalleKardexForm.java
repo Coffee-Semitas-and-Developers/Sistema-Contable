@@ -5,10 +5,13 @@
  */
 package Interfaces;
 
+import Modelos.DetalleKardex;
 import Modelos.DetalleKardexTableModel;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableColumnModel;
@@ -19,27 +22,30 @@ import javax.swing.table.TableColumnModel;
  *
  * @author Dalton
  */
-public class DetalleKardex extends javax.swing.JFrame {
+public class DetalleKardexForm extends javax.swing.JFrame {
 
-    DetalleKardexTableModel detalleTM= new DetalleKardexTableModel();
+     DetalleKardexTableModel detalleTM= new DetalleKardexTableModel();
     private Connection conexion;
+    private double setCostoUnitario;
+    private double setCantidad;
+    private double setEntrada;
 
     
     /**
      * Creates new form DetalleKardex
      */
-    public DetalleKardex() {
+    public DetalleKardexForm() {
         initComponents();
         background();
         inicializarColumnas();
         conectar();
     }
     
-    public DetalleKardex(int idKardex, int idOrden) {
+    public DetalleKardexForm(int idKardex, int idOrden) {
         initComponents();
     }
     
-        public DetalleKardex(int idKardex) {
+        public DetalleKardexForm(int idKardex) {
         initComponents();
     }
 
@@ -178,7 +184,7 @@ public class DetalleKardex extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(rbEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(rbSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -188,12 +194,13 @@ public class DetalleKardex extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(btnAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31))
         );
 
@@ -232,7 +239,7 @@ public class DetalleKardex extends javax.swing.JFrame {
     
      private void background() {
         Fondo f = new Fondo();
-        f.setSize(1333, 629);
+        f.setSize(this.getSize());
         this.add(f);
     }    
     
@@ -264,46 +271,7 @@ public class DetalleKardex extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AdminEmpleadoForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    }   
     
     private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
         // TODO add your handling code here:
@@ -337,8 +305,18 @@ public class DetalleKardex extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         DetalleKardex di = new DetalleKardex();
-        di.setCostoUnitario=Double.parseDouble(txtPrecio.getText());
         
+        if(rbEntrada.isSelected()){
+            di.setEntrada=rbEntrada.isSelected();
+        }
+        
+        
+        
+        di.setCostoUnitario(Double.parseDouble(txtPrecio.getText());
+        di.setCantidad=ouble.parseDouble(txtCantidad.getText());
+        di.setEntrada=Double.parseDouble(txtMonto.getText());
+        
+        detalleTM.dt.add(di);
         
         
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -364,20 +342,21 @@ public class DetalleKardex extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DetalleKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DetalleKardexForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DetalleKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DetalleKardexForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DetalleKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DetalleKardexForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DetalleKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DetalleKardexForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetalleKardex().setVisible(true);
+                new DetalleKardexForm().setVisible(true);
             }
         });
     }
