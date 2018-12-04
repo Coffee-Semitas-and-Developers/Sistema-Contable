@@ -105,10 +105,12 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
         tablacom = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jfecha = new javax.swing.JLabel();
         jdfechainicio = new com.toedter.calendar.JDateChooser();
         jdfechafinal = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -126,13 +128,13 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/LOGO 2.jpg"))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        jLabel1.setText("MUEBLES RIVERAS S.A DE C.V");
+        jLabel1.setText("MUEBLES RIVERADE C.V");
 
-        jLabel3.setText("Balance de comprobación");
-
+        jdfechainicio.setDateFormatString("MM/dd/yyyy");
         jdfechainicio.setMaxSelectableDate(null);
         jdfechainicio.setMinSelectableDate(new java.util.Date(1541055698000L));
 
+        jdfechafinal.setDateFormatString("MM/dd/yyyy");
         jdfechafinal.setMinSelectableDate(new java.util.Date(1541055684000L));
 
         jButton2.setText("Generar Reporte");
@@ -142,58 +144,76 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Fecha de inicio");
+
+        jLabel4.setText("Fecha final");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(73, 73, 73)
                 .addComponent(jLabel2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addComponent(jLabel1))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jdfechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(87, 87, 87)
+                                .addComponent(jdfechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(49, 49, 49)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel3)
+                                .addGap(171, 171, 171)
+                                .addComponent(jLabel4)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(33, 33, 33))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jdfechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)
-                        .addComponent(jdfechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(33, 33, 33))
+                        .addGap(141, 141, 141)
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(jButton1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(105, 105, 105)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(jfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(jButton1)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jdfechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jdfechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton2)
+                                .addComponent(jdfechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jdfechainicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1))
+                .addComponent(jButton1)
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -207,6 +227,8 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        if(!(jdfechafinal.getDate() == null || jdfechainicio.getDate() == null)){  
         balancetabla.cuentas.clear();
         try {
             Statement coneccion = this.conexion.createStatement();
@@ -216,7 +238,7 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
                     + "(select c.codigocuenta, c.nombrecuenta, c.estadofinanciero,r.debe, r.haber from "
                     + "cuenta c inner join (select d.iddetalle, d.codigocuenta, d.debe, d.haber from transaccion t "
                     + "inner join detalletransaccion d  on t.idtransaccion = d.idtransaccion where t.fechatransaccion "
-                    + "between '"+ fechaini+"' and '"+fechafinal+"') r on c.codigocuenta = r.codigocuenta group by c.codigocuenta,"
+                    + "between '" + fechaini + "' and '" + fechafinal + "') r on c.codigocuenta = r.codigocuenta group by c.codigocuenta,"
                     + " c.nombrecuenta, r.debe, r.haber) x where x.estadofinanciero like'%G%'  group by x.codigocuenta, x.nombrecuenta;";
             ResultSet resultado = coneccion.executeQuery(sentencia);
             while (resultado.next()) {
@@ -228,9 +250,13 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
                 this.balancetabla.cuentas.add(cuenta);
                 balancetabla.fireTableDataChanged();
             }
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error en la conexion con la base" + e);
-            e.printStackTrace();
+            e.printStackTrace();}  
+        }
+        else{
+        JOptionPane.showMessageDialog(null,"Debe de elegir una fecha de inicio y una de final para generar los reportes");
         }
 
         // TODO add your handling code here:
@@ -250,16 +276,24 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BalanceDeComprobacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BalanceDeComprobacion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BalanceDeComprobacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BalanceDeComprobacion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BalanceDeComprobacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BalanceDeComprobacion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BalanceDeComprobacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BalanceDeComprobacion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -285,9 +319,11 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private com.toedter.calendar.JDateChooser jdfechafinal;
     private com.toedter.calendar.JDateChooser jdfechainicio;
+    private javax.swing.JLabel jfecha;
     private javax.swing.JTable tablacom;
     // End of variables declaration//GEN-END:variables
 }

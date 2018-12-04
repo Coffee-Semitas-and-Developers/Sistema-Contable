@@ -40,7 +40,10 @@ public class BalanceCompTableModel extends AbstractTableModel {
                 c = cuenta.getNombreCuenta();
                 break;
             case 2:
-                c = cuenta.getDebe()- cuenta.getHaber();
+                c = cuenta.getDebe();
+                break;
+            case 3:
+                c= cuenta.getHaber();
                 break;
         }
         return c;
