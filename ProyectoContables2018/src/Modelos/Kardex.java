@@ -4,26 +4,44 @@
  * and open the template in the editor.
  */
 package Modelos;
+
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.ListIterator;
 import java.util.List;
 import java.util.ArrayList;
+
 /**
  *
  * @author AxlHrndz
  */
 public class Kardex {
+
     private int idKardex;
-    private String metodoKardex;
     private Date fechaApertura;
-    private int cantidadesTotales;
+    private double cantidadesTotales;
     private double costoUnitarioTotales;
     private double montoTotales;
-    private List<detalleKardex> detalle = new ArrayList<detalleKardex>();
-    private materiaPrima mp = new materiaPrima();
+    private List<DetalleKardex> detalle = new ArrayList<DetalleKardex>();
+    private MateriaPrima mp = new MateriaPrima();
 
     public Kardex() {
+    }
+
+    public List<DetalleKardex> getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(List<DetalleKardex> detalle) {
+        this.detalle = detalle;
+    }
+
+    public MateriaPrima getMp() {
+        return mp;
+    }
+
+    public void setMp(MateriaPrima mp) {
+        this.mp = mp;
     }
 
     public int getIdKardex() {
@@ -34,14 +52,6 @@ public class Kardex {
         this.idKardex = idKardex;
     }
 
-    public String getMetodoKardex() {
-        return metodoKardex;
-    }
-
-    public void setMetodoKardex(String metodoKardex) {
-        this.metodoKardex = metodoKardex;
-    }
-
     public Date getFechaApertura() {
         return fechaApertura;
     }
@@ -50,17 +60,18 @@ public class Kardex {
         this.fechaApertura = fechaApertura;
     }
 
-    public int getCantidadesTotales() {
+    public double getCantidadesTotales() {
         return cantidadesTotales;
     }
 
     public double getCostoUnitarioTotales() {
+        this.costoUnitarioTotales = this.costoUnitarioTotales/this.cantidadesTotales;
         return costoUnitarioTotales;
     }
 
     public double getMontoTotales() {
+        this.montoTotales = this.cantidadesTotales * this.costoUnitarioTotales;
         return montoTotales;
     }
-    
-    //hacer set para cantidades, costo unitario y monto Totales
+
 }

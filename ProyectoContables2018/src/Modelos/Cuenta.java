@@ -7,6 +7,7 @@ package Modelos;
 
 import Conexion.Conexion;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -306,13 +307,12 @@ public class Cuenta {
         return debe;
     }
 
-    public double obtenerhaberconfecha(int idcuenta, Date fechainicio, Date fechafinal) {
+    public double obtenerhaberconfecha(Date fechainicio, Date fechafinal) {
         double haber = 0;
-        int cuenta = idcuenta;
 
         try {
             /*Sentencia SQL para las fecha registradas y las cuentas*/
-            String setencia = "select * from detalletransaccion";
+            String setencia = "select * from detalletransaccion where codigocuenta=" + String.valueOf(codigo);
             String setenciafechainicio = "select * from (SELECT * FROM "
                     + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion asc limit 1";
@@ -336,10 +336,10 @@ public class Cuenta {
                 parametro da un valor menor que cero*/
                 //establece el rango de fechas
                 if (fechainicio.compareTo(fechainibase) > 0 && fechafinal.compareTo(fechafinalbase) < 0) {
-                    if (cuenta == identificador) {
+                   
                         haber += tabla.getDouble("haber");
                     }//if cuenta        
-                } //if fecha
+             
                 else {
                     JOptionPane.showInternalMessageDialog(null, "la fecha  no se encuentra en los registro contables");
                 }
@@ -351,4 +351,31 @@ public class Cuenta {
         }
         return haber;
     }
+
+    public static Cuenta obtenerCuenta(int codigo) {
+        Cuenta cuenta = new Cuenta();
+        try {
+            String sentencia = "SELECT * FROM cuenta where codigocuenta=?";
+            PreparedStatement statement = Conexion.getConexion().prepareStatement(sentencia);
+            statement.setInt(1, codigo);
+            ResultSet resultado = statement.executeQuery();
+            
+            if(resultado.next()){
+                cuenta.setCodigo(resultado.getInt("codigocuenta"));
+                cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
+                cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
+                cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));;
+                cuenta.setDescripcion(resultado.getString("descripcion"));
+                cuenta.setCodigoMayor(resultado.getInt("cue_codigocuenta"));
+                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0), 0);
+                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(1), 1);
+            }
+            
+                        
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error en la conexion con la base" + e);
+        }
+        return cuenta;
+    }
+
 }

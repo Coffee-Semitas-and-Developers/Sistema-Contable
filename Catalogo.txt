@@ -1,9 +1,9 @@
 Pág.           1			
-	MUEBLES R	IVERA, S.A. DE	C.V.
+	MUEBLES RIVERA, S.A. DE	C.V.
 	Catál	ogo de cuentas	
-	Al 29 de	Febrero del 2	016
+	Al 29 de Febrero del 2016
 			
-C O	D I G O	N O M B R	E
+CODIGO	NOMBRE
 ————————————————	——————————————————————————————————————	——————————————	————————————————————————————————————————————————————
 1	ACTIVO		
 11	CIRCULANTE		

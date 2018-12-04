@@ -40,19 +40,19 @@ public class CuentaTableModel extends AbstractTableModel {
             case 1:
                 valor = cuenta.getNombreCuenta();
                 break;
-            case 2:
+            /*case 2:
                 valor = cuenta.getDescripcion();
-                break;
-            case 3:
+                break;*/
+            case 2:
                 valor = cuenta.getNombreMayor();
                 break;
-            case 4:
+            case 3:
                 valor = cuenta.getGrupoCuenta();
                 break;
-            case 5:
+            case 4:
                 valor = Cuenta.tipoBalance(cuenta.getEstadoFinanciero(0)) + " \n " + Cuenta.tipoBalance(cuenta.getEstadoFinanciero(1));
                 break;
-            case 6:
+            case 5:
                 if (MantenimientoCuenta.cbSaldoFinal.isSelected()) {
                     valor = cuenta.getSaldoFinal();
                 }

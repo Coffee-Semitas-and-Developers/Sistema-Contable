@@ -1,5 +1,5 @@
 package Modelos;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
@@ -9,7 +9,7 @@ public class Transaccion {
     public int idTransaccion;
     public String descripcion;
     public Date fecha;
-    public double monto;//pueda que se elimine este atributo
+    public double monto;
     public PeriodoContable idPeriodoContable;
     public DetalleTransaccion detalleTransaccion;
 

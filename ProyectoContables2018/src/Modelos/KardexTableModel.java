@@ -5,51 +5,55 @@
  */
 package Modelos;
 
+import Interfaces.MantenimientoCuenta;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
  *
- * @author AxlHrndz
+ * @author Dalton
  */
-public class DetalleTarjetaTableModel extends AbstractTableModel {
+public class KardexTableModel extends AbstractTableModel {
 
-    public List<DetalleTarjetaDeTiempo> detalle = new ArrayList<DetalleTarjetaDeTiempo>();
+    public List<Kardex> kars = new ArrayList();
 
     @Override
     public int getRowCount() {
-        return detalle.size();
+        return kars.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 6;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        DetalleTarjetaDeTiempo det = detalle.get(rowIndex);
+        Kardex kar = kars.get(rowIndex);
         Object valor = null;
 
         switch (columnIndex) {
             case 0:
-                valor = det.getDiaSeleccionado();
+                valor = kar.getIdKardex();
                 break;
             case 1:
-                valor = det.getFechaTarjeta();
+                valor = kar.getMp().getCodigoMateria();
                 break;
             case 2:
-                valor = det.getHorasTrabajadas();
+                valor = kar.getMp().getNombreMateria();
                 break;
             case 3:
-                valor = det.getHorasExtras();
+                valor = kar.getCantidadesTotales();
+                break;
+            case 4:
+                valor = kar.getCostoUnitarioTotales();
+                break;
+            case 5:
+                valor = kar.getMontoTotales();
                 break;
         }
         return valor;
     }
 
-    public void add(DetalleTarjetaDeTiempo a) {
-        detalle.add(a);
-    }
 }
