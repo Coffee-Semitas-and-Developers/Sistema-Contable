@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @author Dalton
  */
 public class Cuenta {
-
+    private static Conexion conexion= new Conexion();
     private int codigo;
     private String nombreCuenta;
     private String descripcion;
@@ -356,11 +356,11 @@ public class Cuenta {
         Cuenta cuenta = new Cuenta();
         try {
             String sentencia = "SELECT * FROM cuenta where codigocuenta=?";
-            PreparedStatement statement = Conexion.getConexion().prepareStatement(sentencia);
+            PreparedStatement statement = conexion.prepareStatement(sentencia);
             statement.setInt(1, codigo);
             ResultSet resultado = statement.executeQuery();
             
-            if(resultado.next()){
+            while(resultado.next()){
                 cuenta.setCodigo(resultado.getInt("codigocuenta"));
                 cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
                 cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
@@ -369,9 +369,8 @@ public class Cuenta {
                 cuenta.setCodigoMayor(resultado.getInt("cue_codigocuenta"));
                 cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0), 0);
                 cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(1), 1);
-            }
-            
-                        
+
+            }                        
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error en la conexion con la base" + e);
         }
