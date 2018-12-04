@@ -12,7 +12,6 @@ import Modelos.ServCuentaTableModel;
 import Modelos.Transaccion;
 import java.awt.List;
 import java.sql.Connection;
-
 import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
