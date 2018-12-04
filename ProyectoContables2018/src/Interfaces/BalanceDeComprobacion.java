@@ -147,34 +147,32 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jLabel2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(99, 99, 99)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(jdfechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(67, 67, 67)
-                                .addComponent(jdfechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(58, 58, 58)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(99, 99, 99)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(125, 125, 125)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(62, 62, 62)
+                        .addComponent(jdfechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67)
+                        .addComponent(jdfechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(33, 33, 33))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(140, 140, 140)
+                .addComponent(jButton1)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,9 +190,9 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
                             .addComponent(jButton2))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(5, 5, 5)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1))
         );
 
@@ -211,48 +209,25 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         balancetabla.cuentas.clear();
         try {
-
             Statement coneccion = this.conexion.createStatement();
-            String sentencia = "select a.codigocuenta,a.nombrecuenta,d.debe,d.haber "
-                    + " from  detalletransaccion d inner join cuenta a on d.codigocuenta = a.codigocuenta "
-                    + "where estadofinanciero like '%G%'";
+            java.util.Date fechaini = jdfechainicio.getDate();
+            java.util.Date fechafinal = jdfechafinal.getDate();
+            String sentencia = "select x.codigocuenta, x.nombrecuenta, sum(x.debe) as debe, sum(x.haber) as haber from "
+                    + "(select c.codigocuenta, c.nombrecuenta, c.estadofinanciero,r.debe, r.haber from "
+                    + "cuenta c inner join (select d.iddetalle, d.codigocuenta, d.debe, d.haber from transaccion t "
+                    + "inner join detalletransaccion d  on t.idtransaccion = d.idtransaccion where t.fechatransaccion "
+                    + "between '"+ fechaini+"' and '"+fechafinal+"') r on c.codigocuenta = r.codigocuenta group by c.codigocuenta,"
+                    + " c.nombrecuenta, r.debe, r.haber) x where x.estadofinanciero like'%G%'  group by x.codigocuenta, x.nombrecuenta;";
             ResultSet resultado = coneccion.executeQuery(sentencia);
-
-            Statement conexion1 = this.conexion.createStatement();
-            //esta sentencia me recoge la fecha utima registrada
-            String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
-                    + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
-                    + "order by fechatransaccion desc limit 1";
-            ResultSet fechafinalbd = conexion1.executeQuery(setenciafechafinal);
-
-            /*Statement conexion3 = this.conexion.createStatement();
-            String setenciafechainicio = "select * from (SELECT * FROM "
-                    + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
-                    + "order by fechatransaccion asc limit 1";
-            ResultSet fechainibd = conexion3.executeQuery(setenciafechainicio);*/
-            // while (fechainibd.next()) {
-            while (fechafinalbd.next()) {
-                java.util.Date fechaini = jdfechainicio.getDate();
-                java.util.Date fechafinal = jdfechafinal.getDate();
-                Date fechafinlbd = fechafinalbd.getDate("fechatransaccion");
-
-                //Date fechainicialbd = fechainibd.getDate("fechatransaccion");
-                while (resultado.next()) {
-                    if (fechafinal.compareTo(fechafinlbd) < 0 ) {
-                        Cuenta cuenta = new Cuenta();
-                        cuenta.setCodigo(resultado.getInt("codigocuenta"));
-                        cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
-                        cuenta.setDebe(resultado.getDouble("debe"));
-                        cuenta.setHaber(resultado.getDouble("haber"));
-                        this.balancetabla.cuentas.add(cuenta);
-                        balancetabla.fireTableDataChanged();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Las fechas igresadas no estan el periodo contable");
-                    }
-                }
+            while (resultado.next()) {
+                Cuenta cuenta = new Cuenta();
+                cuenta.setCodigo(resultado.getInt("codigocuenta"));
+                cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
+                cuenta.setDebe(resultado.getDouble("debe"));
+                cuenta.setHaber(resultado.getDouble("haber"));
+                this.balancetabla.cuentas.add(cuenta);
+                balancetabla.fireTableDataChanged();
             }
-
-            // }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error en la conexion con la base" + e);
             e.printStackTrace();
