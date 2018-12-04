@@ -312,9 +312,9 @@ public class DetalleKardexForm extends javax.swing.JFrame {
         
         
         
-        di.setCostoUnitario(Double.parseDouble(txtPrecio.getText());
-        di.setCantidad=ouble.parseDouble(txtCantidad.getText());
-        di.setEntrada=Double.parseDouble(txtMonto.getText());
+        di.setCostoUnitario(Double.parseDouble(txtPrecio.getText()));
+        di.setCantidad(Integer.parseInt(txtCantidad.getText()));
+        di.setEntrada(Boolean.parseBoolean(txtMonto.getText()));
         
         detalleTM.dt.add(di);
         

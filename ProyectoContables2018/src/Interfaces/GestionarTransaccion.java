@@ -41,6 +41,8 @@ public class GestionarTransaccion extends javax.swing.JFrame {
         initComponents();
         background();
         getIconImage();
+        setLocationRelativeTo(null);
+        this.setResizable(false);
         inicializarColumnas();
         conectar();
         consultaInicial();
@@ -130,6 +132,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
         btnEditarTransaccion = new javax.swing.JButton();
         btnInsertarTransaccion = new javax.swing.JButton();
         btnEliminarTransaccion = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -180,6 +183,13 @@ public class GestionarTransaccion extends javax.swing.JFrame {
             }
         });
 
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -189,26 +199,26 @@ public class GestionarTransaccion extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(52, 52, 52))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtConsultarTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                                .addComponent(btnConsultarTransaccion)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jLabel1)
+                                .addGap(52, 52, 52))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnEditarTransaccion)
-                                .addGap(170, 170, 170)
-                                .addComponent(btnInsertarTransaccion)
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnEliminarTransaccion)))
-                        .addContainerGap())))
+                                .addComponent(txtConsultarTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addComponent(btnConsultarTransaccion)
+                        .addContainerGap(420, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnEditarTransaccion)
+                        .addGap(71, 71, 71)
+                        .addComponent(btnInsertarTransaccion)
+                        .addGap(123, 123, 123)
+                        .addComponent(btnEliminarTransaccion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalir)
+                        .addGap(34, 34, 34))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +237,8 @@ public class GestionarTransaccion extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInsertarTransaccion)
                     .addComponent(btnEliminarTransaccion)
-                    .addComponent(btnEditarTransaccion))
+                    .addComponent(btnEditarTransaccion)
+                    .addComponent(btnSalir))
                 .addContainerGap())
         );
 
@@ -327,6 +338,12 @@ public class GestionarTransaccion extends javax.swing.JFrame {
    
 
     }//GEN-LAST:event_tablatransaccionesMouseClicked
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        MenuConta obj = new MenuConta();
+        obj.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
     private void UpdateJTable() {
         detalleTransaccionTModel.transacciones.clear();
         try {
@@ -407,6 +424,7 @@ public class GestionarTransaccion extends javax.swing.JFrame {
     private javax.swing.JButton btnEditarTransaccion;
     private javax.swing.JButton btnEliminarTransaccion;
     private javax.swing.JButton btnInsertarTransaccion;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
