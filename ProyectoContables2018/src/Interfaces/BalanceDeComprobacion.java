@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 
 public final class BalanceDeComprobacion extends javax.swing.JFrame {
 
-    public BalanceCompTableModel tabla = new BalanceCompTableModel();
+    public BalanceCompTableModel balancetabla = new BalanceCompTableModel();
     private final Conexion conexion = new Conexion();
 
     /**
@@ -32,6 +32,13 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
 
     public BalanceDeComprobacion() {
         initComponents();
+        inicializarcolumna();
+        setLocationRelativeTo(null);
+        this.setResizable(false);
+        setTitle("Balance de comprobación");
+        conexion.getConexion();
+        getIconImage();
+        background();
     }
 
     public BalanceDeComprobacion(int a) {
@@ -113,7 +120,7 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
             }
         });
 
-        tablacom.setModel(tabla);
+        tablacom.setModel(balancetabla);
         jScrollPane1.setViewportView(tablacom);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/LOGO 2.jpg"))); // NOI18N
@@ -142,15 +149,6 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jButton1)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel2)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,6 +166,15 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
                         .addGap(125, 125, 125)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(33, 33, 33))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,54 +209,52 @@ public final class BalanceDeComprobacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Cuenta cuenta = new Cuenta();
-        DetalleTransaccion Detalle = new DetalleTransaccion();
+        balancetabla.cuentas.clear();
         try {
-            Statement conexion = this.conexion.createStatement();
-            Statement conexion1 = this.conexion.createStatement();
-            Statement conexion3 = this.conexion.createStatement();
-            String sentencia = "select a.estadofinanciero,a.codigocuenta,"
-                    + "a.nombrecuenta,d.debe,d.haber from  detalletransaccion d"
-                    + "  inner join cuenta a on d.codigocuenta = a.codigocuenta "
+
+            Statement coneccion = this.conexion.createStatement();
+            String sentencia = "select a.codigocuenta,a.nombrecuenta,d.debe,d.haber "
+                    + " from  detalletransaccion d inner join cuenta a on d.codigocuenta = a.codigocuenta "
                     + "where estadofinanciero like '%G%'";
-            String setenciafechainicio = "select * from (SELECT * FROM "
-                    + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
-                    + "order by fechatransaccion asc limit 1";
+            ResultSet resultado = coneccion.executeQuery(sentencia);
+
+            Statement conexion1 = this.conexion.createStatement();
             //esta sentencia me recoge la fecha utima registrada
             String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
                     + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
                     + "order by fechatransaccion desc limit 1";
-            PreparedStatement statenm = this.conexion.prepareStatement(sentencia);
-            // ResultSet resultado = statenm.executeQuery();
-            ResultSet resultado = conexion3.executeQuery(sentencia);
-            ResultSet fechainibd = conexion.executeQuery(setenciafechainicio);
             ResultSet fechafinalbd = conexion1.executeQuery(setenciafechafinal);
-            if (resultado.getFetchSize() == 0) {
-                JOptionPane.showMessageDialog(null, "error");
-            }
-            while (fechainibd.next()) {
-                while (fechafinalbd.next()) {
-                    Date fechainicialbd = fechainibd.getDate("fechatransaccion");
-                    Date fechafinlbd = fechafinalbd.getDate("fechatransaccion");
-                    java.util.Date fechaini = jdfechainicio.getDate();
-                    java.util.Date fechafinal = jdfechafinal.getDate();
-                    while (resultado.next()) {
-                        if (fechafinlbd.compareTo(fechafinal) < 0 && fechainicialbd.compareTo(fechaini)>0) {
-                            cuenta.setCodigo(resultado.getInt("codigocuenta"));
-                            cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
-                            Detalle.setDebe(resultado.getDouble("debe"));
-                            Detalle.setHaber(resultado.getDouble("haber"));
-                            tabla.cuentas.add(cuenta);
-                            tabla.transacciones.add(Detalle);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "las fechas igresadas no estan el periodo contable");
-                        }
+
+            /*Statement conexion3 = this.conexion.createStatement();
+            String setenciafechainicio = "select * from (SELECT * FROM "
+                    + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
+                    + "order by fechatransaccion asc limit 1";
+            ResultSet fechainibd = conexion3.executeQuery(setenciafechainicio);*/
+            // while (fechainibd.next()) {
+            while (fechafinalbd.next()) {
+                java.util.Date fechaini = jdfechainicio.getDate();
+                java.util.Date fechafinal = jdfechafinal.getDate();
+                Date fechafinlbd = fechafinalbd.getDate("fechatransaccion");
+
+                //Date fechainicialbd = fechainibd.getDate("fechatransaccion");
+                while (resultado.next()) {
+                    if (fechafinal.compareTo(fechafinlbd) < 0 ) {
+                        Cuenta cuenta = new Cuenta();
+                        cuenta.setCodigo(resultado.getInt("codigocuenta"));
+                        cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
+                        cuenta.setDebe(resultado.getDouble("debe"));
+                        cuenta.setHaber(resultado.getDouble("haber"));
+                        this.balancetabla.cuentas.add(cuenta);
+                        balancetabla.fireTableDataChanged();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Las fechas igresadas no estan el periodo contable");
                     }
                 }
             }
 
+            // }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "error en la conexion con la base" + e);
+            JOptionPane.showMessageDialog(null, "Error en la conexion con la base" + e);
             e.printStackTrace();
         }
 

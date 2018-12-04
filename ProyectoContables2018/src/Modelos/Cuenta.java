@@ -27,13 +27,39 @@ public class Cuenta {
     private double saldoFinal;
     private int codigoMayor;
     private String nombreMayor;
+    private double debe;
+    private double haber;
 
-    public Cuenta(String nombreCuenta, String descripcion, char[] estadoFinanciero, String grupoCuenta) {
+    public Cuenta(String nombreCuenta, String descripcion, String grupoCuenta, double saldoFinal, int codigoMayor, String nombreMayor, double debe, double haber) {
         this.nombreCuenta = nombreCuenta;
         this.descripcion = descripcion;
-        this.estadoFinanciero = estadoFinanciero;
         this.grupoCuenta = grupoCuenta;
+        this.saldoFinal = saldoFinal;
+        this.codigoMayor = codigoMayor;
+        this.nombreMayor = nombreMayor;
+        this.debe = debe;
+        this.haber = haber;
     }
+
+   
+    public void setDebe(double debe) {
+        this.debe = debe;
+    }
+
+    public void setHaber(double haber) {
+        this.haber = haber;
+    }
+
+    public double getDebe() {
+        return debe;
+    }
+
+    public double getHaber() {
+        return haber;
+    }
+    
+
+    
 
     public Cuenta() {
     }
