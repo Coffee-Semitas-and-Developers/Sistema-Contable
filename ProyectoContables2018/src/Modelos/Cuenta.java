@@ -352,36 +352,28 @@ public class Cuenta {
         return haber;
     }
 
-    public static Cuenta obtenercuenta(Date fechainicio, Date fechafinal, String estado) {
+    public static Cuenta obtenerCuenta(int codigo) {
         Cuenta cuenta = new Cuenta();
         try {
-            Statement conexion = Conexion.getConexion().createStatement();
-            String sentencia = "SELECT * FROM cuenta where estadofinanciero like '%?%'";
-            String setenciafechainicio = "select * from (SELECT * FROM "
-                    + "detalletransaccion d inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
-                    + "order by fechatransaccion asc limit 1";
-//esta sentencia me recoge la fecha utima registrada 
-            String setenciafechafinal = "select * from (SELECT * FROM detalletransaccion d "
-                    + "inner join transaccion t on d.idtransaccion = t.idtransaccion) p "
-                    + "order by fechatransaccion desc limit 1";
-            ResultSet fechainiciobd = conexion.executeQuery(setenciafechainicio);
-            ResultSet fechafinalbd = conexion.executeQuery(setenciafechafinal);
-            PreparedStatement statenm = Conexion.getConexion().prepareStatement(sentencia);
-            statenm.setString(1, estado);
-            Date fechainibd = fechainiciobd.getDate("fechatransaccion");
-            Date fechafinlbd = fechafinalbd.getDate("fechatransaccion");
-            ResultSet resultado = statenm.executeQuery();
-            if (fechainicio.compareTo(fechainibd) > 0 && fechafinal.compareTo(fechafinlbd) < 0) {
-                cuenta.setCodigo(resultado.getInt("codigo"));
+            String sentencia = "SELECT * FROM cuenta where codigocuenta=?";
+            PreparedStatement statement = Conexion.getConexion().prepareStatement(sentencia);
+            statement.setInt(1, codigo);
+            ResultSet resultado = statement.executeQuery();
+            
+            if(resultado.next()){
+                cuenta.setCodigo(resultado.getInt("codigocuenta"));
                 cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "las fechas igresadas no estan el periodo contable");
+                cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
+                cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));;
+                cuenta.setDescripcion(resultado.getString("descripcion"));
+                cuenta.setCodigoMayor(resultado.getInt("cue_codigocuenta"));
+                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0), 0);
+                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(1), 1);
             }
-
+            
+                        
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "error en la conexion con la base");
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "error en la conexion con la base" + e);
         }
         return cuenta;
     }

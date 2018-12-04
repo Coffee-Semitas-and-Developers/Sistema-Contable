@@ -15,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Dalton
  */
 public class KardexTableModel extends AbstractTableModel {
-    
+
     public List<Kardex> kars = new ArrayList();
 
     @Override
@@ -50,10 +50,10 @@ public class KardexTableModel extends AbstractTableModel {
                 valor = kar.getCostoUnitarioTotales();
                 break;
             case 5:
-                valor= kar.getMontoTotales();
+                valor = kar.getMontoTotales();
                 break;
         }
         return valor;
     }
-    
+
 }
