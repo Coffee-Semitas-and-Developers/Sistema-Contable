@@ -111,7 +111,6 @@ public class MantenimientoCuenta extends javax.swing.JFrame {
                 cuenta.setCodigo(resultado.getInt("codigocuenta"));
                 cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
                 cmbCuentaMayor.addItem(cuenta);
-                System.out.println(cuenta.toString());
             }
             //tableCuenta.repaint();
         } catch (SQLException ex) {

@@ -8,9 +8,16 @@ package Interfaces;
 import Conexion.Conexion;
 import Modelos.*;
 import java.awt.HeadlessException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
@@ -23,19 +30,27 @@ import javax.swing.table.TableColumnModel;
 public class MantenimientoKardex extends javax.swing.JFrame {
 
     KardexTableModel kardexTableModel = new KardexTableModel();
+    private int idOrden = 0;
     private final Conexion conexion = new Conexion();
     private Kardex karActual = null;
     private boolean guardar = true;
     private int cantidadCaracteres = 0;
+    private final Calendar fecha = new GregorianCalendar();
+    private String dat = null;
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    DecimalFormat df = new DecimalFormat("#######.00");
+    private Date d = new Date();
+    java.sql.Date sqlDate;
 
     /**
      * Creates new form MantenimientoKardex
      */
     public MantenimientoKardex() {
         initComponents();
+        conexion.getConexion();
         consultaInicial();
         inicializarColumnas();
-        conexion.getConexion();
+        setFecha();
         background();
     }
 
@@ -44,28 +59,28 @@ public class MantenimientoKardex extends javax.swing.JFrame {
         f.setSize(this.getSize());
         this.add(f);
     }
-    
+
     private void consultaInicial() {
         try {
-            String sql = "select * from kardex k inner join materiaprima mp on k.codigomateria=mp.codigomateria";
+            String sql = "select  k.fechaapertura, k.idkardex, mp.codigomateria, mp.nombremateria, mp.directa,"
+                    + "mp.descripcionmateria, mp.unidadesmateria, k.cantidadtotal, k.costounitariototal, k.montototal "
+                    + "from kardex k inner join materiaprima mp on k.codigomateria=mp.codigomateria";
             Statement statement = this.conexion.createStatement();
 
             ResultSet resultado = statement.executeQuery(sql);
 
             while (resultado.next()) {
-                Cuenta cuenta = new Cuenta();
-                cuenta.setCodigo(resultado.getInt("codigocuenta"));
-                cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
-                cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
-                cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));;
-                cuenta.setDescripcion(resultado.getString("descripcion"));
-                cuenta.setNombreMayor(getNombreCuentaPadre(resultado.getInt("cue_codigocuenta")));
-                cuenta.setCodigoMayor(resultado.getInt("cue_codigocuenta"));
-                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0), 0);
-                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(1), 1);
-                this.cuentaTabla.cuentas.add(cuenta);
+                Kardex kardex = new Kardex();
+                kardex.setFechaApertura(resultado.getDate(1));
+                kardex.setIdKardex(resultado.getInt(2));
+                MateriaPrima mp = new MateriaPrima(resultado.getInt(3), resultado.getString(4), resultado.getBoolean(5), resultado.getString(6), resultado.getString(7));
+                kardex.setMp(mp);
+                kardex.setCantidadesTotales(resultado.getDouble(8));
+                kardex.setCostoUnitarioTotales(resultado.getDouble(9));;
+                kardex.setMontoTotales(resultado.getDouble(10));
+                this.kardexTableModel.kars.add(kardex);
             }
-            tableCuenta.repaint();
+            tableKardex.repaint();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al recuperar los datos" + ex);
@@ -75,26 +90,29 @@ public class MantenimientoKardex extends javax.swing.JFrame {
     private void inicializarColumnas() {
         TableColumnModel tColumnModel = new DefaultTableColumnModel();
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 7; i++) {
             TableColumn col = new TableColumn(i);
 
             switch (i) {
                 case 0:
-                    col.setHeaderValue("ID Kardex");
+                    col.setHeaderValue("Fecha de apertura");
                     break;
                 case 1:
-                    col.setHeaderValue("Código Materia");
+                    col.setHeaderValue("ID Kardex");
                     break;
                 case 2:
-                    col.setHeaderValue("Nombre Materia");
+                    col.setHeaderValue("Código Materia");
                     break;
                 case 3:
-                    col.setHeaderValue("Cantidad");
+                    col.setHeaderValue("Nombre Materia");
                     break;
                 case 4:
-                    col.setHeaderValue("Costo Unitario");
+                    col.setHeaderValue("Cantidad");
                     break;
                 case 5:
+                    col.setHeaderValue("Costo Unitario");
+                    break;
+                case 6:
                     col.setHeaderValue("Monto Total");
                     break;
             }
@@ -115,37 +133,70 @@ public class MantenimientoKardex extends javax.swing.JFrame {
         }
     }
 
-     private void UpdateJTable() {
-        cuentaTabla.cuentas.clear();
+    private void UpdateJTable() {
+        kardexTableModel.kars.clear();
 
         try {
-            String sql = "SELECT * FROM cuenta order by codigocuenta asc";
+            String sql = "select  k.fechaapertura, k.idkardex, mp.codigomateria, mp.nombremateria, mp.directa,"
+                    + "mp.descripcionmateria, mp.unidadesmateria, k.cantidadtotal, k.costounitariototal, k.montototal "
+                    + "from kardex k inner join materiaprima mp on k.codigomateria=mp.codigomateria";
             Statement statement = this.conexion.createStatement();
 
             ResultSet resultado = statement.executeQuery(sql);
 
             while (resultado.next()) {
-                Cuenta cuenta = new Cuenta();
-                cuenta.setCodigo(resultado.getInt("codigocuenta"));
-                cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
-                cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
-                if (cbSaldoFinal.isSelected()) {
-                    cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));
-                }
-                cuenta.setDescripcion(resultado.getString("descripcion"));
-                cuenta.setNombreMayor(getNombreCuentaPadre(resultado.getInt("cue_codigocuenta")));
-                cuenta.setCodigoMayor(resultado.getInt("cue_codigocuenta"));
-                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(0), 0);
-                cuenta.setEstadoFinanciero(resultado.getString("estadofinanciero").charAt(1), 1);
-                this.cuentaTabla.cuentas.add(cuenta);
-                cuentaTabla.fireTableDataChanged();
-                listarCuentaMayores();
+                Kardex kardex = new Kardex();
+                kardex.setFechaApertura(resultado.getDate(1));
+                kardex.setIdKardex(resultado.getInt(2));
+                kardex.setMp(new MateriaPrima(resultado.getInt(3), resultado.getString(4), resultado.getBoolean(5), resultado.getString(6), resultado.getString(7)));
+                kardex.setCantidadesTotales(resultado.getDouble(8));
+                kardex.setCostoUnitarioTotales(resultado.getDouble(9));;
+                kardex.setMontoTotales(resultado.getDouble(10));
+                this.kardexTableModel.kars.add(kardex);
+                kardexTableModel.fireTableDataChanged();
             }
-            tableCuenta.repaint();
+            tableKardex.repaint();
+
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al recuperar las peliculas de la base de datos." + ex);
+            JOptionPane.showMessageDialog(this, "Error al recuperar los datos" + ex);
         }
     }
+
+    public void setFecha() {
+        //Instanciamos el objeto Calendar
+        //en fecha obtenemos la fecha y hora del sistema
+        //Calendar fecha = new GregorianCalendar();
+        //Obtenemos el valor del año, mes, día,
+        //hora, minuto y segundo del sistema
+        //usando el método get y el parámetro correspondiente
+        int año = fecha.get(Calendar.YEAR);
+        int mes = fecha.get(Calendar.MONTH) + 1;
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        dat = ("" + dia + "/" + mes + "/" + año + "").toString();
+        try {
+            d = dateFormat.parse(dat);
+            sqlDate = new java.sql.Date(d.getTime());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al recuperar los datos" + ex);
+        }
+    }
+
+    public int lastMateriaPrima() {
+        int codigo = 0;
+        try {
+            String ultimo = "SELECT codigomateria FROM materiaprima ORDER BY codigomateria DESC LIMIT 1";
+            Statement st = conexion.createStatement();
+            ResultSet r = st.executeQuery(ultimo);
+            while (r.next()) {
+                codigo = r.getInt(1);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar la cuenta\n" + ex);
+        }
+
+        return codigo;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -344,7 +395,7 @@ public class MantenimientoKardex extends javax.swing.JFrame {
                                 .addComponent(txtMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblCantidad)
                                 .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                       .addGap(18, 18, 18)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblMontoTotal)
@@ -370,119 +421,85 @@ public class MantenimientoKardex extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        /*try {
-            Cuenta m = (Cuenta) cmbCuentaMayor.getSelectedItem(); //Cuenta mayor de la nueva cuenta
+        try {
+
             if (guardar) {
-                if (codigoExistente(Integer.parseInt(txtMateria.getText()))) {
-                    JOptionPane.showMessageDialog(this, "¡El código de la nueva cuenta que desea guardar ya existe!", "Error en el guardado", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    Cuenta c = new Cuenta();
-                    c.setCodigo(Integer.parseInt(txtMateria.getText()));
-                    c.setNombreCuenta(txtNombre.getText());
-                    c.setDescripcion(txtADescripcion.getText());
-                    c.setCodigoMayor(m.getCodigo());
-                    c.setNombreMayor(m.getNombreCuenta());
-                    c.setGrupoCuenta(cmbUnidad.getSelectedItem().toString());
-                    c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 0);
-                    c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin2.getSelectedItem().toString()), 1);
+                Kardex k = new Kardex();
+                MateriaPrima mp = new MateriaPrima();
+                mp.setNombreMateria(txtMateria.getText());
+                mp.setDescripcionMateria(txtADescripcion.getText());
+                mp.setDirecta(cbDirecta.isSelected());
+                mp.setUnidadesMateria(cmbUnidad.getSelectedItem().toString());
+                k.setMp(mp);
+                k.setFechaApertura(sqlDate);
+                k.setCantidadesTotales(Double.parseDouble(txtCantidad.getText()));
+                k.setMontoTotales(Double.parseDouble(txtMontoTotal.getText()));
+                double cu = k.getMontoTotales() / k.getCantidadesTotales();
+                //k.setCostoUnitarioTotales(Double.valueOf(df.format(cu)));
+                k.setCostoUnitarioTotales(cu);
+                String sentenciaSql = "INSERT INTO materiaprima (nombremateria, directa, descripcionmateria, unidadesmateria)"
+                        + "VALUES (?, ?, ?, ?)";
 
-                    //Conversion de chars (Estado Financiero) a string
-                    StringBuilder str = new StringBuilder(2);
-                    str.append(c.getEstadoFinanciero(0));
-                    str.append(c.getEstadoFinanciero(1));
+                PreparedStatement statement = this.conexion.prepareStatement(sentenciaSql);
+                statement.setString(1, mp.getNombreMateria());
+                statement.setBoolean(2, mp.isDirecta());
+                statement.setString(3, mp.getDescripcionMateria());
+                statement.setString(4, mp.getUnidadesMateria());
+                statement.execute();
 
-                    String sentenciaSql;
-                    PreparedStatement statement;
-                    switch (c.getCodigoMayor()) {
-                        case 0:
-                            sentenciaSql = "INSERT INTO cuenta(codigocuenta,nombrecuenta,descripcion,grupocuenta,estadofinanciero) VALUES" + "(?,?,?,?,?)";
-
-                            statement = this.conexion.prepareStatement(sentenciaSql);
-                            statement.setInt(1, c.getCodigo());
-                            statement.setString(2, c.getNombreCuenta());
-                            statement.setString(3, c.getDescripcion());
-                            statement.setString(4, c.getGrupoCuenta());
-                            statement.setCharacterStream(5, new StringReader(str.toString()), 2);
-                            break;
-                        default:
-                            sentenciaSql = "INSERT INTO cuenta(codigocuenta,cue_codigocuenta,nombrecuenta,descripcion,grupocuenta,estadofinanciero) VALUES" + "(?,?,?,?,?,?)";
-
-                            statement = this.conexion.prepareStatement(sentenciaSql);
-                            statement.setInt(1, c.getCodigo());
-                            statement.setInt(2, c.getCodigoMayor());
-                            statement.setString(3, c.getNombreCuenta());
-                            statement.setString(4, c.getDescripcion());
-                            statement.setString(5, c.getGrupoCuenta());
-                            statement.setCharacterStream(6, new StringReader(str.toString()), 2);
-                            break;
-                    }
-
-                    statement.execute();
-                    //JOptionPane.showMessageDialog(this, "La nuevo cuenta ha sido guardada existosamente");
-                    btnNuevaCuentaActionPerformed(evt);
-                    UpdateJTable();
-                }
+                String sentenciaKardex = "INSERT INTO public.kardex(codigomateria, fechaapertura, cantidadtotal, costounitariototal, montototal) VALUES (?, ?, ?, ?,?)";
+                PreparedStatement statementK = this.conexion.prepareStatement(sentenciaKardex);
+                statementK.setInt(1, lastMateriaPrima());
+                statementK.setDate(2, sqlDate);
+                statementK.setDouble(3, k.getCantidadesTotales());
+                statementK.setDouble(4, k.getCostoUnitarioTotales());
+                statementK.setDouble(5, k.getMontoTotales());
+                statementK.execute();
+                btnNuevaMateriaActionPerformed(evt);
+                UpdateJTable();
 
             } else {
-                Cuenta c = new Cuenta();
-                c.setCodigo(Integer.parseInt(txtMateria.getText()));
-                c.setNombreCuenta(txtNombre.getText());
-                c.setDescripcion(txtADescripcion.getText());
-                c.setCodigoMayor(m.getCodigo());
-                c.setNombreMayor(m.getNombreCuenta());
-                c.setGrupoCuenta(cmbUnidad.getSelectedItem().toString());
-                c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin.getSelectedItem().toString()), 0);
-                c.setEstadoFinanciero(Cuenta.tipoBalanceLetra(cmbEstadoFin2.getSelectedItem().toString()), 1);
-
-                //Conversion de chars (Estado Financiero) a string
-                StringBuilder str = new StringBuilder(2);
-                str.append(c.getEstadoFinanciero(0));
-                str.append(c.getEstadoFinanciero(1));
-
-                String sentenciaSql;
-                PreparedStatement preparedStatement;
-                switch (m.getCodigo()) {
-                    case 0:
-                        sentenciaSql = "UPDATE cuenta SET nombrecuenta= ? , descripcion = ? , grupocuenta = ?, estadofinanciero= ? WHERE codigocuenta = ?";
-                        preparedStatement = this.conexion.prepareStatement(sentenciaSql);
-                        preparedStatement.setString(1, c.getNombreCuenta());
-                        preparedStatement.setString(2, c.getDescripcion());
-                        preparedStatement.setString(3, c.getGrupoCuenta());
-                        preparedStatement.setCharacterStream(4, new StringReader(str.toString()), 2);
-                        preparedStatement.setInt(5, c.getCodigo());
-                        break;
-                    default:
-                        sentenciaSql = "UPDATE cuenta SET cue_codigocuenta=?, nombrecuenta= ? , descripcion = ? , grupocuenta = ?, estadofinanciero= ? WHERE codigocuenta = ?";
-                        preparedStatement = this.conexion.prepareStatement(sentenciaSql);
-                        preparedStatement.setInt(1, m.getCodigo());
-                        preparedStatement.setString(2, c.getNombreCuenta());
-                        preparedStatement.setString(3, c.getDescripcion());
-                        preparedStatement.setString(4, c.getGrupoCuenta());
-                        preparedStatement.setCharacterStream(5, new StringReader(str.toString()), 2);
-                        preparedStatement.setInt(6, c.getCodigo());
-                        break;
-                }
-                preparedStatement.execute();
-                btnNuevaCuentaActionPerformed(evt);
+                String sentenciaSql = "UPDATE materiaprima SET nombremateria=?, directa=?, descripcionmateria=?, unidadesmateria=? WHERE codigomateria = ?";
+                PreparedStatement statement = this.conexion.prepareStatement(sentenciaSql);
+                statement.setString(1, txtMateria.getText());
+                statement.setBoolean(2, cbDirecta.isSelected());
+                statement.setString(3, txtADescripcion.getText());
+                statement.setString(4, cmbUnidad.getSelectedItem().toString());
+                statement.setInt(5, karActual.getMp().getCodigoMateria());
+                statement.execute();
+                btnNuevaMateriaActionPerformed(evt);
                 UpdateJTable();
             }
+            UpdateJTable();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al guardar la cuenta\n" + ex);
         }
-        UpdateJTable();*/
+        UpdateJTable();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleActionPerformed
         // TODO add your handling code here:
-        /*try {
-            
-        } catch (SQLException ex) {
+        try {
+            int currentKardex = tableKardex.getSelectedRow();
+            Kardex k = kardexTableModel.kars.get(currentKardex);
+            if (idOrden != 0) {
+                DetalleKardex dK = new DetalleKardex(k.getIdKardex(), idOrden);
+                dK.setVisible(true);
+            } else {
+                DetalleKardex dK = new DetalleKardex(k.getIdKardex());
+                dK.setVisible(true);
+            }
+            this.setVisible(false);
+
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error en la eliminación. " + ex.getMessage());
-        }*/
+        }
     }//GEN-LAST:event_btnDetalleActionPerformed
 
     private void btnNuevaMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaMateriaActionPerformed
         // TODO add your handling code here:
+        txtCantidad.setEditable(true);
+        txtMontoTotal.setEditable(true);
         txtMateria.setText("");
         txtCantidad.setText("");
         txtMontoTotal.setText("");
@@ -559,6 +576,8 @@ public class MantenimientoKardex extends javax.swing.JFrame {
             txtMontoTotal.setText(String.valueOf(k.getMontoTotales()));
             cbDirecta.setSelected(k.getMp().isDirecta());
             cmbUnidad.setSelectedItem(k.getMp().getUnidadesMateria());
+            txtCantidad.setEditable(false);
+            txtMontoTotal.setEditable(false);
             guardar = false;
         }
     }//GEN-LAST:event_tableKardexMouseClicked
@@ -566,7 +585,6 @@ public class MantenimientoKardex extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         cerrar();
-
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -576,23 +594,31 @@ public class MantenimientoKardex extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MantenimientoKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MantenimientoKardex.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MantenimientoKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MantenimientoKardex.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MantenimientoKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MantenimientoKardex.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MantenimientoKardex.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MantenimientoKardex.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

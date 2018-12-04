@@ -34,6 +34,14 @@ public class DetalleKardex extends javax.swing.JFrame {
         inicializarColumnas();
         conectar();
     }
+    
+    public DetalleKardex(int idKardex, int idOrden) {
+        initComponents();
+    }
+    
+        public DetalleKardex(int idKardex) {
+        initComponents();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

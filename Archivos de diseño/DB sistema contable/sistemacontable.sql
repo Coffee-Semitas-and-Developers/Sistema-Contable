@@ -344,14 +344,11 @@ IDPLANILLA
 /* Table: MATERIAPRIMA                                          */
 /*==============================================================*/
 create table MATERIAPRIMA (
-   CODIGOMATERIA        INT4                 not null,
+   CODIGOMATERIA        SERIAL not null,
    NOMBREMATERIA        VARCHAR(20)          not null,
    DIRECTA              BOOL                 not null,
    DESCRIPCIONMATERIA   VARCHAR(100)         null,
    UNIDADESMATERIA      VARCHAR(100)         not null,
-   CANTIDADMATERIA      DECIMAL(10,2)        not null,
-   PRECIOADQUISION      DECIMAL(10,2)        not null,
-   constraint PK_MATERIAPRIMA primary key (CODIGOMATERIA)
 );
 
 /*==============================================================*/
