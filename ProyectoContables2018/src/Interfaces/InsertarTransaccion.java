@@ -58,6 +58,23 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         lbPartidaDoble.setVisible(false);
         btnGuardar.setEnabled(false);
     }
+    //Metodo para insertar planillas// tiPlanilla es 0 es planilla de salrio, si es 1 planilla de vacaiones, si es 2 es planilla de aguinaldos
+    public InsertarTransaccion(int tiPlanilla,double totalIsss,double totalAFP,double totalRenta,double totalDesc,double totalBoni,double totalSalarioNeto, double totalIsssPatrono,double totalAFPPatrono, double totalAportePatrono) {
+         
+        
+        
+        
+        
+        
+        initComponents();
+        conectar();
+        llenarCombobox();
+        inicializarColumnas();
+        lbPartidaDoble.setVisible(false);
+        btnGuardar.setEnabled(false);
+    }
+    
+    
 
     private void conectar() {
         try {
