@@ -5,77 +5,89 @@
  */
 package Interfaces;
 
+import Conexion.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import Modelos.*;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Gonzalo
  */
 public class BalanceGeneral extends javax.swing.JFrame {
+
     public BalancegeneralTableModel activotable = new BalancegeneralTableModel();
     public BalancegeneralTableModel pasivotable = new BalancegeneralTableModel();
     public BalancegeneralTableModel capitaltable = new BalancegeneralTableModel();
-    
+    private final Conexion conexion = new Conexion();
+
     int b;
+
     /**
      * Creates new form balanceGeneral
      */
-    public BalanceGeneral(){
+    public BalanceGeneral() {
         initComponents();
+        setLocationRelativeTo(null);
+        this.setResizable(false);
+        setTitle("Balance General");
+        inicializarcolumna();
+        conexion.getConexion();
+        getIconImage();
+        background();
+    }
+
+    public BalanceGeneral(int a) {
+        initComponents();
+        conexion.getConexion();
         setLocationRelativeTo(null);
         this.setResizable(false);
         setTitle("Balance General");
         inicializarcolumna();
         getIconImage();
         background();
+        this.b = a;
     }
-    public BalanceGeneral(int a) {
-        initComponents();
-         setLocationRelativeTo(null);
-        this.setResizable(false);
-        setTitle("Balance General");
-        inicializarcolumna();
-        getIconImage();
-        background();
-        this.b=a;
-    }
-    
+
     public void background() {
- Fondo ima = new Fondo();
- ima.setSize(this.getSize());
- this.add(ima);
-}
-      
-    
-    private void inicializarcolumna(){
-    TableColumnModel tColumnModel = new DefaultTableColumnModel();
-        
-        for(int i=0; i<3; i++) {
+        Fondo ima = new Fondo();
+        ima.setSize(this.getSize());
+        this.add(ima);
+    }
+
+    private void inicializarcolumna() {
+        TableColumnModel tColumnModel = new DefaultTableColumnModel();
+
+        for (int i = 0; i < 3; i++) {
             TableColumn col = new TableColumn(i);
-            
-            switch(i) {
-                case 0: col.setHeaderValue("Codigo");
+
+            switch (i) {
+                case 0:
+                    col.setHeaderValue("Codigo");
                     break;
-                case 1: col.setHeaderValue("Nombre");
+                case 1:
+                    col.setHeaderValue("Nombre");
                     break;
-                case 2: col.setHeaderValue("Saldo");
-                   
+                case 2:
+                    col.setHeaderValue("Saldo");
+
             }
-            
+
             tColumnModel.addColumn(col);
         }
-         tablaactivo.setColumnModel(tColumnModel);
-         tablapasivo.setColumnModel(tColumnModel);
-         tablacapital.setColumnModel(tColumnModel);
-         tablacapital.getTableHeader().setVisible(false);
+        tablaactivo.setColumnModel(tColumnModel);
+        tablapasivo.setColumnModel(tColumnModel);
+        tablacapital.setColumnModel(tColumnModel);
+        tablacapital.getTableHeader().setVisible(false);
     }
-    
+
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/LOGO 2.jpg"));
         return retValue;
@@ -106,9 +118,15 @@ public class BalanceGeneral extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jdfechainicio = new com.toedter.calendar.JDateChooser();
+        jdfechafinal = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        totalactivo = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        totalpasivo = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,43 +145,13 @@ public class BalanceGeneral extends javax.swing.JFrame {
         setIconImage(getIconImage());
         setResizable(false);
 
-        tablaactivo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tablaactivo.setModel(activotable);
         jScrollPane1.setViewportView(tablaactivo);
 
-        tablapasivo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tablapasivo.setModel(pasivotable);
         jScrollPane3.setViewportView(tablapasivo);
 
-        tablacapital.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tablacapital.setModel(capitaltable);
         jScrollPane4.setViewportView(tablacapital);
 
         jLabel1.setText("Activo");
@@ -182,9 +170,7 @@ public class BalanceGeneral extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        jLabel5.setText("MUEBLES RIVERAS S.A DE C.V");
-
-        jLabel6.setText("Balance General");
+        jLabel5.setText("MUEBLES RIVERAS S.A");
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/LOGO 2.jpg"))); // NOI18N
 
@@ -195,100 +181,204 @@ public class BalanceGeneral extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setText("Total Activo");
+
+        jLabel9.setText("Total pasivo mas patrimonio");
+
+        jLabel10.setText("fecha inicio");
+
+        jLabel11.setText("fecha final");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jLabel5)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(71, 71, 71)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(62, 62, 62))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(jdfechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(jdfechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(jButton2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(191, 191, 191)
+                                .addComponent(jLabel5))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel1)
-                        .addGap(62, 62, 62)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(223, 223, 223)
-                        .addComponent(jLabel2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel8))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(453, 453, 453)
+                                            .addComponent(totalactivo))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel1)
+                                            .addGap(91, 91, 91)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(186, 186, 186)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(452, 452, 452)
+                                .addComponent(totalpasivo))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))))))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton2)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel7)
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(6, 6, 6))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                            .addComponent(jLabel2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jdfechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel11)
+                                .addComponent(jdfechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(6, 6, 6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
+                        .addGap(4, 4, 4)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(totalpasivo)
+                        .addGap(57, 57, 57))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
                         .addGap(11, 11, 11)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap())
+                        .addComponent(totalactivo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(14, 14, 14))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        GenerarReporte  regresar = new GenerarReporte(b);
-       regresar.setVisible(true);
-       this.setVisible(false);
+        GenerarReporte regresar = new GenerarReporte(b);
+        regresar.setVisible(true);
+        this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        if (!(jdfechafinal.getDate() == null || jdfechainicio.getDate() == null)) {
+            activotable.cuentas.clear();
+            pasivotable.cuentas.clear();
+            capitaltable.cuentas.clear();
+            double acumuladoractivo = 0;
+            double acumuladorpasivo = 0;
+            double acumulador = 0;
+            try {
+                Statement coneccion = this.conexion.createStatement();
+                java.util.Date fechaini = jdfechainicio.getDate();
+                java.util.Date fechafinal = jdfechafinal.getDate();
+                String sentencia = "select x.codigocuenta, x.nombrecuenta,"
+                        + "x.grupocuenta, sum(x.debe), sum(x.haber) from (select "
+                        + "c.codigocuenta, c.nombrecuenta,c.grupocuenta, c.estadofinanciero,"
+                        + "r.debe, r.haber from cuenta c inner join (select d.iddetalle, "
+                        + "d.codigocuenta, d.debe, d.haber from transaccion t inner join detalletransaccion d "
+                        + "on t.idtransaccion = d.idtransaccion where t.fechatransaccion between '" + fechaini + "' "
+                        + "and '" + fechafinal + "') r on c.codigocuenta = r.codigocuenta group by c.codigocuenta,"
+                        + "c.grupocuenta, c.nombrecuenta, r.debe, r.haber) x where x.estadofinanciero like '%G%'  "
+                        + "group by x.codigocuenta, x.nombrecuenta,x.grupocuenta";
+                ResultSet resultado = coneccion.executeQuery(sentencia);
+                while (resultado.next()) {
+                    String identificador = String.valueOf(resultado.getInt("codigocuenta"));
+                    switch (identificador.substring(1)) {
+                        case "1": {
+                            Cuenta cuenta = new Cuenta();
+                            cuenta.setCodigo(resultado.getInt("codigocuenta"));
+                            cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
+                            cuenta.setDebe(resultado.getDouble("debe"));
+                            cuenta.setHaber(resultado.getDouble("haber"));
+                            acumuladoractivo += (resultado.getDouble("debe") - resultado.getDouble("haber"));
+                            this.activotable.cuentas.add(cuenta);
+                            activotable.fireTableDataChanged();
+                        }
+                        break;
+                        case "2": {
+                            Cuenta cuenta = new Cuenta();
+                            cuenta.setCodigo(resultado.getInt("codigocuenta"));
+                            cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
+                            cuenta.setDebe(resultado.getDouble("debe"));
+                            cuenta.setHaber(resultado.getDouble("haber"));
+                            acumuladorpasivo += (resultado.getDouble("debe") - resultado.getDouble("haber"));
+                            this.pasivotable.cuentas.add(cuenta);
+                            pasivotable.fireTableDataChanged();
+                        }
+                        break;
+                        case "3": {
+                            Cuenta cuenta = new Cuenta();
+                            cuenta.setCodigo(resultado.getInt("codigocuenta"));
+                            cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
+                            cuenta.setDebe(resultado.getDouble("debe"));
+                            cuenta.setHaber(resultado.getDouble("haber"));
+                            acumulador += (resultado.getDouble("debe") - resultado.getDouble("haber"));
+                            this.capitaltable.cuentas.add(cuenta);
+                            capitaltable.fireTableDataChanged();
+                        }
+                        break;
+                    }
+
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error en la conexion con la base" + e);
+                e.printStackTrace();
+            }
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Debe de elegir una fecha de inicio y una de final para generar los reportes");
+        }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -333,22 +423,28 @@ public class BalanceGeneral extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable2;
+    private com.toedter.calendar.JDateChooser jdfechafinal;
+    private com.toedter.calendar.JDateChooser jdfechainicio;
     private javax.swing.JTable tablaactivo;
     private javax.swing.JTable tablacapital;
     private javax.swing.JTable tablapasivo;
+    private javax.swing.JLabel totalactivo;
+    private javax.swing.JLabel totalpasivo;
     // End of variables declaration//GEN-END:variables
 }
