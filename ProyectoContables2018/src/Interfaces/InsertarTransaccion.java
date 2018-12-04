@@ -545,7 +545,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         return j;
     }
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
 
         try {
@@ -596,11 +596,11 @@ public class InsertarTransaccion extends javax.swing.JFrame {
             Logger.getLogger(InsertarTransaccion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    }                                          
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbHaberActionPerformed
+    }                                       
     /* //metodo para obtener las fechas de los jdchooser
                 DateFormat formato =new SimpleDateFormat("dd/MM/yyyy");
                 Calendar fechacon =  jdfecha.getCurrent();
@@ -613,18 +613,8 @@ public class InsertarTransaccion extends javax.swing.JFrame {
                 tra.fecha = new java.sql.Date(j.getTime());
                //hasta a qui con el metodo para enviar las fechas
      */
-    public Date fechaDC() throws ParseException {
-        DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar fechacon = jdfecha.getCalendar();
-        int año = fechacon.get(Calendar.YEAR);
-        int mes = fechacon.get(Calendar.MONTH);
-        int dia = fechacon.get(Calendar.DAY_OF_MONTH);
-        String fecha1 = (dia + "/" + mes + "/" + año).toString();
-        Date j = new Date();
-        j = formato.parse(fecha1);
-        return j;
-    }
-
+  
+/*
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
 
@@ -678,7 +668,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnGuardarActionPerformed
-
+*/
     private void insertarPlanilla(double totalIsss, double totalAFP, double totalRenta, double totalDesc, double totalBoni, double totalSalarioNeto, double totalIsssPatrono, double totalAFPPatrono, double totalAportePatrono) {
         Cuenta c = new Cuenta();
         DetalleTransaccion d = new DetalleTransaccion();
