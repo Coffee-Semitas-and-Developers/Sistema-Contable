@@ -27,6 +27,7 @@ import java.util.GregorianCalendar;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
@@ -44,6 +45,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
     public DetalleTransaccionTableModel detalleTransaccionTModel = new DetalleTransaccionTableModel();
     Transaccion t = new Transaccion();
     double tDebe, tHaber = 0.00;
+    private ButtonGroup btnGCreditoDebito;
 
     /**
      * Creates new form InsertarMovimiento
@@ -663,9 +665,9 @@ public class InsertarTransaccion extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(InsertarTransaccion.class.getName()).log(Level.SEVERE, null, ex);
         }
+return cuenta;
+    }                                          
 
-    }//GEN-LAST:event_btnGuardarActionPerformed
-*/
     private void insertarPlanilla(double totalIsss, double totalAFP, double totalRenta, double totalDesc, double totalBoni, double totalSalarioNeto, double totalIsssPatrono, double totalAFPPatrono, double totalAportePatrono) {
         Cuenta c = new Cuenta();
         DetalleTransaccion d = new DetalleTransaccion();
