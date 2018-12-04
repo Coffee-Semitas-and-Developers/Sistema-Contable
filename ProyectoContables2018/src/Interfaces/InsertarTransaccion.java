@@ -97,12 +97,10 @@ public class InsertarTransaccion extends javax.swing.JFrame {
             ResultSet resultado = statement.executeQuery(sentenciaSql);
             while (resultado.next()) {
                 Cuenta cuenta = new Cuenta();
-//              cuenta.setCodigo(resultado.getInt("codigocuenta"));
-                cuenta.setCodigo(resultado.getInt("idcuenta"));
+              cuenta.setCodigo(resultado.getInt("codigocuenta"));
                 cuenta.setNombreCuenta(resultado.getString("nombrecuenta"));
-//              cuenta.setDescripcion(resultado.getString("descripcion"));
-                cuenta.setDescripcion(resultado.getString("descricion"));
-                cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
+              cuenta.setDescripcion(resultado.getString("descripcion"));
+              cuenta.setGrupoCuenta(resultado.getString("grupocuenta"));
                 cuenta.setSaldoFinal(resultado.getDouble("saldofinal"));
                 cmbCuenta.addItem(cuenta);
             }
