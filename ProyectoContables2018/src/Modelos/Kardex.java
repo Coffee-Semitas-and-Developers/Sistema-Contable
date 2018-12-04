@@ -65,6 +65,7 @@ public class Kardex {
     }
 
     public double getCostoUnitarioTotales() {
+        this.costoUnitarioTotales = this.costoUnitarioTotales/this.cantidadesTotales;
         return costoUnitarioTotales;
     }
 
