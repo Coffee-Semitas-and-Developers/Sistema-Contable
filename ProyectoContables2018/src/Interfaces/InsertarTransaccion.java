@@ -60,7 +60,7 @@ public class InsertarTransaccion extends javax.swing.JFrame {
 
 
     }
-    
+   
     public void background() {
         Fondo ima = new Fondo();
         ima.setSize(this.getSize());
