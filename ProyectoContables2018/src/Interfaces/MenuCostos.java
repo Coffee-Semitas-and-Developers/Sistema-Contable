@@ -7,6 +7,8 @@ package Interfaces;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -188,7 +190,8 @@ public class MenuCostos extends javax.swing.JFrame {
 
 
     private void btnMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimientosActionPerformed
-
+        Icon m = new ImageIcon("/MANTENIMIENTO.jpg");
+        JOptionPane.showMessageDialog(this, "Oops! Esto es vergonzoso. Lo sentimos estamos en mantenimiento. Regresaremos pronto", "Función en mantenimiento", JOptionPane.ERROR_MESSAGE, m);
     }//GEN-LAST:event_btnMovimientosActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

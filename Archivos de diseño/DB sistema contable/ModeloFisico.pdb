@@ -8228,13 +8228,14 @@ ATT IDNT</a:History>
 <a:Code>IDKARDEX</a:Code>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
-<a:ModificationDate>1542573929</a:ModificationDate>
+<a:ModificationDate>1543896223</a:ModificationDate>
 <a:Modifier>Dalton</a:Modifier>
 <a:History>ORG {2C3A65D2-4F40-4E63-8C1C-C77B6C316104}
 DAT 1542573930
 ORG {11DA614B-E3FD-4E96-8475-8302594DCE1B},{5B1F4380-6517-419B-8AA6-22BC0AA67591}
 DAT 1542570630
-ATT PIDTF</a:History>
+ATT PIDTF
+ATT PRIM</a:History>
 <a:DataType>INT4</a:DataType>
 <a:Length>4</a:Length>
 <a:Column.Mandatory>1</a:Column.Mandatory>
@@ -8245,16 +8246,17 @@ ATT PIDTF</a:History>
 <a:Code>IDORDEN</a:Code>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
-<a:ModificationDate>1542573929</a:ModificationDate>
+<a:ModificationDate>1543896196</a:ModificationDate>
 <a:Modifier>Dalton</a:Modifier>
 <a:History>ORG {ACA7B88D-9B98-447F-B60E-BE17F0FF8441}
 DAT 1542573930
 ORG {3B47D3CF-FAC6-4FD2-ADC9-FAC99337CE08},{10344B35-7DEE-4C67-80B4-A0942B882D87}
 DAT 1542570630
-ATT PIDTF</a:History>
+ATT PIDTF
+ATT PRIM
+ATT MAND</a:History>
 <a:DataType>INT4</a:DataType>
 <a:Length>4</a:Length>
-<a:Column.Mandatory>1</a:Column.Mandatory>
 </o:Column>
 <o:Column Id="o224">
 <a:ObjectID>7435ED36-0DD3-4768-9624-E0483B49FC81</a:ObjectID>
@@ -8346,16 +8348,16 @@ ATT NAME</a:History>
 <a:Code>IDENTIFIER_1</a:Code>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
-<a:ModificationDate>1542573929</a:ModificationDate>
+<a:ModificationDate>1543896223</a:ModificationDate>
 <a:Modifier>Dalton</a:Modifier>
 <a:History>ORG {019CD9FF-FC6F-4E3E-9D23-FEA53AF0A001}
 DAT 1542573930
 ORG {CCAB6C57-E074-4F85-B0F7-078BC79BAF10}
-DAT 1542570630</a:History>
+DAT 1542570630
+REM COLNCOL {ACA7B88D-9B98-447F-B60E-BE17F0FF8441}
+REM COLNCOL {2C3A65D2-4F40-4E63-8C1C-C77B6C316104}</a:History>
 <c:Key.Columns>
 <o:Column Ref="o221"/>
-<o:Column Ref="o222"/>
-<o:Column Ref="o223"/>
 </c:Key.Columns>
 </o:Key>
 </c:Keys>
@@ -8366,7 +8368,7 @@ DAT 1542570630</a:History>
 <a:Code>DETALLEKARDEX_PK</a:Code>
 <a:CreationDate>1542573930</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
-<a:ModificationDate>1542573930</a:ModificationDate>
+<a:ModificationDate>1543896223</a:ModificationDate>
 <a:Modifier>Dalton</a:Modifier>
 <a:Unique>1</a:Unique>
 <c:LinkedObject>
@@ -8383,29 +8385,9 @@ DAT 1542570630</a:History>
 <o:Column Ref="o221"/>
 </c:Column>
 </o:IndexColumn>
-<o:IndexColumn Id="o232">
-<a:ObjectID>63905006-73BA-4597-A8B6-F2FEB3FB32DF</a:ObjectID>
-<a:CreationDate>1542573930</a:CreationDate>
-<a:Creator>Dalton</a:Creator>
-<a:ModificationDate>1542573930</a:ModificationDate>
-<a:Modifier>Dalton</a:Modifier>
-<c:Column>
-<o:Column Ref="o222"/>
-</c:Column>
-</o:IndexColumn>
-<o:IndexColumn Id="o233">
-<a:ObjectID>04AE870A-3F36-4367-AB89-C25E716BD7BA</a:ObjectID>
-<a:CreationDate>1542573930</a:CreationDate>
-<a:Creator>Dalton</a:Creator>
-<a:ModificationDate>1542573930</a:ModificationDate>
-<a:Modifier>Dalton</a:Modifier>
-<c:Column>
-<o:Column Ref="o223"/>
-</c:Column>
-</o:IndexColumn>
 </c:IndexColumns>
 </o:Index>
-<o:Index Id="o234">
+<o:Index Id="o232">
 <a:ObjectID>26909918-FC50-4601-8BBB-E844CCC52F97</a:ObjectID>
 <a:Name>DETALLATIPO_FK</a:Name>
 <a:Code>DETALLATIPO_FK</a:Code>
@@ -8417,7 +8399,7 @@ DAT 1542570630</a:History>
 <o:Reference Ref="o46"/>
 </c:LinkedObject>
 <c:IndexColumns>
-<o:IndexColumn Id="o235">
+<o:IndexColumn Id="o233">
 <a:ObjectID>359ACDB5-6351-4DD7-A1FC-4D88C8360C9B</a:ObjectID>
 <a:CreationDate>1542573930</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -8429,7 +8411,7 @@ DAT 1542570630</a:History>
 </o:IndexColumn>
 </c:IndexColumns>
 </o:Index>
-<o:Index Id="o236">
+<o:Index Id="o234">
 <a:ObjectID>58473399-7F90-4C83-897B-0FD1DABCFC8D</a:ObjectID>
 <a:Name>SOLICITAMTAERIA_FK</a:Name>
 <a:Code>SOLICITAMTAERIA_FK</a:Code>
@@ -8441,7 +8423,7 @@ DAT 1542570630</a:History>
 <o:Reference Ref="o48"/>
 </c:LinkedObject>
 <c:IndexColumns>
-<o:IndexColumn Id="o237">
+<o:IndexColumn Id="o235">
 <a:ObjectID>F471662B-9C18-479C-B7D9-CF62EB501E1B</a:ObjectID>
 <a:CreationDate>1542573930</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -8476,7 +8458,7 @@ ATT OBJEXA</a:History>
 
 </a:ExtendedAttributesText>
 <c:Columns>
-<o:Column Id="o238">
+<o:Column Id="o236">
 <a:ObjectID>79F3D283-5EF4-4997-9158-FED17909051F</a:ObjectID>
 <a:Name>idUsuario</a:Name>
 <a:Code>IDUSUARIO</a:Code>
@@ -8495,10 +8477,10 @@ ATT IDNT</a:History>
 <a:Identity>1</a:Identity>
 <a:Column.Mandatory>1</a:Column.Mandatory>
 <c:Sequence>
-<o:Sequence Ref="o239"/>
+<o:Sequence Ref="o237"/>
 </c:Sequence>
 </o:Column>
-<o:Column Id="o240">
+<o:Column Id="o238">
 <a:ObjectID>FA68C272-6A2E-4DF2-A875-CDD72581DAF6</a:ObjectID>
 <a:Name>nombreUsuario</a:Name>
 <a:Code>NOMBREUSUARIO</a:Code>
@@ -8513,7 +8495,7 @@ DAT 1542570630</a:History>
 <a:DataType>TEXT</a:DataType>
 <a:Column.Mandatory>1</a:Column.Mandatory>
 </o:Column>
-<o:Column Id="o241">
+<o:Column Id="o239">
 <a:ObjectID>80453406-40AA-4EC2-AC27-373CEC1F62DA</a:ObjectID>
 <a:Name>contraseña</a:Name>
 <a:Code>CONTRASENA</a:Code>
@@ -8528,7 +8510,7 @@ DAT 1542570630</a:History>
 <a:DataType>TEXT</a:DataType>
 <a:Column.Mandatory>1</a:Column.Mandatory>
 </o:Column>
-<o:Column Id="o242">
+<o:Column Id="o240">
 <a:ObjectID>054B56D7-DB44-44FF-8494-7C92E1F84042</a:ObjectID>
 <a:Name>rol</a:Name>
 <a:Code>ROL</a:Code>
@@ -8545,7 +8527,7 @@ DAT 1542570630</a:History>
 </o:Column>
 </c:Columns>
 <c:Keys>
-<o:Key Id="o243">
+<o:Key Id="o241">
 <a:ObjectID>2BF9FC19-B999-4EE6-8ED6-B3A9AF52A8CC</a:ObjectID>
 <a:Name>Identifier_1</a:Name>
 <a:Code>IDENTIFIER_1</a:Code>
@@ -8558,12 +8540,12 @@ DAT 1542573930
 ORG {948C3B0F-B828-42E5-815A-2A7EB6524EEB}
 DAT 1542570630</a:History>
 <c:Key.Columns>
-<o:Column Ref="o238"/>
+<o:Column Ref="o236"/>
 </c:Key.Columns>
 </o:Key>
 </c:Keys>
 <c:Indexes>
-<o:Index Id="o244">
+<o:Index Id="o242">
 <a:ObjectID>0F186DA3-A562-44B6-9E7D-BE1F5826522E</a:ObjectID>
 <a:Name>USUARIO_PK</a:Name>
 <a:Code>USUARIO_PK</a:Code>
@@ -8573,24 +8555,24 @@ DAT 1542570630</a:History>
 <a:Modifier>Dalton</a:Modifier>
 <a:Unique>1</a:Unique>
 <c:LinkedObject>
-<o:Key Ref="o243"/>
+<o:Key Ref="o241"/>
 </c:LinkedObject>
 <c:IndexColumns>
-<o:IndexColumn Id="o245">
+<o:IndexColumn Id="o243">
 <a:ObjectID>FE1D17FC-0C70-4E88-A783-710EA3432D48</a:ObjectID>
 <a:CreationDate>1542573930</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
 <a:ModificationDate>1542573930</a:ModificationDate>
 <a:Modifier>Dalton</a:Modifier>
 <c:Column>
-<o:Column Ref="o238"/>
+<o:Column Ref="o236"/>
 </c:Column>
 </o:IndexColumn>
 </c:IndexColumns>
 </o:Index>
 </c:Indexes>
 <c:PrimaryKey>
-<o:Key Ref="o243"/>
+<o:Key Ref="o241"/>
 </c:PrimaryKey>
 </o:Table>
 </c:Tables>
@@ -8631,7 +8613,7 @@ ATT PIDF</a:History>
 <o:Key Ref="o84"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o246">
+<o:ReferenceJoin Id="o244">
 <a:ObjectID>B6F9FD5A-6E8D-4FA3-8BA6-F93AE20835F0</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -8678,7 +8660,7 @@ ATT PIDF</a:History>
 <o:Key Ref="o78"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o247">
+<o:ReferenceJoin Id="o245">
 <a:ObjectID>FFC478AE-DFBB-4FB8-9F68-67AF22B9BA80</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -8726,7 +8708,7 @@ ATT PIDF</a:History>
 <o:Key Ref="o96"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o248">
+<o:ReferenceJoin Id="o246">
 <a:ObjectID>05A62646-8F59-4B76-9DEE-16A326E5B681</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -8768,7 +8750,7 @@ DAT 1542570630</a:History>
 <o:Key Ref="o126"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o249">
+<o:ReferenceJoin Id="o247">
 <a:ObjectID>1E32E1F9-66DA-47F2-89D5-CDF9B63911C0</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -8810,7 +8792,7 @@ DAT 1542570630</a:History>
 <o:Key Ref="o133"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o250">
+<o:ReferenceJoin Id="o248">
 <a:ObjectID>38E383F7-0871-4322-B523-9447E4CCDFF2</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -8853,7 +8835,7 @@ ATT MAND</a:History>
 <o:Key Ref="o118"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o251">
+<o:ReferenceJoin Id="o249">
 <a:ObjectID>131FE8E2-BD5F-45C7-A792-201355945ADE</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -8897,7 +8879,7 @@ DAT 1542570630</a:History>
 <o:Key Ref="o118"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o252">
+<o:ReferenceJoin Id="o250">
 <a:ObjectID>1B269792-B6DA-4A53-BDBA-4D4D57A07449</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -8942,7 +8924,7 @@ ATT MNDB</a:History>
 <o:Key Ref="o155"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o253">
+<o:ReferenceJoin Id="o251">
 <a:ObjectID>43C11DE6-8CF4-4EC6-A8FB-6AD291F57636</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -8984,7 +8966,7 @@ DAT 1542570630</a:History>
 <o:Key Ref="o166"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o254">
+<o:ReferenceJoin Id="o252">
 <a:ObjectID>87FCF9E7-066E-4E47-BE14-8CC285F7636A</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -9026,7 +9008,7 @@ DAT 1542570630</a:History>
 <o:Key Ref="o216"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o255">
+<o:ReferenceJoin Id="o253">
 <a:ObjectID>0EBA405F-8AD3-44C1-A967-89B08EF23438</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -9083,7 +9065,7 @@ ATT CARD</a:History>
 <o:Key Ref="o216"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o256">
+<o:ReferenceJoin Id="o254">
 <a:ObjectID>16D4544B-2900-4063-8DEB-4D7E19690FA8</a:ObjectID>
 <a:CreationDate>1543769834</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -9125,7 +9107,7 @@ ATT DMNT</a:History>
 <o:Key Ref="o78"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o257">
+<o:ReferenceJoin Id="o255">
 <a:ObjectID>444BC766-3F11-49F2-8F89-969C2DEEB687</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -9170,7 +9152,7 @@ ATT MNDA</a:History>
 <o:Key Ref="o199"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o258">
+<o:ReferenceJoin Id="o256">
 <a:ObjectID>0B924ED6-BF83-480E-B3CA-A94A9FE1F23A</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -9212,7 +9194,7 @@ DAT 1542570630</a:History>
 <o:Key Ref="o216"/>
 </c:ParentKey>
 <c:Joins>
-<o:ReferenceJoin Id="o259">
+<o:ReferenceJoin Id="o257">
 <a:ObjectID>CB221F34-50F1-4A91-8C87-0B40BFCE9157</a:ObjectID>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
@@ -9231,7 +9213,7 @@ DAT 1542573930</a:History>
 </o:Reference>
 </c:References>
 <c:Sequences>
-<o:Sequence Id="o239">
+<o:Sequence Id="o237">
 <a:ObjectID>7B264FCA-1C84-4C30-B9C9-EC26090EAF00</a:ObjectID>
 <a:Name>Sequence_1</a:Name>
 <a:Code>SEQUENCE_1</a:Code>
@@ -9242,7 +9224,7 @@ DAT 1542573930</a:History>
 </o:Sequence>
 </c:Sequences>
 <c:DefaultGroups>
-<o:Group Id="o260">
+<o:Group Id="o258">
 <a:ObjectID>E1DE5071-02E4-46BA-A058-EBC5B6C9D8DD</a:ObjectID>
 <a:Name>PUBLIC</a:Name>
 <a:Code>PUBLIC</a:Code>
@@ -9253,7 +9235,7 @@ DAT 1542573930</a:History>
 </o:Group>
 </c:DefaultGroups>
 <c:TargetModels>
-<o:TargetModel Id="o261">
+<o:TargetModel Id="o259">
 <a:ObjectID>00D8F810-6B25-4932-A31E-F33578AFC1BD</a:ObjectID>
 <a:Name>PostgreSQL 9.x</a:Name>
 <a:Code>PGSQL9</a:Code>
@@ -9269,7 +9251,7 @@ DAT 1542573930</a:History>
 <o:Shortcut Ref="o4"/>
 </c:SessionShortcuts>
 </o:TargetModel>
-<o:TargetModel Id="o262">
+<o:TargetModel Id="o260">
 <a:ObjectID>E5A3E168-CF2B-4ADE-9A99-10BFF074154C</a:ObjectID>
 <a:Name>ModeloLogico</a:Name>
 <a:Code>MODELOLOGICO</a:Code>

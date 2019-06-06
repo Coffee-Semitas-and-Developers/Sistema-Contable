@@ -6409,14 +6409,16 @@ ATT NAME</a:History>
 <a:Code>NOMBRECUENTA</a:Code>
 <a:CreationDate>1542573929</a:CreationDate>
 <a:Creator>Dalton</a:Creator>
-<a:ModificationDate>1542573929</a:ModificationDate>
+<a:ModificationDate>1543896424</a:ModificationDate>
 <a:Modifier>Dalton</a:Modifier>
 <a:History>ORG {F8858234-DF25-4D89-864A-BC09BD1495F3}
 DAT 1542573930
 ORG {5DF43AD2-E599-4DD4-AF40-2FD8CE90C6A3}
-DAT 1542570630</a:History>
-<a:DataType>VARCHAR(30)</a:DataType>
-<a:Length>30</a:Length>
+DAT 1542570630
+ATT DTTP
+ATT MLEN</a:History>
+<a:DataType>VARCHAR(75)</a:DataType>
+<a:Length>75</a:Length>
 <a:Column.Mandatory>1</a:Column.Mandatory>
 </o:Column>
 <o:Column Id="o114">
